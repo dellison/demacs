@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# key: ifm
+# name: ifmain
+# author: david ellison
+# --
+if __name__ == "__main__":
+    $0

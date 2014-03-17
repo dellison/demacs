@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: list comprehension
+# key: lc
+# contributor: david ellison
+# --
+[$1 for ${2:$1} in $0]

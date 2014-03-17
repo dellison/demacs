@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: unittest
+# key: test
+# expand-env: ((yas-indent-line 'fixed))
+# contributor: david ellison
+# --
+import unittest
+
+class ${1:FooTests}(unittest.TestCase):
+
+    def testFoo(self):
+        self.failUnless(False)
+	$0
+
+def main():
+    unittest.main()
+
+if __name__ == '__main__':
+    main()

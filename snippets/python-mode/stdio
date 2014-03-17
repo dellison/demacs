@@ -1,0 +1,18 @@
+# name: stdio
+# key: stdio
+# author: david ellison
+# --
+import os
+import re
+import sys
+
+
+def main():
+    for line in sys.stdin():
+`(message "    ")`$0
+    	print line
+    
+
+if __name__ == '__main__':
+    main()
+    

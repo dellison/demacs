@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: read_file
+# key: readf
+# expand-env: ((yas/indent-line 'fixed))
+# contributor: david ellison
+# --
+with open(${1:data_file}, mode="r") as f:
+    for line in f:
+        line = line.strip()
+        $0

@@ -1,0 +1,11 @@
+elpa/*
+*.org
+dne*
+*.dat
+places
+bookmarks
+url*
+tramp
+/setup-clms.el
+/TEST
+/de/*
