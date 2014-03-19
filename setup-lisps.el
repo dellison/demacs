@@ -20,5 +20,15 @@
   (enable-paredit-mode)
   (evil-paredit-mode t))
 
+(defun de/clean-buffer-parens ()
+  "Removes any space/newlines from between closing parens
+in the current buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward ")[[:space:]\n]+)" nil t)
+      (replace-match "))" nil nil)
+      (beginning-of-line))))
+
 (provide 'setup-lisps)
   
