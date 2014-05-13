@@ -7,4 +7,7 @@
   (require 'slime)
   (slime-setup))
 
+
+(add-hook 'slime-mode-hook 'de/lisps-mode-hook)
+
 (provide 'setup-common-lisp)

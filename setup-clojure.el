@@ -8,6 +8,9 @@
   (cider-turn-on-eldoc-mode)
   (paredit-mode 1))
 
+;; (add-hook 'clojure-mode-hook 'de/lisps-mode-hook)
+;; (add-hook 'cider-repl-mode-hook 'de/lisps-mode-hook)
+
 (add-hook 'clojure-mode-hook 'de/cider-mode-hook)
 (add-hook 'cider-repl-mode-hook 'de/cider-mode-hook)
 
