@@ -8,7 +8,7 @@
 (set-default 'indicate-empty-lines t)
 
 (setq enable-recursive-minibuffers t)
-(show-paren-mode 1)
+(show-paren-mode -1)
 
 (when (display-graphic-p)
   (global-hl-line-mode 1))
@@ -17,7 +17,7 @@
 (blink-cursor-mode -1)
 
 (setq scroll-conservatively 1
-      scroll-margin 5)
+      scroll-margin 0)
 
 (setq dired-listing-switches "-hal") 
 
@@ -42,6 +42,8 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
+;; ediff stuff
+(setq ediff-split-window-function 'split-window-horizontally)
 
 ;; it's the future now, so you can use a lot of memory
 (setq gc-cons-threshold 20000000)
