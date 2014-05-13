@@ -1,11 +1,20 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Setup for Evil Mode, the VIM emulation layer for emacs.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (mapc 'install-if-needed '(evil
 			   evil-matchit
 			   evil-nerd-commenter
 			   evil-paredit
 			   evil-leader))
 
-(setq evil-move-cursor-back t)
-(setq evil-cross-lines t)
+(setq evil-move-cursor-back t
+      evil-cross-lines t
+      evil-insert-state-cursor '(bar . 3)
+      evil-emacs-state-cursor '(bar . 3))
+
 
 (evilnc-default-hotkeys)
 
@@ -27,16 +36,54 @@
 (evil-leader-mode 1)
 (evil-mode 1)
 
+(defun de/comint-shell-command (command)
+  "executes a shell command (in comint mode) in the current directory"
+  (interactive "sRun: ")
+  (let* ((tokens (split-string command))
+	 (cmd (car tokens))
+	 (args (mapconcat 'identity (cdr tokens) " ")))
+    ; (message(format "running command %s with args %s" cmd args))
+    (switch-to-buffer (make-comint cmd cmd nil args))))
+
+;; use spacebar as the leader key
 (evil-leader/set-key
-  "x" 'execute-extended-command
-  "g" 'magit-status
-  "e" 'eshell
-  "k" (lambda () (interactive) (kill-buffer nil))
-  "de" 'de/open-emacs-configuration-file
-  "m" 'woman
+  "1"   'delete-other-windows
+  "="   'ediff-current-file
+  "SPC" 'smex
+  "TAB" 'de/comint-shell-command
+  "c"   'calc
+  "de"  'de/open-emacs-configuration-file
+  "di"  'ediff-current-file
+  "e"   'eshell
+  "f"   'find-name-dired
+  "g"   'magit-status
+  "i"   'info
+  "k"   (defun de/kill-this-buffer ()
+	  (interactive)
+	  (let ((prompt
+		 (format "Kill %s? %s"
+			 (buffer-name)
+			 (if (buffer-modified-p)
+			     "(buffer is unsaved) "
+			   ""))))
+	    (if (y-or-n-p prompt)
+		(kill-buffer)))
+	  (message ""))
+  "j"   'ace-jump-char-mode
+  "l"   'ibuffer
+  "m"   'woman
+  "py"  'run-python
+  "q"   (defun de/qrr-in-buffer (regexp to-string)
+	  "qrr in whole buffer"
+	  (interactive "sQRRegexp: \nsReplace with: ")
+	  (save-excursion
+	    (query-replace-regexp regexp to-string nil (point-min) (point-max))))
+  "r"   're-builder
+  "s"   'de/switch-to-scratch-buffer-here ; see setup-elisp.el
+  "x"   'execute-extended-command
    )
 
-;(evilnc-default-hotkeys)
+(evilnc-default-hotkeys)
 
 ;; keep some emacs bindings
 (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
@@ -138,6 +185,7 @@
 
 ; (setq evil-insert-state-cursor nil) ; originally (bar . 2)
 (setq evil-insert-state-cursor '(bar . 3))
+(setq evil-emacs-state-cursor '(bar . 3))
 
 (setcdr evil-insert-state-map nil) ;; just use normal emacs for insert state
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
