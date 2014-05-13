@@ -8,14 +8,17 @@
 (require 'dired-details)
 (setq dired-details-hidden-string "--- ")
 
-(add-hook 'dired-mode-hook 
-	  (defun de/dired-mode-hook ()
-	    "dired mode hook"
-	    (local-set-key (kbd "(") 'dired-details-toggle)
-	    (local-unset-key (kbd "<SPC>")) ; so that evil-leader works
-	    (local-unset-key " ") ; :( it doesn't work, i want leader
-	    (when (fboundp 'evil-mode)
-	      (define-key evil-normal-state-local-map "(" 'dired-details-toggle))))
+(defun de/dired-mode-hook ()
+  "dired mode hook"
+  (load "dired-x")
+  (local-set-key (kbd "(") 'dired-details-toggle)
+  (local-unset-key (kbd "<SPC>")) ; so that evil-leader works
+  (local-unset-key " ") ; :( it doesn't work, i want leader
+  (when (fboundp 'evil-mode)
+    (define-key evil-normal-state-local-map "(" 'dired-details-toggle)))
+
+(add-hook 'dired-mode-hook 'de/dired-mode-hook)
+(add-hook 'dired-load-hook 'de/dired-mode-hook)
 
 (defun dired-back-to-top ()
   (interactive)
