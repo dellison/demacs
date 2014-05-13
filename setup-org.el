@@ -1,5 +1,6 @@
 (require 'org)
 
+(setq org-startup-folded nil)
 (setq org-todo-keywords '((sequence "[ ]" "[X]")))
 
 (org-babel-do-load-languages 'org-babel-load-languages
