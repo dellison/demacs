@@ -7,6 +7,8 @@
 
 (require 'haskell-mode)
 
+(setq haskell-font-lock-symbols t)
+
 (defalias 'ghci 'run-haskell)
 
 (defun de/ghci ()
