@@ -47,6 +47,7 @@
 
 ;; use spacebar as the leader key
 (evil-leader/set-key
+  "0"   'delete-window
   "1"   'delete-other-windows
   "="   'ediff-current-file
   "SPC" 'smex
