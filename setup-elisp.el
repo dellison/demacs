@@ -30,25 +30,6 @@
 " "YEAH")
 (setq initial-scratch-message de/scratch-yeah)
 
-(defun de/switch-to-scratch-buffer-here ()
-  "create an elisp interaction buffer in the current directory (if necessary)
-and switch to it."
-  (interactive)
-  (let ((local-scratch-buffer-name (format "*scratch: %s*" default-directory)))
-    (if (get-buffer local-scratch-buffer-name)
-	(switch-to-buffer local-scratch-buffer-name)
-      (de/initialize-scratch-buffer-here local-scratch-buffer-name))))
-
-(defun de/initialize-scratch-buffer-here (name)
-  "create a elisp interaction buffer in the current directory"
-  (switch-to-buffer (get-buffer-create name))
-  (goto-char (point-min))
-  (lisp-interaction-mode)
-  (insert (format "; elisp scratch buffer, opened %s\n; in %s\n\n"
-		  (format-time-string "%A, %B %d, %Y at %H:%M %p")
-		  default-directory
-		  )))
-
 (defun de/elisp-mode-hook ()
   "hook for emacs lisp mode"
   (paredit-mode 1) ;; use paredit

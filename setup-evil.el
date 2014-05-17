@@ -45,11 +45,31 @@
     ; (message(format "running command %s with args %s" cmd args))
     (switch-to-buffer (make-comint cmd cmd nil args))))
 
+(defun de/switch-to-scratch-buffer-here ()
+  "create an elisp interaction buffer in the current directory (if necessary)
+and switch to it."
+  (interactive)
+  (let ((local-scratch-buffer-name (format "*scratch: %s*" default-directory)))
+    (if (get-buffer local-scratch-buffer-name)
+	(switch-to-buffer local-scratch-buffer-name)
+      (de/initialize-scratch-buffer-here local-scratch-buffer-name))))
+
+(defun de/initialize-scratch-buffer-here (name)
+  "create a elisp interaction buffer in the current directory"
+  (switch-to-buffer (get-buffer-create name))
+  (goto-char (point-min))
+  (lisp-interaction-mode)
+  (insert (format "; elisp scratch buffer, opened %s\n; in %s\n\n"
+		  (format-time-string "%A, %B %d, %Y at %H:%M %p")
+		  default-directory
+		  )))
+
 ;; use spacebar as the leader key
 (evil-leader/set-key
   "0"   'delete-window
   "1"   'delete-other-windows
-  "="   'ediff-current-file
+  "=="  'ediff-current-file
+  "v="  'vc-ediff 
   "SPC" 'smex
   "TAB" 'de/comint-shell-command
   "c"   'calc
