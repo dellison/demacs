@@ -60,6 +60,13 @@ Only works if there are exactly two windows active."
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
+;;; package setup
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(defun install-if-needed (package)
+  "I hope to deprecate this soon in favor of `use-package' -de"
+  (unless (package-installed-p package)
+    (package-install package)))
+
 (setq package-enable-at-startup nil)
 (unless (package-installed-p 'use-package)
   (unless (assoc 'package package-archive-contents)
