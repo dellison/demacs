@@ -3,8 +3,8 @@
 
 (require 'auto-complete)
 
-(when (fboundp 'exec-path-from-shell-copy-env)
-  (exec-path-from-shell-copy-env "PYTHONPATH"))
+;; (when (fboundp 'exec-path-from-shell-copy-env)
+;;   (exec-path-from-shell-copy-env "PYTHONPATH"))
 
 (defun de/show-flymake-error-in-minibuffer ()
   "duh"
@@ -12,13 +12,14 @@
     (let ((help (get-char-property (save-excursion (back-to-indentation) (point)) 'help-echo)))
       (if help (message "%s" help)))))
 
+(defun de/python-elpy-hook ()
+  (add-hook 'post-command-hook 'de/show-flymake-error-in-minibuffer))
 
-(add-hook 'python-mode-hook
-	  (defun de/python-elpy-hook ()
-	    (add-hook 'post-command-hook 'de/show-flymake-error-in-minibuffer)))
+(add-hook 'python-mode-hook 'de/python-elpy-hook)
+(add-hook 'elpy-mode-hook 'de/python-elpy-hook)
 
 (elpy-enable)
-(elpy-use-ipython)
+;; (elpy-use-ipython)
 
 (require 'elpy)
 
