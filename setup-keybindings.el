@@ -14,6 +14,11 @@
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 (global-set-key "\C-ha" 'apropos) ; search for all symbols by default (instead of only commands)
+(global-set-key (kbd "C-h c") 'apropos-command)  ; previously describe-key-briefly
+
+ ;; i do this by accident a lot and i don't want to look at the FAQ
+(global-set-key (kbd "C-h C-f") 'describe-function)
+
 (global-set-key (kbd "\C-x \C-b") 'ibuffer)
 (global-set-key (kbd "\C-x\C-m") 'execute-extended-command) ;; per Steve Yegge's advice
 
