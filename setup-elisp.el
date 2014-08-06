@@ -35,7 +35,6 @@
   (paredit-mode 1) ;; use paredit
   (elisp-slime-nav-mode 1)
   (eldoc-mode 1)
-  ;; (auto-complete-mode -1)
   (litable-mode -1) ; don't use litable mode, actually...
   (paredit-mode 1)
   (smartparens-mode -1) ;; use paredit for elisp instead
@@ -79,6 +78,13 @@
 	    "Hook for setting up IELM (interactive emacs lisp mode)"
 	    (litable-mode -1)
 	    (define-key evil-insert-state-local-map (kbd "DEL") 'paredit-backward-delete)))
+
+(add-hook 'eshell-setup-hook
+	  (defun de/eshell-setup-hook ()
+	    ""
+	    (paredit-mode 1)
+	    (eldoc-mode 1)
+	    (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))))
 
 (require 'setup-lisps)
 (add-hook 'emacs-lisp-mode-hook 'de/lisps-mode-hook)
