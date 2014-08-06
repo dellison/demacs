@@ -1,17 +1,27 @@
 (if (eq system-type 'darwin)
-    (defvar user-emacs-directory "~/demacs"
+    (defvar demacs-directory "~/demacs"
       "Directory containing all my emacs customizations."))
 (if (eq system-type 'windows-nt)
-    (defvar user-emacs-directory "c:/Users/davide/demacs"
+    (defvar demacs-directory "c:/Users/davide/demacs"
       "Directory containing all my emacs customizations."))
 (if (eq system-type 'cygwin)
-    (defvar user-emacs-directory "/cygdrive/c//Users/davide/demacs"
+    (defvar demacs-directory "/cygdrive/c//Users/davide/demacs"
       "Directory containing all my emacs customizations."))
 
 (add-to-list 'load-path "~/demacs")
 
 (when (fboundp 'list-packages)
-  (require 'setup-packages))
+;;   (require 'setup-packages))
+  (require 'package)
+  (setq package-user-dir (format "%s/elpa" demacs-directory))
+  (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+  (package-refresh-contents)
+  (defun install-if-needed (package)
+  "I hope to deprecate this soon in favor of `use-package' -de"
+  (unless (package-installed-p package)
+    (package-install package)))
+  (package-initialize))
 
 (setq customization-file "~/demacs/custom.el")
 
@@ -29,10 +39,12 @@
 (if (eq system-type 'windows-nt)
     (require 'setup-windows))
 
+
+(require 'setup-core)
 (require 'setup-evil) ; load evil first
 
-(require 'setup-preferences)
-(load "defuns.el")
+;; (require 'setup-preferences)
+;; (load "defuns.el")
 (require 'setup-keybindings)
 (require 'setup-smex)
 (require 'setup-dired)
