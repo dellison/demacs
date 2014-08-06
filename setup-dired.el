@@ -1,5 +1,6 @@
 (require 'dired)
-(setq de/dired-packages '(dired-details))
+(setq de/dired-packages '(dired-details)
+      dired-listing-switches "-hal")
 
 (mapc 'install-if-needed de/dired-packages)
 
