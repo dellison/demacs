@@ -5,11 +5,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (mapc 'install-if-needed '(elisp-slime-nav
-			   litable
+			   ;; litable
 			   paredit))
 
 (require 'elisp-slime-nav)
-(require 'litable)
+;; (require 'litable) ;; changed my mind about this one, i think
 (require 'paredit)
 (require 'setup-lisps)
 
@@ -36,17 +36,22 @@
   (elisp-slime-nav-mode 1)
   (eldoc-mode 1)
   ;; (auto-complete-mode -1)
-  (unless (string-match "demacs/$" default-directory)
-    (litable-mode 1))
+  (litable-mode -1) ; don't use litable mode, actually...
   (paredit-mode 1)
   (smartparens-mode -1) ;; use paredit for elisp instead
 
-  ;; (define-key evil-normal-state-local-map "\C-k" 'paredit-kill)
-  ;; (define-key evil-insert-state-local-map "\C-k" 'paredit-kill)
-  ;; (define-key evil-visual-state-local-map "\C-k" 'paredit-kill)
+  ;; couldn't get this to work yet :(
+  ;; I don't want hippie-expand to use try-expand-line because
+  ;; it screws up paredit & the AST
+  ;; (set (make-local-variable hippie-expand-try-functions-list)
+  ;;      (delete 'try-expand-line 'hippie-expand-try-functions-list
+  ;; 	))
+  ;; (setq hippie-expand-try-functions-list (delete 'try-expand-line 'hippie-expand-try-functions-list))
+
   ;; use shift-space to insert -
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   (define-key evil-normal-state-local-map (kbd "M-.") 'elisp-slime-nav-find-elisp-thing-at-point)
+  (define-key evil-insert-state-local-map (kbd "TAB") 'helm-lisp-completion-at-point)
   (turn-on-elisp-slime-nav-mode)
   (diminish 'undo-tree-mode)
   (diminish 'yas-minor-mode))
