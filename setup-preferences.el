@@ -57,4 +57,7 @@
 (put 'set-goal-column  'disabled nil)
 (put 'upcase-region    'disabled nil)   ; Let upcasing work
 
+;;; let's just enable everything else too...
+(mapatoms (lambda (s) (when (get s 'disabled) (put s 'disabled nil))))
+
 (provide 'setup-preferences)
