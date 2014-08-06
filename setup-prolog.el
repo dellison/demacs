@@ -11,4 +11,15 @@
 	      (xsb "xsb")
 	      (t "pl"))))
 
+(defun de/switch-to-prolog ()
+  (interactive)
+  (prolog-goto-prolog-process-buffer))
+
+(defalias 'switch-to-prolog 'de/switch-to-prolog)
+
+(defun de/prolog-mode-hook ()
+  (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert ":-"))))
+
+(add-hook 'prolog-mode-hook 'de/prolog-mode-hook)
+
 (provide 'setup-prolog)
