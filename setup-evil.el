@@ -12,8 +12,10 @@
 
 (setq evil-move-cursor-back t
       evil-cross-lines t
-      evil-insert-state-cursor '(bar . 3)
-      evil-emacs-state-cursor '(bar . 3))
+      evil-insert-state-cursor '("#FFFFFF" bar)
+      evil-normal-state-cursor '("#FFFFFF" box)
+      evil-emacs-state-cursor '("#CC99FF" box)
+      )
 
 
 (evilnc-default-hotkeys)
@@ -31,6 +33,7 @@
 (require 'evil-paredit)
 
 (evil-leader/set-leader "<SPC>")
+;; (evil-leader/set-key-for-mode 'Info-mode (kbd "S-SPC"))
 
 (global-evil-leader-mode)
 (evil-leader-mode 1)
@@ -68,9 +71,11 @@ and switch to it."
 (evil-leader/set-key
   "0"   'delete-window
   "1"   'delete-other-windows
+  "3"   'split-window-right
+  "\\"  'shell-command
   "=="  'ediff-current-file
   "v="  'vc-ediff 
-  "SPC" 'smex
+  "SPC" 'execute-extended-command
   "TAB" 'de/comint-shell-command
   "c"   'calc
   "de"  'de/open-emacs-configuration-file
@@ -205,10 +210,26 @@ and switch to it."
 ;; 					 mode-line)))))
 
 ; (setq evil-insert-state-cursor nil) ; originally (bar . 2)
-(setq evil-insert-state-cursor '(bar . 3))
-(setq evil-emacs-state-cursor '(bar . 3))
+;; (setq evil-insert-state-cursor '(bar . 3))
+;; (setq evil-emacs-state-cursor '(bar . 3))
 
 (setcdr evil-insert-state-map nil) ;; just use normal emacs for insert state
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
+
+;;; set modes for initial states
+(evil-set-initial-state 'dired-mode 'emacs)
+(evil-set-initial-state 'eshell-mode 'emacs)
+(evil-set-initial-state 'shell-mode 'emacs)
+(evil-set-initial-state 'magit-mode 'emacs)
+(evil-set-initial-state 'comint-mode 'emacs)
+(evil-set-initial-state 'diff-mode 'emacs)
+(evil-set-initial-state 'term-mode 'emacs)
+(evil-set-initial-state 'inferiorer-python-mode 'emacs)
+(evil-set-initial-state 'cider-repl-mode 'emacs)
+(evil-set-initial-state 'cider-stacktrace-mode 'emacs)
+(evil-set-initial-state 'ielm-mode 'emacs)
+(evil-set-initial-state 'haskell-interactive-mode 'emacs)
+(evil-set-initial-state 'inferior-ruby-mode 'emacs)
+(evil-set-initial-state 'inferior-ess-mode 'emacs)
 
 (provide 'setup-evil)
