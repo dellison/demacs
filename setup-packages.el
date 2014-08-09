@@ -2,8 +2,13 @@
 
 (setq package-user-dir "~/demacs/elpa")
 
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+;; (setq package-archives '(("melpa-stable" . "http://melpa.milkbox.net/packages/")
+;; 			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+;; 			 ))
 
 (package-refresh-contents)
 
@@ -12,6 +17,14 @@
     (package-install package)))
 
 (package-initialize)
+
+(setq package-enable-at-startup nil)
+(unless (package-installed-p 'use-package)
+  (unless (assoc 'package package-archive-contents)
+    (package-refresh-contents)
+    (package-install 'use-package)))
+(require 'use-package)
+
 
 (setq my-packages '(yasnippet
 		    magit
