@@ -12,11 +12,26 @@
 
 (setq evil-move-cursor-back t
       evil-cross-lines t
-      evil-insert-state-cursor '("#FFFFFF" bar)
-      evil-normal-state-cursor '("#FFFFFF" box)
-      evil-emacs-state-cursor '("#CC99FF" box)
-      )
-
+      evil-insert-state-cursor (defun de/set-insert-state-cursor ()
+				 (setq cursor-type '(bar . 4))
+				 (set-face-attribute 'cursor nil :background "#FFFFFF")
+				 (blink-cursor-mode 10))
+      evil-emacs-state-cursor (defun de/set-emacs-state-cursor ()
+				(blink-cursor-mode -1)
+				(set-face-attribute 'cursor nil :background "#CC99FF")
+				(setq 'cursor-type 'box))
+      evil-motion-state-cursor (defun de/set-motion-state-cursor ()
+				 (setq 'cursor-type 'box)
+				 (set-face-attribute 'cursor nil :background "#6666FF")
+				 (blink-cursor-mode -1))
+      evil-normal-state-cursor (defun de/set-normal-state-cursor ()
+				 (setq cursor-type 'box)
+				 (set-face-attribute 'cursor nil :background "#FFFFFF")
+				 (blink-cursor-mode -1))
+      evil-visual-state-cursor (defun de/set-visual-state-cursor ()
+				 (setq cursor-type 'box)
+				 (set-face-attribute 'cursor nil :background "#3399FF")
+				 (blink-cursor-mode -1)))
 
 (evilnc-default-hotkeys)
 
@@ -111,11 +126,17 @@ and switch to it."
 
 (evilnc-default-hotkeys)
 
+;;; don't skip wrapped lines
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
 ;; keep some emacs bindings
 (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
 (define-key evil-insert-state-map "\C-e" 'end-of-line)
 (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
 (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+
+(define-key evil-normal-state-map (kbd "C-w") 'backward-kill-word)
 
 ; (define-key evil-normal-state-map "\C-f" 'evil-forward-char)
 (define-key evil-insert-state-map "\C-f" 'evil-forward-char)
@@ -152,6 +173,8 @@ and switch to it."
 (define-key evil-insert-state-map (kbd "s-M-t") 'transpose-sexps)
 (define-key evil-normal-state-map (kbd "s-M-t") 'transpose-sexps)
 
+(define-key evil-motion-state-map (kbd "RET") nil)
+
 ;; now "quit" with C-g also sends you back to normal mode
 (defadvice keyboard-quit (before evil activate)
   (when (fboundp 'evil-normal-state)
@@ -165,71 +188,25 @@ and switch to it."
     (save-buffer)
     (evil-normal-state)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Below are hooks to change the color of the mode line depending
-; on the Evil state (i.e. Vim mode). Colors are:
-; Normal Mode:
-; fg: #DCDCCC zenburn-fg
-; bg: #5D3FA6 zenburn-bg-1
-; Insert Mode:
-; fg: #DC8CC3 zenburn-magenta
-; bg: #4D3FA6 zenburn-blue-5
-; Visual Mode:
-; fg: #DCA3A3 zenburn-red+1
-; bg: #8C5353 zenburn-red-4
-; Emacs-Mode:
-; fg: #BFEBBF zenburn-green+4
-; bg: #5F7F5F zenburn-green-4
-
-;; (add-hook 'evil-insert-state-entry-hook
-;; 	  (defun de/evil-insert-state-entry-hook ()
-;; 	    (when (display-graphic-p)
-;; 	      (face-remap-add-relative 'mode-line
-;; 				       '((:foreground "#4D3FA6" :background "#2B2B2B")
-;; 					 mode-line)))))
-;; 					;previously '((:foreground "#DC8CC3" :background "#4D3FA6")
-
-;; (add-hook 'evil-normal-state-entry-hook
-;; 	  (defun de/evil-normal-state-entry-hook ()
-;; 	    (when (display-graphic-p)
-;; 	      (face-remap-add-relative 'mode-line
-;; 				       '((:foreground "#5F7F5F" :background "#2B2B2B")
-;; 					 mode-line)))))	
-
-;; (add-hook 'evil-visual-state-entry-hook
-;; 	  (defun de/evil-visual-state-entry-hook ()
-;; 	    (when (display-graphic-p)
-;; 	      (face-remap-add-relative 'mode-line
-;; 				       '((:foreground "#DCA3A3" :background "#8C5353")
-;; 					 mode-line)))))
-;; (add-hook 'evil-emacs-state-entry-hook
-;; 	  (defun de/evil-emacs-state-entry-hook ()
-;; 	    (when (display-graphic-p) 
-;; 	      (face-remap-add-relative 'mode-line
-;; 				       '((:foreground "#BFEBBF" :background "#5F7F5F")
-;; 					 mode-line)))))
-
-; (setq evil-insert-state-cursor nil) ; originally (bar . 2)
-;; (setq evil-insert-state-cursor '(bar . 3))
-;; (setq evil-emacs-state-cursor '(bar . 3))
-
 (setcdr evil-insert-state-map nil) ;; just use normal emacs for insert state
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
 
 ;;; set modes for initial states
-(evil-set-initial-state 'dired-mode 'emacs)
-(evil-set-initial-state 'eshell-mode 'emacs)
-(evil-set-initial-state 'shell-mode 'emacs)
-(evil-set-initial-state 'magit-mode 'emacs)
-(evil-set-initial-state 'comint-mode 'emacs)
-(evil-set-initial-state 'diff-mode 'emacs)
-(evil-set-initial-state 'term-mode 'emacs)
-(evil-set-initial-state 'inferiorer-python-mode 'emacs)
+(evil-set-initial-state 'cider-docview-mode 'emacs)
 (evil-set-initial-state 'cider-repl-mode 'emacs)
 (evil-set-initial-state 'cider-stacktrace-mode 'emacs)
-(evil-set-initial-state 'ielm-mode 'emacs)
+(evil-set-initial-state 'comint-mode 'emacs)
+(evil-set-initial-state 'debugger-mode 'emacs)
+(evil-set-initial-state 'diff-mode 'emacs)
+(evil-set-initial-state 'dired-mode 'emacs)
+(evil-set-initial-state 'eshell-mode 'emacs)
 (evil-set-initial-state 'haskell-interactive-mode 'emacs)
-(evil-set-initial-state 'inferior-ruby-mode 'emacs)
+(evil-set-initial-state 'ielm-mode 'emacs)
 (evil-set-initial-state 'inferior-ess-mode 'emacs)
+(evil-set-initial-state 'inf-ruby-mode 'emacs)
+(evil-set-initial-state 'inferiorer-python-mode 'emacs)
+(evil-set-initial-state 'magit-mode 'emacs)
+(evil-set-initial-state 'shell-mode 'emacs)
+(evil-set-initial-state 'term-mode 'emacs)
 
 (provide 'setup-evil)
