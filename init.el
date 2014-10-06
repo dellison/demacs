@@ -1,14 +1,8 @@
-(if (eq system-type 'darwin)
-    (defvar demacs-directory "~/demacs"
-      "Directory containing all my emacs customizations."))
-(if (eq system-type 'windows-nt)
-    (defvar demacs-directory "c:/Users/davide/demacs"
-      "Directory containing all my emacs customizations."))
-(if (eq system-type 'cygwin)
-    (defvar demacs-directory "/cygdrive/c//Users/davide/demacs"
-      "Directory containing all my emacs customizations."))
+(defvar demacs-directory
+  "~/demacs"
+  "directory with emacs customization files")
 
-(add-to-list 'load-path "~/demacs")
+(add-to-list 'load-path demacs-directory)
 
 (when (fboundp 'list-packages)
 ;;   (require 'setup-packages))
@@ -22,13 +16,6 @@
   (unless (package-installed-p package)
     (package-install package)))
   (package-initialize))
-
-(setq customization-file "~/demacs/custom.el")
-
-;; (defvar emacs-root-dir "~/demacs"
-;;   "Directory with all elisp code for custumization.")
-;; (add-to-list 'load-path emacs-root-dir)
-;; (add-to-list 'load-path (concat emacs-root-dir "/site-lisp"))
 
 (when (display-graphic-p)
     (server-start))
@@ -50,15 +37,12 @@
 (require 'setup-dired)
 (require 'setup-shell)
 (require 'setup-ido)
-(require 'setup-ibuffer)
 
-(require 'setup-encoding) ;; utf-8 everywhere
-
-(require 'setup-magit)
 (require 'setup-yasnippet)
 (require 'setup-projectile)
 
-(require 'setup-compile)
+(require 'setup-mode-line)
+;; (require 'setup-compile)
 (require 'setup-org)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
