@@ -16,8 +16,9 @@
 (global-set-key "\C-ha" 'apropos) ; search for all symbols by default (instead of only commands)
 (global-set-key (kbd "C-h c") 'apropos-command)  ; previously describe-key-briefly
 
- ;; i do this by accident a lot and i don't want to look at the FAQ
 (global-set-key (kbd "C-h C-f") 'describe-function)
+(global-set-key (kbd "C-h C-v") 'apropos-variable)
+
 
 (global-set-key (kbd "\C-x \C-b") 'ibuffer)
 (global-set-key (kbd "\C-x\C-m") 'execute-extended-command) ;; per Steve Yegge's advice
@@ -42,8 +43,9 @@ Otherwise, moves to the beginning of the line."
 	 (back-to-indentation))))
 (global-set-key "\C-a" 'beginning-of-line-or-indentation)
 
-(global-set-key (kbd "M-j") (lambda () (interactive) (join-line -1)))
-
+(global-set-key (kbd "M-j") (defun de/join-line ()
+			      (interactive)
+			      (save-excursion (join-line -1))))
 
 (defun fast-move-down ()
   (interactive)
@@ -53,8 +55,21 @@ Otherwise, moves to the beginning of the line."
   (interactive)
   (previous-line 5))
 
-(global-set-key (kbd "C-S-n") 'fast-move-down)
-(global-set-key (kbd "C-S-p") 'fast-move-up)
+(defun scroll-forward-1 ()
+  (interactive)
+  (scroll-up 1)
+  (next-line 1))
+
+(defun scroll-back-1 ()
+  (interactive)
+  (scroll-down 1)
+  (previous-line 1))
+
+;; (global-set-key (kbd "C-S-n") 'fast-move-down)
+;; (global-set-key (kbd "C-S-p") 'fast-move-up)
+
+(global-set-key (kbd "C-S-n") 'scroll-forward-1)
+(global-set-key (kbd "C-S-p") 'scroll-back-1)
 
 (define-key occur-mode-map (kbd "v") 'occur-mode-display-occurrence)
 (define-key occur-mode-map (kbd "n") 'next-line)
@@ -73,7 +88,7 @@ Otherwise, moves to the beginning of the line."
   (find-file
    (ido-completing-read
     "Emacs configuration file: "
-    (sort (file-expand-wildcards "~/demacs/*.el") 'string<))))
+    (sort (file-expand-wildcards (format "%s/*.el" demacs-directory)) 'string<))))
 (global-set-key (kbd "C-c de") 'de/open-emacs-configuration-file)
 
 (when (fboundp 'evil-mode)
