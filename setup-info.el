@@ -17,7 +17,7 @@
 
 (add-hook 'Info-mode-hook
 	  (defun de/Info-mode-hook ()
-	    (define-key evil-motion-state-local-map (kbd "S-SPC") 'Info-scroll-up)))
+	    (define-key evil-motion-state-local-map (kbd "S-SPC") 'Info-scroll-down)))
 
 (defun de/open-info-file ()
   "Opens info file"
