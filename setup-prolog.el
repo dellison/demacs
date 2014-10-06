@@ -18,7 +18,8 @@
 (defalias 'switch-to-prolog 'de/switch-to-prolog)
 
 (defun de/prolog-mode-hook ()
-  (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert ":-"))))
+  (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert ":-")))
+  (smartparens-mode 1))
 
 (add-hook 'prolog-mode-hook 'de/prolog-mode-hook)
 
