@@ -3,14 +3,27 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(setq inhibit-startup-message t  ;; no splash screen
-      visible-bell t             ;; blink, don't beep
-      blink-cursor-mdoe -1       ;; but not the cursor
-      scroll-conservatively 1    ;; scroll like VIM
+(setq inhibit-startup-message t
+      visible-bell t             
+      blink-cursor-mode -1
+      scroll-conservatively 1
+      scroll-error-top-bottom t
       enable-recursive-minibuffers t
       echo-keystrokes 0.1
       ediff-split-window-function 'split-window-horizontally
-      )
+      ediff-window-setup-function 'ediff-setup-windows-plain
+      backup-directory-alist '(("." . "~/backups"))
+      gc-cons-threshold 20000000)
+
+(show-paren-mode 1)
+(winner-mode 1)
+
+(set-default 'indicate-unused-lines t)
+
+(defalias 'remove-lines 'flush-lines)
+(defalias 'qrr 'query-replace-regexp)
+(defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'wc 'count-words)
 
 (defun toggle-window-split ()
   "Toggle between a horizontal and vertical arrangement of two windows.
@@ -58,7 +71,31 @@ Only works if there are exactly two windows active."
 	  (set-window-start w2 s1)))))
 
 (require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+;; no more 'post-forward-angle-brackets
+(setq uniquify-buffer-name-style 'forward)
+
+;;; use utf-8 everywhere!
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+;; backwards compatibility as default-buffer-file-coding-system
+;; is deprecated in 23.2.
+(if (boundp 'buffer-file-coding-system)
+    (setq-default buffer-file-coding-system 'utf-8)
+  (setq default-buffer-file-coding-system 'utf-8))
+ 
+;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+;;; enable all the disabled commands
+(mapatoms (lambda (s) (when (get s 'disabled) (put s 'disabled nil))))
+
+;;; use ibuffer instead of list-buffers
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(add-hook 'ibuffer-mode-hook
+	  (defun de/ibuffer-mode-hook ()
+	    (local-set-key (kbd "C-x C-f") 'ido-find-file)))
 
 ;;; package setup
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -84,16 +121,10 @@ Only works if there are exactly two windows active."
   (use-package zenburn-theme :ensure zenburn-theme)
   (global-hl-line-mode 1))
 
-(use-package idle-highlight-mode
-  :ensure idle-highlight-mode
-  :init (setq idle-highlight-idle-time 2.0))
-
-;;; enable all the disabled commands
-(mapatoms (lambda (s) (when (get s 'disabled) (put s 'disabled nil))))
-
-;;; now setup a few smaller packages
+;;; now setup a few smaller packages from ELPA
 (use-package yasnippet
-  :ensure yasnippet)
+  :ensure yasnippet
+  :init (add-to-list 'yas/snippet-dirs (format "%s/snippets" demacs-directory)))
 
 ;; a little mode line setup
 (use-package diminish
@@ -101,11 +132,23 @@ Only works if there are exactly two windows active."
 (display-time-mode 1)
 (column-number-mode 1)
 
+(use-package highlight-symbol
+  :ensure highlight-symbol
+  :init (progn
+	  (setq highlight-symbol-idle-delay 2.5)
+	  (set-face-attribute 'highlight-symbol-face nil
+			      ;; :background "#93E0E3"
+			      ;; :foreground "#DC8CC3"
+			      )
+	  (highlight-symbol-mode -1))) ;; don't use it :(
+
 ;; use Magit for git stuff
 (use-package magit
   :ensure magit
-  :init (when (eq system-type 'darwin)
-	  (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.3/bin/emacsclient")))
+  :init (progn
+	  (global-set-key (kbd "C-c gs") 'magit-status)
+	  (when (eq system-type 'darwin)
+	    (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.3/bin/emacsclient"))))
 
 (use-package multiple-cursors
   :ensure multiple-cursors
@@ -125,6 +168,9 @@ Only works if there are exactly two windows active."
 (use-package undo-tree
   :ensure undo-tree
   :bind (("C-x u" . undo-tree-visualize)))
+
+(use-package company
+  :ensure company)
 
 ;; smartparens?
 
