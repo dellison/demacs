@@ -55,6 +55,7 @@
 (require 'setup-ess) ; for R
 (require 'setup-haskell)
 (require 'setup-javascript)
+(require 'setup-latex)
 (require 'setup-ruby)
 (require 'setup-perl)
 (require 'setup-prolog)
