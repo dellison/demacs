@@ -10,10 +10,8 @@
 (setq dired-details-hidden-string "--- ")
 
 (defun de/dired-find-here (wildcard)
-  (interactive "sfind " default-directory " (wildcard) :")
-  (message "i'm in " default-directory)
-  (find-name-dired default-directory wildcard)
-  )
+  (interactive "srun `find' recursively with wildcard: ")
+  (find-name-dired default-directory wildcard))
 
 (defun de/dired-mode-hook ()
   "dired mode hook"
