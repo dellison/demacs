@@ -1,24 +1,26 @@
 (require 'ido)
+
+(setq ido-create-new-buffer 'always
+      ido-enable-flex-matching t
+      ido-enable-last-directory-history nil
+      ido-record-commands nil
+      ido-max-prospects 12
+      ido-max-work-directory-list 0
+      ido-max-work-file-list 0)
+
 (ido-mode t)
+(ido-everywhere t)
 
-(setq de/ido-packages '(flx-ido
-			ido-vertical-mode
-			ido-ubiquitous
-			))
+(use-package flx-ido
+  :ensure flx-ido
+  :init (flx-ido-mode 1))
 
-(mapc 'install-if-needed de/ido-packages)
+(use-package ido-vertical-mode
+  :ensure ido-vertical-mode
+  :init (ido-vertical-mode 1))
 
-;(ido-everywhere t)
-(setq ido-enable-flex-matching t)
-
-(flx-ido-mode 1)
-(require 'flx-ido)
-;(setq ido-use-faces nil)
-
-(ido-vertical-mode t)
-(require 'ido-vertical-mode)
-
-(ido-ubiquitous-mode t)
-(require 'ido-ubiquitous)
+(use-package ido-ubiquitous
+  :ensure ido-ubiquitous
+  :init (ido-ubiquitous-mode 1))
 
 (provide 'setup-ido)
