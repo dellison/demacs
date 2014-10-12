@@ -201,6 +201,7 @@ and switch to it."
 (evil-set-initial-state 'debugger-mode            'emacs)
 (evil-set-initial-state 'diff-mode                'emacs)
 (evil-set-initial-state 'dired-mode               'emacs)
+(evil-set-initial-state 'doc-view-mode            'emacs)
 (evil-set-initial-state 'eshell-mode              'emacs)
 (evil-set-initial-state 'git-commit-mode          'emacs)
 (evil-set-initial-state 'haskell-interactive-mode 'emacs)
