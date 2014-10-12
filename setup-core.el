@@ -18,6 +18,9 @@
 (show-paren-mode 1)
 (winner-mode 1)
 
+(setq frame-title-format
+      '(:eval (or buffer-file-name (buffer-name))))
+
 (set-default 'indicate-unused-lines t)
 
 (defalias 'remove-lines 'flush-lines)
