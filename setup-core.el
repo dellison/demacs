@@ -53,8 +53,8 @@ Only works if there are exactly two windows active."
 	  (set-window-buffer (selected-window) this-win-buffer)
 	  (set-window-buffer (next-window) next-win-buffer)
 	  (select-window first-win)
-	  (if this-win-2nd (other-window 1)))))
-  (message "You must have two windows to toggle them!"))
+	  (if this-win-2nd (other-window 1))))
+    (message "You must have two windows to toggle them!")))
 (global-set-key (kbd "C-x |") 'toggle-window-split)
 
 (defun swap-windows ()
@@ -72,6 +72,24 @@ Only works if there are exactly two windows active."
 	  (set-window-buffer w2 b1)
 	  (set-window-start w1 s2)
 	  (set-window-start w2 s1)))))
+
+(defun de/indent-to-something-on-prev-line (s)
+  "boy oh boy this one is ugly...
+this lets you indent the current line as far as some
+character on the previous line.
+I wrote it thinking it would help write AVMs faster
+in LaTeX."
+  (interactive "sIntent to: ")
+  (let* ((prev-line-anchor (save-excursion (forward-line -1)
+					   (beginning-of-line)
+					   (point)))
+	 (prev-line-goal (save-excursion (forward-line -1)
+					 (beginning-of-line)
+					 (search-forward s)
+				 (point)))
+	 (to-indent (- prev-line-goal prev-line-anchor)))
+    (beginning-of-line)
+    (insert-char ?\s (- 1 to-indent))))
 
 (require 'uniquify)
 ;; no more 'post-forward-angle-brackets
@@ -98,10 +116,16 @@ Only works if there are exactly two windows active."
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (add-hook 'ibuffer-mode-hook
 	  (defun de/ibuffer-mode-hook ()
-	    (local-set-key (kbd "C-x C-f") 'ido-find-file)))
+	    (local-set-key (kbd "U") 'ibuffer-unmark-all)
+	    (local-set-key (kbd "C-x C-f") 'ido-find-file)
+	    (message "setting up ibuffer!")))
 
 ;;; package setup
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; (add-to-list 'package-archives '("melpa" . "http://stable.melpa.org/packages/"))
+(setq package-archives '(("org" . "http://orgmode.org/elpa/")
+			 ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
+			 ("melpa" . "http://melpa.org/packages/")
+			 ("gnu" . "http://elpa.gnu.org/packages/")))
 (defun install-if-needed (package)
   "I hope to deprecate this soon in favor of `use-package' -de"
   (unless (package-installed-p package)
@@ -121,7 +145,19 @@ Only works if there are exactly two windows active."
     (set-frame-parameter
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-  (use-package zenburn-theme :ensure zenburn-theme)
+  (use-package zenburn-theme
+    :ensure zenburn-theme
+    :config
+    (progn
+      ;; try to fix whitespace highlighting
+      
+      ))
+  ;; (use-package solarized-theme
+  ;;   :ensure solarized-theme
+  ;;   :config
+  ;;   (progn
+  ;;     (load-theme 'solarized-dark))
+  ;;   )
   (global-hl-line-mode 1))
 
 ;;; now setup a few smaller packages from ELPA
@@ -155,7 +191,7 @@ Only works if there are exactly two windows active."
 
 (use-package multiple-cursors
   :ensure multiple-cursors
-  :bind (("M-+" . mc/mark-all-dwim)))
+  :bind (("M-+" . mc/mark-next-like-this)))
 
 (use-package expand-region
   :ensure expand-region
