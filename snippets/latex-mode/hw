@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: hw
+# key: hw
+# --
+\documentclass{report}
+
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{qtree}
+\usepackage{avm}
+\avmfont{\sc}     % small caps for feature names
+\avmvalfont{\rm}  % roman for feature values
+\avmsortfont{\it} % italic for sort labels (types)
+\avmvskip{.1ex}\avmhskip{.5em}
+
+\usepackage{fancyheadings}
+
+\begin{document}
+
+% Header
+\pagestyle{fancy}
+\rhead{David Ellison\\\\$1}
+
+$0
+
+\end{document}

@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: usepackage
+# key: up
+# --
+\usepackage{$1}$0

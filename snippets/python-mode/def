@@ -2,7 +2,6 @@
 # name: python function definition
 # key: def
 # expand-env: ((yas-indent-line 'fixed))
-# contributor: david ellison
 # --
 def ${1:name}($2):
     """$3

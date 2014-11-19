@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: flaskblock
+# key: fl
+# expand-env: ((yas-indent-line 'fixed))
+# --
+%{ $0 %}

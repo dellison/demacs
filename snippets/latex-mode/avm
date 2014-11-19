@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: avm
+# key: avm
+# expand-env: ((yas-indent-line 'fixed))
+# --
+{
+\begin{avm} 
+  \[ \asort{${1:word}}
+     syn & \[ head \[ \asort{${2:POS}}
+                      agr & \[
+                            \]
+                   \] \\\\
+              val  \[ spr   & \< \> \\\\
+                      comps & \< \>
+                   \]
+           \] \\\\
+     sem & \[
+           \]
+  \]
+\end{avm}
+}
+$0

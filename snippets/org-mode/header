@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: header
+# key: org
+# --
+#+TITLE: $1
+#+AUTHOR: david ellison
+#+TODO: ${2:todo wait | done}
+$0

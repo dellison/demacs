@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: documentclass
+# key: dc
+# --
+\documentclass\{${1:report}\}
+$0

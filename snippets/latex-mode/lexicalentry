@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: lexicalentry
+# key: lex
+# --
+\begin{avm} \< \textnormal{${1:word}},
+            \[ \asort{word}
+                head & \begin{avm} \[ \asort{${2:pos}} 
+                                       agr & ${3:agr}
+                                              \end{avm} \] 
+                       \end{avm} \\\\
+                val  & \begin{avm} \[ spr   & \<\>\\\\
+                                      comps & \< \> \]
+                       \end{avm} \] \>
+\end{avm}
+$0
