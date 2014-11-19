@@ -4,36 +4,28 @@
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(mapc 'install-if-needed '(evil
+(use-package evil
+  :ensure evil
+  :init
+  (progn
+    (evil-mode 1)))
+
+
+(mapc 'install-if-needed '(;;evil
 			   evil-matchit
-			   evil-nerd-commenter
+			   ;; evil-nerd-commenter
 			   evil-paredit
 			   evil-leader))
 
 (setq evil-move-cursor-back t
       evil-cross-lines t
-      evil-insert-state-cursor (defun de/set-insert-state-cursor ()
-				 (setq cursor-type '(bar . 4))
-				 (set-face-attribute 'cursor nil :background "#FFFFFF")
-				 (blink-cursor-mode 10))
-      evil-emacs-state-cursor (defun de/set-emacs-state-cursor ()
-				(blink-cursor-mode -1)
-				(set-face-attribute 'cursor nil :background "#CC99FF")
-				(setq 'cursor-type 'box))
-      evil-motion-state-cursor (defun de/set-motion-state-cursor ()
-				 (setq 'cursor-type 'box)
-				 (set-face-attribute 'cursor nil :background "#6666FF")
-				 (blink-cursor-mode -1))
-      evil-normal-state-cursor (defun de/set-normal-state-cursor ()
-				 (setq cursor-type 'box)
-				 (set-face-attribute 'cursor nil :background "#FFFFFF")
-				 (blink-cursor-mode -1))
-      evil-visual-state-cursor (defun de/set-visual-state-cursor ()
-				 (setq cursor-type 'box)
-				 (set-face-attribute 'cursor nil :background "#3399FF")
-				 (blink-cursor-mode -1)))
+      evil-insert-state-cursor '("#FFFFFF"  box)
+      evil-emacs-state-cursor  '("#FFFFFF"  box)
+      evil-motion-state-cursor '("#F0DFAF"  box)
+      evil-normal-state-cursor '("#F0DFAF"  box)
+      evil-visual-state-cursor '("#F0DFAF"  box))
 
-(evilnc-default-hotkeys)
+;; (evilnc-default-hotkeys)
 
 (global-evil-matchit-mode 1)
 (evil-matchit-mode 1)
@@ -43,11 +35,11 @@
 (define-key dired-mode-map (kbd "SPC") nil)
 
 (require 'evil)
-(require 'evil-nerd-commenter)
+;; (require 'evil-nerd-commenter)
 (require 'evil-leader)
 (require 'evil-paredit)
 
-(evil-leader/set-leader "<SPC>")
+(evil-leader/set-leader ",")
 ;; (evil-leader/set-key-for-mode 'Info-mode (kbd "S-SPC"))
 
 (global-evil-leader-mode)
@@ -124,7 +116,7 @@ and switch to it."
   "x"   'execute-extended-command
    )
 
-(evilnc-default-hotkeys)
+;; (evilnc-default-hotkeys)
 
 ;;; don't skip wrapped lines
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -173,6 +165,14 @@ and switch to it."
 (define-key evil-insert-state-map (kbd "s-M-t") 'transpose-sexps)
 (define-key evil-normal-state-map (kbd "s-M-t") 'transpose-sexps)
 
+(when (display-graphic-p)
+  (defun de/dont-suspend-frame ()
+    (interactive)
+    (message "didn't suspend the frame!"))
+  (define-key evil-emacs-state-map (kbd "C-z") 'de/dont-suspend-frame)
+  (define-key evil-insert-state-map (kbd "C-z") 'de/dont-suspend-frame)
+  (message "yeah!"))
+
 (define-key evil-motion-state-map (kbd "RET") nil)
 
 ;; now "quit" with C-g also sends you back to normal mode
@@ -193,25 +193,39 @@ and switch to it."
 (when (display-graphic-p)
   (define-key evil-emacs-state-map [escape] 'evil-normal-state))
 
-;;; set modes for initial states
-(evil-set-initial-state 'cider-docview-mode       'emacs)
-(evil-set-initial-state 'cider-repl-mode          'emacs)
-(evil-set-initial-state 'cider-stacktrace-mode    'emacs)
-(evil-set-initial-state 'comint-mode              'emacs)
-(evil-set-initial-state 'debugger-mode            'emacs)
-(evil-set-initial-state 'diff-mode                'emacs)
-(evil-set-initial-state 'dired-mode               'emacs)
-(evil-set-initial-state 'doc-view-mode            'emacs)
-(evil-set-initial-state 'eshell-mode              'emacs)
-(evil-set-initial-state 'git-commit-mode          'emacs)
-(evil-set-initial-state 'haskell-interactive-mode 'emacs)
-(evil-set-initial-state 'ielm-mode                'emacs)
-(evil-set-initial-state 'inferior-ess-mode        'emacs)
-(evil-set-initial-state 'inf-ruby-mode            'emacs)
-(evil-set-initial-state 'inferiorer-python-mode   'emacs)
-(evil-set-initial-state 'magit-mode               'emacs)
-(evil-set-initial-state 'shell-mode               'emacs)
-(evil-set-initial-state 'sql-interactive-mode     'emacs)
-(evil-set-initial-state 'term-mode                'emacs)
+;;; Start the following modes in the Emacs state:
+(let ((initial-state-emacs-modes '(cider-docview-mode
+				   cider-repl-mode
+				   cider-test-report-mode
+				   cider-stacktrace-mode
+				   comint-mode
+				   debugger-mode
+				   diff-mode
+				   dired-mode
+				   doc-view-mode
+				   eshell-mode
+				   git-commit-mode
+				   haskell-interactive-mode
+				   help-mode
+				   ielm-mode
+				   inferior-ess-mode
+				   inf-ruby-mode
+				   Info-mode
+				   inferiorer-python-mode
+				   magit-mode
+				   prolog
+				   shell-mode
+				   sql-interactive-mode
+				   term-mode)))
+  (mapc (lambda (m)
+	  (evil-set-initial-state m 'emacs))
+	initial-state-emacs-modes))
+
+(use-package evil-nerd-commenter
+  :ensure evil-nerd-commenter
+  :config
+  (progn
+    (require 'evil-nerd-commenter)
+    (evilnc-default-hotkeys)))
 
 (provide 'setup-evil)
