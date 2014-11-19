@@ -15,10 +15,6 @@
 (setq de/info-directories '("~/demacs/info"
 			    "/usr/share/info") )
 
-(add-hook 'Info-mode-hook
-	  (defun de/Info-mode-hook ()
-	    (define-key evil-motion-state-local-map (kbd "S-SPC") 'Info-scroll-down)))
-
 (defun de/open-info-file ()
   "Opens info file"
   (interactive)
