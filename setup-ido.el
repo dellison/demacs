@@ -23,4 +23,14 @@
   :ensure ido-ubiquitous
   :init (ido-ubiquitous-mode 1))
 
+(add-hook 'ido-setup-hook
+	  (defun de/ido-go-home ()
+	    (define-key ido-file-completion-map
+	      (kbd "~")
+	      (lambda ()
+		(interactive)
+		(if (looking-back "/")
+		    (insert "~/")
+		  (call-interactively 'self-insert-command))))))
+
 (provide 'setup-ido)
