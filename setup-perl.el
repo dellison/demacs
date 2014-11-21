@@ -4,8 +4,6 @@
 
 (add-hook 'cperl-mode-hook 
 	  (defun de/perl-mode-hook ()
-	    (setq cperl-hairy t))
-	  (autopair-mode -1)
-	  )
+	    (setq cperl-hairy t)))
 
 (provide 'setup-perl)
