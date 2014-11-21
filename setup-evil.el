@@ -191,6 +191,7 @@ and switch to it."
 				   magit-mode
 				   prolog
 				   shell-mode
+				   special-mode
 				   sql-interactive-mode
 				   term-mode)))
   (mapc (lambda (m)
