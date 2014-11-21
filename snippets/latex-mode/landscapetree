@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: landscapetree
+# key: ltree
+# expand-env: ((yas-indent-line 'fixed))
+# --
+.{
+\begin{landscape}
+\resizebox{20cm}{!} {
+{
+\Tree % $1
+[.$0
+]
+}
+}
+\end{landscape}
+} % END $1
