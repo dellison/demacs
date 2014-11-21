@@ -123,46 +123,22 @@ and switch to it."
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
 ;; keep some emacs bindings
-(define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
-(define-key evil-insert-state-map "\C-e" 'end-of-line)
-(define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
-(define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+;; (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
+;; (define-key evil-insert-state-map "\C-e" 'end-of-line)
+;; (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
+;; (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
 
 (define-key evil-normal-state-map (kbd "C-w") 'backward-kill-word)
 
-; (define-key evil-normal-state-map "\C-f" 'evil-forward-char)
-(define-key evil-insert-state-map "\C-f" 'evil-forward-char)
-(define-key evil-visual-state-map "\C-f" 'evil-forward-char)
-
-; (define-key evil-normal-state-map "\C-b" 'evil-backward-char)
-(define-key evil-insert-state-map "\C-b" 'evil-backward-char)
-(define-key evil-visual-state-map "\C-b" 'evil-backward-char)
-
-; (define-key evil-normal-state-map "\C-d" 'delete-char)
-(define-key evil-insert-state-map "\C-d" 'delete-char)
-(define-key evil-visual-state-map "\C-d" 'delete-char)
-
-; (define-key evil-normal-state-map "\C-n" 'evil-next-line)
-(define-key evil-insert-state-map "\C-n" 'evil-next-line)
 (define-key evil-visual-state-map "\C-n" 'evil-next-line)
 
 (define-key evil-normal-state-map "\C-p" 'evil-previous-line)
-(define-key evil-insert-state-map "\C-p" 'evil-previous-line)
 (define-key evil-visual-state-map "\C-p" 'evil-previous-line)
-
-(define-key evil-insert-state-map "\C-k" 'kill-line)
-
-; (define-key evil-normal-state-map "\C-y" 'yank)
-(define-key evil-insert-state-map "\C-y" 'yank)
-(define-key evil-visual-state-map "\C-y" 'yank)
 
 (define-key evil-normal-state-map (kbd "C-r") 'isearch-backward-regexp)
 
-(define-key evil-insert-state-map (kbd "C-t") 'transpose-chars)
 (define-key evil-normal-state-map (kbd "C-t") 'transpose-chars)
-(define-key evil-insert-state-map (kbd "M-t") 'transpose-words)
 (define-key evil-normal-state-map (kbd "M-t") 'transpose-words)
-(define-key evil-insert-state-map (kbd "s-M-t") 'transpose-sexps)
 (define-key evil-normal-state-map (kbd "s-M-t") 'transpose-sexps)
 
 (when (display-graphic-p)
