@@ -4,6 +4,9 @@
 (use-package paredit)
 (use-package evil-paredit)
 (use-package rainbow-delimiters)
+(use-package rainbow-identifiers
+  :ensure rainbow-identifiers
+  )
 
 (use-package rainbow-blocks
   :ensure rainbow-blocks)
@@ -14,8 +17,12 @@
   (cond
    (rainbow-blocks-mode
     (rainbow-blocks-mode-disable)
+    (rainbow-identifiers-mode -1)
     (rainbow-delimiters-mode-enable))
-   (t
+   ((and (null rainbow-blocks-mode) (null rainbow-identifiers-mode))
+    (rainbow-identifiers-mode 1)
+    (rainbow-blocks-mode -1))
+   (rainbow-identifiers-mode
     (rainbow-blocks-mode-enable)
     (rainbow-delimiters-mode-disable))))
 
