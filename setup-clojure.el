@@ -32,7 +32,8 @@ in the current buffer."
   ;; (clojure-mode-font-lock-setup)
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
-  (cider-turn-on-eldoc-mode))
+  (cider-turn-on-eldoc-mode)
+  (evil-emacs-state))
 
 
 (require 'cider)
