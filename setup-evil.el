@@ -21,9 +21,9 @@
       evil-cross-lines t
       evil-insert-state-cursor '("#FFFFFF"  box)
       evil-emacs-state-cursor  '("#FFFFFF"  box)
-      evil-motion-state-cursor '("#F0DFAF"  box)
-      evil-normal-state-cursor '("#F0DFAF"  box)
-      evil-visual-state-cursor '("#F0DFAF"  box))
+      evil-motion-state-cursor '("#D0BF8F"  box)
+      evil-normal-state-cursor '("#D0BF8F"  box)
+      evil-visual-state-cursor '("#D0BF8F"  box))
 
 ;; (evilnc-default-hotkeys)
 
