@@ -10,4 +10,4 @@
   (eldoc-mode 1)
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-"))))
 
-(add-hook 'eshell-setup-hook 'de/eshell-setup-hook)
+(add-hook 'eshell-mode-hook 'de/eshell-setup-hook)

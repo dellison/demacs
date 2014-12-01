@@ -36,6 +36,7 @@
 (require 'setup-smex)
 (require 'setup-dired)
 (require 'setup-shell)
+(require 'eshell)
 (require 'setup-ido)
 
 (require 'setup-yasnippet)
