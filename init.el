@@ -63,5 +63,6 @@
 ;; (require 'setup-python)
 (require 'setup-elpy)
 
-;; school
-(require 'setup-clms)
+(if (file-exists-p (format "%s/setup-site.el" demacs-directory))
+    (require 'setup-site))
+
