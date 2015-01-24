@@ -3,6 +3,8 @@
 (require 'projectile)
  (projectile-mode 1)
 
-(global-set-key (kbd "C-c ff") 'projectile-find-file)
+(if (fboundp 'helm)
+    (global-set-key (kbd "C-c ff") 'helm-projectile)
+  (global-set-key (kbd "C-c ff") 'projectile-find-file))
 
 (provide 'setup-projectile)
