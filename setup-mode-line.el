@@ -2,6 +2,10 @@
 ;; Sets up a custom mode line
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(when (fboundp 'csv-mode)
+  (message "trying to set up the mode line with csv mode"
+	   ))
+
 (defun mode-line-fill (face reserve)
   "Return empty space using FACE and leaving RESERVE space on the right."
   (unless reserve
@@ -12,22 +16,24 @@
               'display `((space :align-to (- (+ right right-fringe right-margin) ,reserve)))
               'face face))
 
-
 (use-package nyan-mode
   :ensure nyan-mode
-  :init (progn
-	  (setq nyan-bar-length 18)))
+  :init
+  (progn
+    (setq nyan-bar-length 18)))
 
 
 (defvar de/mode-line-evil
   '(:eval
-    (let ((evil-modeline-indicator-color
+    (let ((evil-modeline-indicator-color ;; not actually using this right now...
 	   (case evil-state
 	     ('emacs  (setq evil-modeline-indicator-color "#CC99FF"))
 	     ('normal (setq evil-modeline-indicator-color "#DFAF8F"))
 	     ('visual (setq evil-modeline-indicator-color "#3399FF")))))
-      (propertize evil-mode-line-tag
-		  'face 'font-lock-variable-name-face)))
+      ;; (propertize evil-mode-line-tag
+      ;; 		  'face 'font-lock-variable-name-face)
+      evil-mode-line-tag
+      ))
   "Display the evil state in the mode line")
 
 (defvar de/mode-line-buffer-name
@@ -43,8 +49,9 @@
   "Display the buffer name, with trailing \"[*]\" if modified from disk.")
 
 (defvar de/mode-line-buffer-size
-  '(:eval (concat (propertize "L%l"
-			      'face 'font-lock-constant-face)))
+  '(:eval (concat (propertize "%l: "
+			      'face 'font-lock-constant-face
+			      'face '(:height 30))))
   "Display the line number")
 
 (defvar de/mode-line-mode-info
@@ -58,11 +65,14 @@
 		    'face '(:height 130 :foreground "LightSkyBlue"))))
 
 (setq-default mode-line-format
-	      (list de/mode-line-evil
+	      (list ""
+		    de/mode-line-evil
 		    "%@ " ;; '-' if `default-directory' is local, '@' if it's remote
 		    de/mode-line-buffer-name
-		    "(" de/mode-line-buffer-size ") "
-		    `(vc-mode vc-mode)
+		    ;; de/mode-line-buffer-size
+		    mode-line-position
+		    '(:eval (nyan-create))
+		    ;; `(vc-mode vc-mode)
 		    de/mode-line-mode-info " "
 		    de/mode-line-time
 		    ))
