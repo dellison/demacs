@@ -10,8 +10,6 @@
       scroll-error-top-bottom t
       enable-recursive-minibuffers t
       echo-keystrokes 0.1
-      ediff-split-window-function 'split-window-horizontally
-      ediff-window-setup-function 'ediff-setup-windows-plain
       backup-directory-alist '(("." . "~/backups"))
       gc-cons-threshold 20000000)
 
