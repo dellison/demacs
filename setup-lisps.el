@@ -38,6 +38,8 @@
   (evil-paredit-mode t)
   (local-set-key (kbd "C-c lh") 'de/toggle-lisp-highlighting)
   (define-key evil-visual-state-local-map "x" 'evil-delete-char)
+  (define-key evil-emacs-state-local-map (kbd "M-J") 'paredit-join-sexps)
+  (define-key evil-insert-state-local-map (kbd "M-J") 'paredit-join-sexps)
   ;; (make-local-variable 'hippie-expand-try-functions-list)
   ;; (setq hippie-expand-try-functions-list
   ;; 	'(try-complete-file-name-partially
