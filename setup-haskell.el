@@ -1,18 +1,14 @@
-(mapc 'install-if-needed '(haskell-mode))
-
-(add-hook 'haskell-mode-hook
-	  (defun de/haskell-mode-hook ()
-	    (turn-on-haskell-doc-mode)
-	    (turn-on-haskell-indent)))
-
-(require 'haskell-mode)
-
-(setq haskell-font-lock-symbols t)
-
-(defalias 'ghci 'run-haskell)
-
-(defun de/ghci ()
-  (interactive)
-  (run-haskell "-XNoMonomorphismRestriction"))
-
-(provide 'setup-haskell)
+;; haskell!
+(use-package haskell-mode
+  :commands (haskell-mode)
+  :init
+  (add-to-list 'auto-mode-alist '("\\.l?hs$" . haskell-mode))
+  :config
+  (progn
+    (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+    (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+    (setq haskell-font-lock-symbols t) ;; pretty haskell
+    (defun de/ghci ()
+      "Run Haskell!"
+      (interactive)
+      (run-haskell "-XNoMonomorphismRestriction"))))
