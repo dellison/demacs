@@ -5,6 +5,7 @@
 (global-set-key (kbd "\C-x \C-k") 'kill-region)
 (global-set-key (kbd "\C-c gr") 'lgrep)
 (global-set-key (kbd "\C-c rg") 'rgrep)
+(global-set-key (kbd "C-c sw") 'swap-windows)
 (global-set-key (kbd "\C-c dc") 'describe-char)
 (global-set-key (kbd "\C-c rr") 'replace-rectangle)
 (global-set-key (kbd "\C-c es") 'eshell)
