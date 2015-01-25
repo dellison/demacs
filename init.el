@@ -33,12 +33,12 @@
 ;; (require 'setup-preferences)
 ;; (load "defuns.el")
 (require 'setup-keybindings)
-(require 'setup-smex)
 (require 'setup-dired)
 (require 'setup-shell)
 (require 'setup-ediff)
 (require 'eshell)
-(require 'setup-ido)
+
+(require 'setup-helm)
 
 (require 'setup-yasnippet)
 (require 'setup-projectile)
