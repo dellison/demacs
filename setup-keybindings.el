@@ -90,7 +90,14 @@ Otherwise, moves to the beginning of the line."
    (ido-completing-read
     "Emacs configuration file: "
     (sort (file-expand-wildcards (format "%s/*.el" demacs-directory)) 'string<))))
-(global-set-key (kbd "C-c de") 'de/open-emacs-configuration-file)
+;; (global-set-key (kbd "C-c de") 'de/open-emacs-configuration-file)
+
+(defun de/visit-demacs ()
+  "Use helm to visit an emacs configuration file."
+  (interactive)
+  (let ((default-directory demacs-directory))
+    (helm-projectile)))
+(global-set-key (kbd "C-c de") 'de/visit-demacs)
 
 (when (fboundp 'evil-mode)
   (defun de/save-buffer-and-normal-state ()

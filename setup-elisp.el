@@ -53,7 +53,10 @@
   (turn-on-elisp-slime-nav-mode)
   (diminish 'undo-tree-mode)
   (diminish 'yas-minor-mode)
-  (company-mode 1))
+  ;; (company-mode 1)
+  (if (fboundp 'helm)
+      (local-set-key (kbd "TAB") 'helm-lisp-completion-at-point))
+  )
 
 
 (add-hook 'emacs-lisp-mode-hook 'de/elisp-mode-hook)
