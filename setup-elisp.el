@@ -3,11 +3,6 @@
 ;; Setup for editing emacs lisp
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; (mapc 'install-if-needed '(elisp-slime-nav
-;; 			   ;; litable
-;; 			   paredit))
-
 (use-package elisp-slime-nav
   :ensure elisp-slime-nav)
 
@@ -43,7 +38,6 @@
   (paredit-mode 1) ;; use paredit
   (elisp-slime-nav-mode 1)
   (eldoc-mode 1)
-  (litable-mode -1) ; don't use litable mode, actually...
   (paredit-mode 1)
   (smartparens-mode -1) ;; use paredit for elisp instead
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
@@ -53,10 +47,8 @@
   (turn-on-elisp-slime-nav-mode)
   (diminish 'undo-tree-mode)
   (diminish 'yas-minor-mode)
-  ;; (company-mode 1)
   (if (fboundp 'helm)
-      (local-set-key (kbd "TAB") 'helm-lisp-completion-at-point))
-  )
+      (local-set-key (kbd "TAB") 'helm-lisp-completion-at-point)))
 
 
 (add-hook 'emacs-lisp-mode-hook 'de/elisp-mode-hook)

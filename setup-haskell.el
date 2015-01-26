@@ -8,7 +8,11 @@
     (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
     (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
     (setq haskell-font-lock-symbols t) ;; pretty haskell
-    (defun de/ghci ()
-      "Run Haskell!"
-      (interactive)
-      (run-haskell "-XNoMonomorphismRestriction"))))
+    (use-package inf-haskell)
+    ;; (defun de/ghci ()
+    ;;   "Run Haskell!"
+    ;;   (interactive)
+    ;;   (run-haskell "-XNoMonomorphismRestriction"))
+    ))
+
+(provide 'setup-haskell)

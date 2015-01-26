@@ -1,7 +1,3 @@
-;; (setq de-ruby-packages '(inf-ruby))
-
-;; (mapc 'install-if-needed de-ruby-packages)
-
 (use-package inf-ruby
   :ensure inf-ruby
   :init (progn

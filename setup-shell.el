@@ -1,5 +1,5 @@
 
-(install-if-needed 'exec-path-from-shell)
+;(use-package exec-path-from-shell)
 
 (when (fboundp 'exec-path-from-shell-copy-env)
   (exec-path-from-shell-copy-env "PATH"))
