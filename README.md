@@ -1,2 +1,2 @@
 # demacs
-a configuration for emacs
+David's emacs configuration

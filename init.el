@@ -26,12 +26,9 @@
 (if (eq system-type 'windows-nt)
     (require 'setup-windows))
 
-
 (require 'setup-core)
-(require 'setup-evil) ; load evil first
+(require 'setup-evil) ;; load evil first
 
-;; (require 'setup-preferences)
-;; (load "defuns.el")
 (require 'setup-keybindings)
 (require 'setup-dired)
 (require 'setup-shell)
@@ -54,16 +51,16 @@
 (require 'setup-clojure)
 (require 'setup-common-lisp)
 (require 'setup-elisp)
-(require 'setup-ess) ; for R
 (require 'setup-haskell)
 (require 'setup-javascript)
 (require 'setup-latex)
 (require 'setup-ruby)
 (require 'setup-perl)
 (require 'setup-prolog)
-;; (require 'setup-python)
-(require 'setup-elpy)
+(require 'setup-python)
+(require 'setup-scheme)
 
 (if (file-exists-p (format "%s/setup-site.el" demacs-directory))
     (require 'setup-site))
 
+(message de/scratch-yeah)
