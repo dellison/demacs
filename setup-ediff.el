@@ -40,4 +40,15 @@
 (add-hook 'ediff-after-setup-windows-hook 'de/ediff-ash 'append)
 (add-hook 'ediff-quit-hook 'de/ediff-qh)
 
+(defun de/ediff-these-two-buffers ()
+  "If you have two buffers, ediff them."
+  (interactive)
+  (if (not (= (count-windows) 2))
+      (message "You need exactly two windows to do this.")
+    (let* ((w1 (first (window-list)))
+	   (w2 (second (window-list)))
+	   (b1 (window-buffer w1))
+	   (b2 (window-buffer w2)))
+      (ediff-buffers b1 b2))))
+
 (provide 'setup-ediff)
