@@ -1,13 +1,14 @@
 ;; this is some general setup for Lisp dialects:
 ;; Emacs Lisp, Clojure, Common Lisp, Scheme
 
-(use-package paredit)
-(use-package evil-paredit)
-(use-package rainbow-delimiters)
+(use-package paredit
+  :ensure paredit)
+(use-package evil-paredit
+  :ensure evil-paredit)
+(use-package rainbow-delimiters
+  :ensure rainbow-delimiters)
 (use-package rainbow-identifiers
-  :ensure rainbow-identifiers
-  )
-
+  :ensure rainbow-identifiers)
 (use-package rainbow-blocks
   :ensure rainbow-blocks)
 
@@ -26,10 +27,6 @@
     (rainbow-blocks-mode-enable)
     (rainbow-delimiters-mode-disable))))
 
-(require 'evil)
-(require 'paredit)
-(require 'rainbow-delimiters)
-
 (defun de/lisps-mode-hook ()
   "generalized hook for working with lisp languages"
   (rainbow-delimiters-mode 1)
@@ -40,6 +37,8 @@
   (define-key evil-visual-state-local-map "x" 'evil-delete-char)
   (define-key evil-emacs-state-local-map (kbd "M-J") 'paredit-join-sexps)
   (define-key evil-insert-state-local-map (kbd "M-J") 'paredit-join-sexps)
+  (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
+  (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   ;; (make-local-variable 'hippie-expand-try-functions-list)
   ;; (setq hippie-expand-try-functions-list
   ;; 	'(try-complete-file-name-partially
@@ -62,5 +61,12 @@ in the current buffer."
     (while (re-search-forward ")[[:space:]\n]+)" nil t)
       (replace-match "))" nil nil)
       (beginning-of-line))))
+
+(defun de/evil-paredit-open-below ()
+  "Like `evil-open-below', but moves outside the current s-expression first"
+  (interactive)
+  (paredit-forward-up)
+  (newline-and-indent)
+  (paredit-open-round))
 
 (provide 'setup-lisps)

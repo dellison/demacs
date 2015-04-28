@@ -43,12 +43,12 @@
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   (define-key evil-normal-state-local-map (kbd "M-.") 'elisp-slime-nav-find-elisp-thing-at-point)
-  (define-key evil-insert-state-local-map (kbd "C-TAB") 'helm-lisp-completion-at-point)
   (turn-on-elisp-slime-nav-mode)
   (diminish 'undo-tree-mode)
   (diminish 'yas-minor-mode)
   (if (fboundp 'helm)
-      (local-set-key (kbd "TAB") 'helm-lisp-completion-at-point)))
+      (local-set-key (kbd "C-M-i") 'helm-lisp-completion-at-point))
+  (local-set-key (kbd "C-RET") 'de/evil-paredit-open-below))
 
 
 (add-hook 'emacs-lisp-mode-hook 'de/elisp-mode-hook)
@@ -57,7 +57,7 @@
 (add-hook 'ielm-mode-hook 'de/elisp-mode-hook)
 (add-hook 'ielm-mode-hook 'de/lisps-mode-hook)
 
-(add-hook 'lisp-mode-hook 'de-elisp-mode-hook)
+;; (add-hook 'lisp-mode-hook 'de/elisp-mode-hook)
 (add-hook 'lisp-mode-hook 'de/lisps-mode-hook)
 
 (add-hook 'minibuffer-setup-hook
