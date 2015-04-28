@@ -4,6 +4,7 @@
 
 (when (fboundp 'csv-mode)
   (message "trying to set up the mode line with csv mode"
+	   ;; TODO
 	   ))
 
 (defun mode-line-fill (face reserve)
@@ -18,9 +19,10 @@
 
 (use-package nyan-mode
   :ensure nyan-mode
-  :init
+  :config
   (progn
-    (setq nyan-bar-length 18)))
+    (setq nyan-bar-length 18
+	  nyan-wavy-trail nil)))
 
 
 (defvar de/mode-line-evil
@@ -49,9 +51,8 @@
   "Display the buffer name, with trailing \"[*]\" if modified from disk.")
 
 (defvar de/mode-line-buffer-size
-  '(:eval (concat (propertize "%l: "
-			      'face 'font-lock-constant-face
-			      'face '(:height 30))))
+  '(:eval (concat (propertize "[ %l | %c ] "
+			      'face '(:height 130))))
   "Display the line number")
 
 (defvar de/mode-line-mode-info
@@ -69,12 +70,10 @@
 		    de/mode-line-evil
 		    "%@ " ;; '-' if `default-directory' is local, '@' if it's remote
 		    de/mode-line-buffer-name
-		    ;; de/mode-line-buffer-size
-		    mode-line-position
+		    de/mode-line-buffer-size
+		    ;; mode-line-position
 		    '(:eval (nyan-create))
-		    ;; `(vc-mode vc-mode)
 		    de/mode-line-mode-info " "
-		    de/mode-line-time
-		    ))
+		    de/mode-line-time))
 
 (provide 'setup-mode-line)
