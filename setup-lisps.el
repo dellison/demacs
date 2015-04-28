@@ -19,13 +19,16 @@
    (rainbow-blocks-mode
     (rainbow-blocks-mode-disable)
     (rainbow-identifiers-mode -1)
-    (rainbow-delimiters-mode-enable))
+    (rainbow-delimiters-mode-enable)
+    (message "Using normal highlighting, with delimiters."))
    ((and (null rainbow-blocks-mode) (null rainbow-identifiers-mode))
     (rainbow-identifiers-mode 1)
-    (rainbow-blocks-mode -1))
+    (rainbow-blocks-mode -1)
+    (message "Highlighting individual identifiers."))
    (rainbow-identifiers-mode
     (rainbow-blocks-mode-enable)
-    (rainbow-delimiters-mode-disable))))
+    (rainbow-delimiters-mode-disable)
+    (message "Highlighting by s-expression."))))
 
 (defun de/lisps-mode-hook ()
   "generalized hook for working with lisp languages"
