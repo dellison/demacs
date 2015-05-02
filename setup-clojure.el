@@ -4,7 +4,8 @@
 (setq cider-repl-use-pretty-printing t)
 
 (when (eq system-type 'darwin)
-  (setenv "PATH" (concat (getenv "PATH") ":/Users/david/tools/leiningen")))
+  (setenv "PATH" (concat (getenv "PATH") ":/Users/david/tools/leiningen"))
+  (add-to-list 'exec-path "/Users/david/tools/leiningen"))
 
 (setq cider-repl-history-file (format "%s/.nrepl-history" demacs-directory))
 
