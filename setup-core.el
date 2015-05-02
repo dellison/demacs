@@ -1,11 +1,17 @@
-;; no GUI
-(if (and (fboundp 'menu-bar-mode) (not (eq system-type 'darwin))) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;; no menu bar (on GUI OSX it's okay since it's not part of the emacs frame)
+(if (and (fboundp 'menu-bar-mode) (not (eq system-type 'darwin)))
+    (menu-bar-mode -1))
+
+;; no toolbar either
+(if (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+
+;; no scrollbar (nyan-mode instead)
+(if (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
 
 (setq inhibit-startup-message t
       visible-bell t             
-      blink-cursor-mode -1
       scroll-conservatively 1
       scroll-error-top-bottom t
       enable-recursive-minibuffers t
@@ -13,9 +19,11 @@
       backup-directory-alist '(("." . "~/backups"))
       gc-cons-threshold 20000000)
 
+(blink-cursor-mode 0)
 (show-paren-mode 1)
 (winner-mode 1)
 
+;; if you're looking at a file, the frame title should be the full path
 (setq frame-title-format
       '(:eval (or buffer-file-name (buffer-name))))
 
@@ -72,8 +80,7 @@ Only works if there are exactly two windows active."
 	  (set-window-start w2 s1)))))
 
 (defun de/indent-to-something-on-prev-line (s)
-  "boy oh boy this one is ugly...
-this lets you indent the current line as far as some
+  "this lets you indent the current line as far as some
 character on the previous line.
 I wrote it thinking it would help write AVMs faster
 in LaTeX."
@@ -89,8 +96,16 @@ in LaTeX."
     (beginning-of-line)
     (insert-char ?\s (- 1 to-indent))))
 
+(require 'comint)
+(defun de/clear-comint-buffer ()
+  "Clear the comint buffer"
+  (interactive)
+  (let ((comint-buffer-maximum-size 0))
+    (comint-truncate-buffer)))
+
+(define-key comint-mode-map (kbd "C-c M-o") 'de/clear-comint-buffer)
+
 (require 'uniquify)
-;; no more 'post-forward-angle-brackets
 (setq uniquify-buffer-name-style 'forward)
 
 ;;; use utf-8 everywhere!
@@ -121,9 +136,11 @@ in LaTeX."
 ;;; package setup
 ;; (add-to-list 'package-archives '("melpa" . "http://stable.melpa.org/packages/"))
 (setq package-archives '(("org" . "http://orgmode.org/elpa/")
-			 ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
 			 ("melpa" . "http://melpa.org/packages/")
-			 ("gnu" . "http://elpa.gnu.org/packages/")))
+			 ("gnu" . "http://elpa.gnu.org/packages/"))
+      package-user-dir (concat demacs-directory "/elpa"))
+
+
 (defun install-if-needed (package)
   "I hope to deprecate this soon in favor of `use-package' -de"
   (unless (package-installed-p package)
@@ -136,6 +153,10 @@ in LaTeX."
     (package-install 'use-package)))
 (require 'use-package)
 
+;; never have the menu bar when running in a terminal
+(if (not (display-graphic-p))
+    (menu-bar-mode -1))
+
 (when (display-graphic-p)
   (defun toggle-fullscreen ()
     "Toggle full screen"
@@ -143,31 +164,20 @@ in LaTeX."
     (set-frame-parameter
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
+
   (use-package zenburn-theme
     :ensure zenburn-theme
     :config
     (progn
-      ;; try to fix whitespace highlighting
-      
-      ))
-  ;; (use-package solarized-theme
-  ;;   :ensure solarized-theme
-  ;;   :config
-  ;;   (progn
-  ;;     (load-theme 'solarized-dark))
-  ;;   )
-  (global-hl-line-mode 1))
+      ;; TODO: try to fix whitespace highlighting?
+      )))
 
 ;;; now setup a few smaller packages from ELPA
 (use-package yasnippet
   :ensure yasnippet
-  :init (add-to-list 'yas/snippet-dirs (format "%s/snippets" demacs-directory)))
-
-;; a little mode line setup
-(use-package diminish
-  :ensure diminish)
-(display-time-mode 1)
-(column-number-mode 1)
+  :config
+  (progn
+    (add-to-list 'yas/snippet-dirs (format "%s/snippets" demacs-directory))))
 
 (use-package highlight-symbol
   :ensure highlight-symbol
@@ -177,7 +187,7 @@ in LaTeX."
 			      ;; :background "#93E0E3"
 			      ;; :foreground "#DC8CC3"
 			      )
-	  (highlight-symbol-mode -1))) ;; don't use it :(
+	  (highlight-symbol-mode 1))) ;; don't use it :(
 
 ;; use Magit for git stuff
 (use-package magit
@@ -185,7 +195,7 @@ in LaTeX."
   :init (progn
 	  (global-set-key (kbd "C-c gs") 'magit-status)
 	  (when (eq system-type 'darwin)
-	    (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.3/bin/emacsclient"))))
+	    (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.5/bin/emacsclient"))))
 
 (use-package multiple-cursors
   :ensure multiple-cursors
