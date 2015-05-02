@@ -1,10 +1,8 @@
-(install-if-needed 'projectile)
-
-(require 'projectile)
- (projectile-mode 1)
-
-(if (fboundp 'helm)
-    (global-set-key (kbd "C-c ff") 'helm-projectile)
-  (global-set-key (kbd "C-c ff") 'projectile-find-file))
+(use-package projectile
+  :ensure projectile
+  :config
+  (progn
+    (projectile-mode 1)
+    (global-set-key (kbd "C-c ff") 'helm-projectile)))
 
 (provide 'setup-projectile)
