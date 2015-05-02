@@ -37,11 +37,17 @@
   (enable-paredit-mode)
   (evil-paredit-mode t)
   (local-set-key (kbd "C-c lh") 'de/toggle-lisp-highlighting)
+  (local-set-key (kbd "C-M-l") 'paredit-forward-slurp-sexp)
+  (local-set-key (kbd "C-M-h") 'paredit-forward-barf-sexp)
   (define-key evil-visual-state-local-map "x" 'evil-delete-char)
   (define-key evil-emacs-state-local-map (kbd "M-J") 'paredit-join-sexps)
   (define-key evil-insert-state-local-map (kbd "M-J") 'paredit-join-sexps)
-  (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
-  (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
+  (define-key evil-emacs-state-local-map (kbd "S-SPC")
+    (lambda () (interactive) (insert "-")))
+  (define-key evil-insert-state-local-map (kbd "S-SPC")
+    (lambda () (interactive) (insert "-")))
+  (aggressive-indent-mode 1)
+  
   ;; (make-local-variable 'hippie-expand-try-functions-list)
   ;; (setq hippie-expand-try-functions-list
   ;; 	'(try-complete-file-name-partially

@@ -133,23 +133,9 @@ in LaTeX."
 	    (local-set-key (kbd "C-x C-f") 'ido-find-file)
 	    (message "setting up ibuffer!")))
 
-;;; package setup
-;; (add-to-list 'package-archives '("melpa" . "http://stable.melpa.org/packages/"))
-(setq package-archives '(("org" . "http://orgmode.org/elpa/")
-			 ("melpa" . "http://melpa.org/packages/")
-			 ("gnu" . "http://elpa.gnu.org/packages/"))
-      package-user-dir (concat demacs-directory "/elpa"))
-
-
-(defun install-if-needed (package)
-  "I hope to deprecate this soon in favor of `use-package' -de"
-  (unless (package-installed-p package)
-    (package-install package)))
-
-(setq package-enable-at-startup nil)
 (unless (package-installed-p 'use-package)
   (unless (assoc 'package package-archive-contents)
-    (package-refresh-contents)
+    ;; (package-refresh-contents)
     (package-install 'use-package)))
 (require 'use-package)
 
@@ -172,6 +158,9 @@ in LaTeX."
       ;; TODO: try to fix whitespace highlighting?
       )))
 
+(use-package aggressive-indent
+  :ensure aggressive-indent)
+
 ;;; now setup a few smaller packages from ELPA
 (use-package yasnippet
   :ensure yasnippet
@@ -192,10 +181,12 @@ in LaTeX."
 ;; use Magit for git stuff
 (use-package magit
   :ensure magit
-  :init (progn
-	  (global-set-key (kbd "C-c gs") 'magit-status)
-	  (when (eq system-type 'darwin)
-	    (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.5/bin/emacsclient"))))
+  :config
+  (progn
+    (global-set-key (kbd "C-c gs") 'magit-status)
+    (setq magit-last-seen-setup-instructions "1.4.0")
+    (when (eq system-type 'darwin)
+      (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.5/bin/emacsclient"))))
 
 (use-package multiple-cursors
   :ensure multiple-cursors
@@ -218,7 +209,5 @@ in LaTeX."
 
 (use-package company
   :ensure company)
-
-;; smartparens?
 
 (provide 'setup-core)
