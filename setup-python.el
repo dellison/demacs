@@ -23,14 +23,14 @@
   (let ((run-cmd (read-from-minibuffer "Run: " (concat "python " (car (last (split-string (buffer-file-name) "/"))) " "))))
     (compile run-cmd t)))
 
-(add-hook 'python-mode-hook
-	  (defun de/python-mode-hook ()
-	    ;; (setq python-indent-guess-indent-offset nil)
-	    (local-set-key (kbd "C-c rp") 'de/run-this-python-script-as-compile)
-	    (local-set-key (kbd "C-c pb") 'de/python-insert-breakpoint)
-	    (local-set-key (kbd "C-c pd") 'de/python-insert-breakpoint)
-	    (local-set-key (kbd "S-SPC") (lambda () (interactive) (insert "_")))))
+(defun de/python-mode-hook ()
+  (smartparens-mode 1)
+  (show-smartparens-mode 1)
+  (local-set-key (kbd "C-c rp") 'de/run-this-python-script-as-compile)
+  (local-set-key (kbd "C-c pb") 'de/python-insert-breakpoint)
+  (local-set-key (kbd "C-c pd") 'de/python-insert-breakpoint)
+  (local-set-key (kbd "S-SPC") (lambda () (interactive) (insert "_"))))
 
-
+(add-hook 'python-mode-hook 'de/python-mode-hook) 
 
 (provide 'setup-python)
