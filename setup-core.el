@@ -173,13 +173,14 @@ in LaTeX."
 
 (use-package highlight-symbol
   :ensure highlight-symbol
-  :init (progn
-	  (setq highlight-symbol-idle-delay 2.5)
-	  (set-face-attribute 'highlight-symbol-face nil
-			      ;; :background "#93E0E3"
-			      ;; :foreground "#DC8CC3"
-			      )
-	  (highlight-symbol-mode 1))) ;; don't use it :(
+  :config
+  (progn
+    (setq highlight-symbol-idle-delay 2.5)
+    (set-face-attribute 'highlight-symbol-face nil
+			;; :background "#93E0E3"
+			;; :foreground "#DC8CC3"
+			)
+    (highlight-symbol-mode 1))) ;; don't use it :(
 
 ;; use Magit for git stuff
 (use-package magit
