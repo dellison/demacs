@@ -27,7 +27,7 @@
 
 " "YEAH")
 (setq initial-scratch-message
-      (format "; elisp scratch buffer, opened %s\n; in %s\n\n"
+      (format ";;; elisp scratch buffer, opened %s\n;;; in %s\n\n"
 	      (format-time-string "%A, %B %d, %Y at %H:%M %p")
 	      default-directory))
 
@@ -39,7 +39,6 @@
   (elisp-slime-nav-mode 1)
   (eldoc-mode 1)
   (paredit-mode 1)
-  (smartparens-mode -1) ;; use paredit for elisp instead
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   (define-key evil-normal-state-local-map (kbd "M-.") 'elisp-slime-nav-find-elisp-thing-at-point)
@@ -57,7 +56,6 @@
 (add-hook 'ielm-mode-hook 'de/elisp-mode-hook)
 (add-hook 'ielm-mode-hook 'de/lisps-mode-hook)
 
-;; (add-hook 'lisp-mode-hook 'de/elisp-mode-hook)
 (add-hook 'lisp-mode-hook 'de/lisps-mode-hook)
 
 (add-hook 'minibuffer-setup-hook
