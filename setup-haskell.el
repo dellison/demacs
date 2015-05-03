@@ -1,18 +1,12 @@
 ;; haskell!
 (use-package haskell-mode
+  :ensure haskell-mode
   :commands (haskell-mode)
-  :init
-  (add-to-list 'auto-mode-alist '("\\.l?hs$" . haskell-mode))
   :config
   (progn
+    (add-to-list 'auto-mode-alist '("\\.l?hs$" . haskell-mode))
     (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
     (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-    (setq haskell-font-lock-symbols nil) ;; don't use pretty haskell
-    (use-package inf-haskell)
-    ;; (defun de/ghci ()
-    ;;   "Run Haskell!"
-    ;;   (interactive)
-    ;;   (run-haskell "-XNoMonomorphismRestriction"))
-    ))
+    (setq haskell-font-lock-symbols nil)))
 
 (provide 'setup-haskell)

@@ -199,6 +199,7 @@ and switch to it."
 				   help-mode
 				   ielm-mode
 				   inferior-ess-mode
+				   inferior-haskell-mode
 				   inf-ruby-mode
 				   Info-mode
 				   inferiorer-python-mode
