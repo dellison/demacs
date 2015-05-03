@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: imports
+# key: imports
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# ${1:}
+ 
+from __future__ import print_function, with_statement
+
+import os
+import sys
+import re

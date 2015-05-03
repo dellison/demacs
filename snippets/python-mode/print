@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: printfun
+# key: p
+# expand-env: ((yas-indent-line 'fixed))
+# --
+print($0)
