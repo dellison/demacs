@@ -1,8 +1,8 @@
 (require 'dired)
-(setq de/dired-packages '(dired-details)
-      dired-listing-switches "-hal")
+(setq dired-listing-switches "-hal")
 
-(mapc 'install-if-needed de/dired-packages)
+(use-package dired-details
+  :ensure dired-details)
 
 (define-key dired-mode-map (kbd "SPC") nil)
 
