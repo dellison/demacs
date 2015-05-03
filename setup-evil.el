@@ -1,31 +1,35 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;
-;;; Setup for Evil Mode, the VIM emulation layer for emacs.
-;;;
+;;; my setup for Evil Mode, the VIM emulation layer for emacs.               ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package evil
   :ensure evil
-  :init
+  :config
   (progn
     (evil-mode 1)))
 
+(use-package evil-matchit
+  :ensure evil-matchit)
 
-(mapc 'install-if-needed '(;;evil
-			   evil-matchit
-			   ;; evil-nerd-commenter
-			   evil-paredit
-			   evil-leader))
+(use-package evil-paredit
+  :ensure evil-paredit)
+
+(use-package evil-nerd-commenter
+  :ensure evil-nerd-commenter
+  :config
+  (progn
+    (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)))
+
+(use-package evil-leader
+  :ensure evil-leader)
 
 (setq evil-move-cursor-back t
       evil-cross-lines t
-      evil-insert-state-cursor '("#FFFFFF"  box)
+      evil-insert-state-cursor '("#FFFFFF"  box) ;; white
       evil-emacs-state-cursor  '("#FFFFFF"  box)
-      evil-motion-state-cursor '("#D0BF8F"  box)
+      evil-motion-state-cursor '("#D0BF8F"  box) ;; off-white (same as "zenburn-yellow-2")
       evil-normal-state-cursor '("#D0BF8F"  box)
       evil-visual-state-cursor '("#D0BF8F"  box))
-
-;; (evilnc-default-hotkeys)
 
 (global-evil-matchit-mode 1)
 (evil-matchit-mode 1)
@@ -35,11 +39,11 @@
 (define-key dired-mode-map (kbd "SPC") nil)
 
 (require 'evil)
-;; (require 'evil-nerd-commenter)
+(require 'evil-nerd-commenter)
 (require 'evil-leader)
 (require 'evil-paredit)
 
-(evil-leader/set-leader ",")
+(evil-leader/set-leader (kbd "SPC"))
 ;; (evil-leader/set-key-for-mode 'Info-mode (kbd "S-SPC"))
 
 (global-evil-leader-mode)
@@ -52,7 +56,7 @@
   (let* ((tokens (split-string command))
 	 (cmd (car tokens))
 	 (args (mapconcat 'identity (cdr tokens) " ")))
-    ; (message(format "running command %s with args %s" cmd args))
+    ;; (message(format "running command %s with args %s" cmd args))
     (switch-to-buffer (make-comint cmd cmd nil args))))
 
 (defun de/switch-to-scratch-buffer-here ()
@@ -146,8 +150,7 @@ and switch to it."
     (interactive)
     (message "didn't suspend the frame!"))
   (define-key evil-emacs-state-map (kbd "C-z") 'de/dont-suspend-frame)
-  (define-key evil-insert-state-map (kbd "C-z") 'de/dont-suspend-frame)
-  (message "yeah!"))
+  (define-key evil-insert-state-map (kbd "C-z") 'de/dont-suspend-frame))
 
 (define-key evil-motion-state-map (kbd "RET") nil)
 
@@ -169,12 +172,23 @@ and switch to it."
 (when (display-graphic-p)
   (define-key evil-emacs-state-map [escape] 'evil-normal-state))
 
+;; back to normal state after being idle for a few seconds
+(defun de/evil-back-to-normal-state ()
+  "back to normal state if you're in insert/emacs state"
+  (interactive)
+  (when (or (evil-emacs-state-p) (evil-insert-state-p))
+    (evil-normal-state)
+    (message "Back to (evil) normal.")))
+
+;; (run-with-idle-timer 5.0 nil 'de/evil-back-to-normal-state)
+
 ;;; Start the following modes in the Emacs state:
 (let ((initial-state-emacs-modes '(cider-docview-mode
 				   cider-repl-mode
 				   cider-test-report-mode
 				   cider-stacktrace-mode
 				   comint-mode
+				   compilation-mode
 				   debugger-mode
 				   diff-mode
 				   dired-mode
@@ -189,6 +203,7 @@ and switch to it."
 				   Info-mode
 				   inferiorer-python-mode
 				   magit-mode
+				   message-mode
 				   prolog
 				   shell-mode
 				   special-mode
@@ -203,6 +218,7 @@ and switch to it."
   :config
   (progn
     (require 'evil-nerd-commenter)
-    (evilnc-default-hotkeys)))
+    ;; (evilnc-default-hotkeys)
+    ))
 
 (provide 'setup-evil)
