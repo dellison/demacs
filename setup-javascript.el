@@ -1,21 +1,15 @@
-;; (mapc 'install-if-needed '(js2-mode))
-
 (use-package js2-mode
   :ensure js2-mode
   :init
   (progn
-    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-    )
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
   :config
-  (add-hook 'js2-mode-hook 'de/js-mode-hook)
-  (define-key js2-mode-map "{" 'paredit-open-curly)
-  (define-key js2-mode-map "}" 'paredit-close-curly-and-newline))
-
-;; (use-package )
+  (progn
+    (add-hook 'js2-mode-hook 'de/js-mode-hook)))
 
 (defun de/js-mode-hook ()
   "Setup for javascript"
-  ;; (de/paredit-nonlisp)
-  )
+  (smartparens-mode 1)
+  (show-smartparens-mode 1))
 
 (provide 'setup-javascript)

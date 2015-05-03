@@ -161,6 +161,9 @@ in LaTeX."
 (use-package aggressive-indent
   :ensure aggressive-indent)
 
+(use-package smartparens
+  :ensure smartparens)
+
 ;;; now setup a few smaller packages from ELPA
 (use-package yasnippet
   :ensure yasnippet
