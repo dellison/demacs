@@ -175,9 +175,9 @@ in LaTeX."
   :ensure highlight-symbol
   :config
   (progn
-    (setq highlight-symbol-idle-delay 2.5)
+    (setq highlight-symbol-idle-delay 2.0)
     (set-face-attribute 'highlight-symbol-face nil
-			;; :background "#93E0E3"
+			:background "#5F5F5F"
 			;; :foreground "#DC8CC3"
 			)
     (highlight-symbol-mode 1))) ;; don't use it :(
