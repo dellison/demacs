@@ -61,6 +61,9 @@
 (require 'setup-prolog)
 (require 'setup-python)
 (require 'setup-scheme)
+(require 'setup-web)
+
+(require 'setup-eww)
 
 (if (file-exists-p (format "%s/setup-site.el" demacs-directory))
     (require 'setup-site))
