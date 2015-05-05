@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: section*
-# key: sec
-# --
-\section*\{${1:Section Title}\}
-$0

@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: subsubsection*
-# key: sssec
-# --
-\subsubsection*\{${1:Section Title}\}
-$0
