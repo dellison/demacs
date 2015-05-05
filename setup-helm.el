@@ -22,8 +22,6 @@
     (define-key helm-grep-mode-map (kbd "<return>")  'helm-grep-mode-jump-other-window)
     (define-key helm-grep-mode-map (kbd "n")  'helm-grep-mode-jump-other-window-forward)
     (define-key helm-grep-mode-map (kbd "p")  'helm-grep-mode-jump-other-window-backward)
-    ;(define-key helm-map (k))
-    ;; (helm-autoresize-mode t)
     (setq helm-command-prefix-key (kbd "C-c h")
 
 	  ;; helm-split-window-in-side-p nil
@@ -33,7 +31,7 @@
 	  
 	  helm-buffers-fuzzy-matching t
 	  helm-M-x-fuzzy-match t
-	  helm-scroll-amount 0
+	  helm-scroll-amount nil
 	  helm-semantic-fuzzy-match t
 	  helm-imenu-fuzzy-match t
 	  helm-locate-fuzzy-match t
@@ -66,7 +64,7 @@
     (setq shackle-rules
 	  '( ;;; Helm windows should always be on the bottom
 	     ;;; (without clobbering any existing windows) at 40% height.
-	    ("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.4)))
+	    ("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.3)))
     (shackle-mode 1)))
 
 (provide 'setup-helm)
