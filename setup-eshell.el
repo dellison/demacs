@@ -11,3 +11,5 @@
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-"))))
 
 (add-hook 'eshell-mode-hook 'de/eshell-setup-hook)
+
+(provide 'setup-eshell)
