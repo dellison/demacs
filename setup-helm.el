@@ -67,4 +67,9 @@
 	    ("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.3)))
     (shackle-mode 1)))
 
+(use-package helm-unicode
+  :ensure helm-unicode
+  :config
+  (bind-key "u" 'helm-unicode 'helm-command-prefix))
+
 (provide 'setup-helm)
