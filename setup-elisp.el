@@ -6,6 +6,11 @@
 (use-package elisp-slime-nav
   :ensure elisp-slime-nav)
 
+(use-package litable
+  :ensure litable
+  :config
+  (add-hook 'lisp-interaction-mode-1 'litable-mode))
+
 (require 'elisp-slime-nav)
 ;; (require 'litable) ;; changed my mind about this one, i think
 (require 'paredit)
@@ -39,8 +44,10 @@
   (elisp-slime-nav-mode 1)
   (eldoc-mode 1)
   (paredit-mode 1)
-  (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
-  (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
+  (define-key evil-insert-state-local-map (kbd "S-SPC")
+    (lambda () (interactive) (insert "-")))
+  (define-key evil-emacs-state-local-map (kbd "S-SPC")
+    (lambda () (interactive) (insert "-")))
   (define-key evil-normal-state-local-map (kbd "M-.") 'elisp-slime-nav-find-elisp-thing-at-point)
   (turn-on-elisp-slime-nav-mode)
   (diminish 'undo-tree-mode)
