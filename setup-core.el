@@ -21,6 +21,7 @@
 
 (blink-cursor-mode 0)
 (show-paren-mode 1)
+(global-hl-line-mode 1)
 (winner-mode 1)
 
 ;; if you're looking at a file, the frame title should be the full path
@@ -64,20 +65,20 @@ Only works if there are exactly two windows active."
 (global-set-key (kbd "C-x |") 'toggle-window-split)
 
 (defun swap-windows ()
- "If you have 2 windows, it swaps them. (from Steve Yegge)"
- (interactive)
- (cond ((not (= (count-windows) 2))(message "You need exactly 2 windows to do this."))
-       (t
-	(let* ((w1 (first (window-list)))
-	       (w2 (second (window-list)))
-	       (b1 (window-buffer w1))
-	       (b2 (window-buffer w2))
-	       (s1 (window-start w1))
-	       (s2 (window-start w2)))
-	  (set-window-buffer w1 b2)
-	  (set-window-buffer w2 b1)
-	  (set-window-start w1 s2)
-	  (set-window-start w2 s1)))))
+  "If you have 2 windows, it swaps them. (from Steve Yegge)"
+  (interactive)
+  (cond ((not (= (count-windows) 2))(message "You need exactly 2 windows to do this."))
+	(t
+	 (let* ((w1 (first (window-list)))
+		(w2 (second (window-list)))
+		(b1 (window-buffer w1))
+		(b2 (window-buffer w2))
+		(s1 (window-start w1))
+		(s2 (window-start w2)))
+	   (set-window-buffer w1 b2)
+	   (set-window-buffer w2 b1)
+	   (set-window-start w1 s2)
+	   (set-window-start w2 s1)))))
 
 (defun de/indent-to-something-on-prev-line (s)
   "this lets you indent the current line as far as some
@@ -91,7 +92,7 @@ in LaTeX."
 	 (prev-line-goal (save-excursion (forward-line -1)
 					 (beginning-of-line)
 					 (search-forward s)
-				 (point)))
+					 (point)))
 	 (to-indent (- prev-line-goal prev-line-anchor)))
     (beginning-of-line)
     (insert-char ?\s (- 1 to-indent))))
@@ -118,7 +119,7 @@ in LaTeX."
 (if (boundp 'buffer-file-coding-system)
     (setq-default buffer-file-coding-system 'utf-8)
   (setq default-buffer-file-coding-system 'utf-8))
- 
+
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
