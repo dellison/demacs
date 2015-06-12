@@ -20,23 +20,38 @@
 (use-package nyan-mode
   :ensure nyan-mode
   :config
-  (progn
-    (setq nyan-bar-length 18
-	  nyan-wavy-trail nil)))
+  (setq nyan-bar-length 18
+	nyan-wavy-trail nil))
 
+(defface evil-modeline-emacs-face
+  '((t (:background "#333399"
+	:foreground "#cc99ff"
+	:weight bold)))
+  "Mode line face for insert and emacs states in evil.")
+
+(defface evil-modeline-normal-face
+  '((t (:background "#111111"
+	:foreground "#dfaf8f"
+	:weight bold)))
+  "Mode line face for normal state in evil.")
+
+(defface evil-modeline-visual-face
+  '((t (:background "#660033"
+	:foreground "#3399ff"
+	:weight bold)))
+  "Mode line face for visual state in evil.")
 
 (defvar de/mode-line-evil
   '(:eval
-    (let ((evil-modeline-indicator-color ;; not actually using this right now...
+    (let ((evil-modeline-indicator-face
 	   (case evil-state
-	     ('emacs  (setq evil-modeline-indicator-color "#CC99FF"))
-	     ('normal (setq evil-modeline-indicator-color "#DFAF8F"))
-	     ('visual (setq evil-modeline-indicator-color "#3399FF")))))
-      ;; (propertize evil-mode-line-tag
-      ;; 		  'face 'font-lock-variable-name-face)
-      evil-mode-line-tag
-      ))
-  "Display the evil state in the mode line")
+	     (emacs   'evil-modeline-emacs-face)
+	     (insert  'evil-modeline-emacs-face)
+	     (normal  'evil-modeline-normal-face)
+	     (visual  'evil-modeline-visual-face))))
+      (propertize evil-mode-line-tag
+		  'face evil-modeline-indicator-face)))
+  "Display the evil state in the mode line.")
 
 (defvar de/mode-line-buffer-name
   '(:eval
@@ -68,7 +83,7 @@
 (setq-default mode-line-format
 	      (list ""
 		    de/mode-line-evil
-		    "%@ " ;; '-' if `default-directory' is local, '@' if it's remote
+		    "%@ " ;; '-' if default-directory is local, '@' if it's remote
 		    de/mode-line-buffer-name
 		    de/mode-line-buffer-size
 		    ;; mode-line-position
