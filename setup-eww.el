@@ -2,7 +2,12 @@
 
 (evil-set-initial-state 'eww-mode 'emacs)
 
-(defun de/eww-open-this-dwim ()
+(defun eww-search ()
+  (interactive)
+  (let ((terms (read-from-minibuffer "Search Terms: ")))
+    (eww-browse-url (concat eww-search-prefix terms))))
+
+(defun de/open-with-eww-dwim ()
   (interactive)
   (cond
    ((region-active-p)
@@ -12,7 +17,7 @@
    ((and (fboundp 'markdown-link-p) (markdown-link-p))
     (eww (markdown-link-link)))
    (t
-    (message "something else?"))))
+    (eww-search))))
 
 (defun de/eww-mode-hook ()
   "setup for EWW, the emacs web browser (wowser)"
