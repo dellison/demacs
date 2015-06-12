@@ -5,11 +5,20 @@
 (use-package evil
   :ensure evil
   :config
-  (progn
-    (evil-mode 1)))
+  (evil-mode 1)
+  (setq evil-move-cursor-back t
+	evil-cross-lines t
+	evil-insert-state-cursor '("#FFFFFF"  box) ;; white
+	evil-emacs-state-cursor  '("#FFFFFF"  box)
+	evil-motion-state-cursor '("#D0BF8F"  box) ;; same as "zenburn-yellow-2"
+	evil-normal-state-cursor '("#D0BF8F"  box)
+	evil-visual-state-cursor '("#D0BF8F"  box)))
 
 (use-package evil-matchit
-  :ensure evil-matchit)
+  :ensure evil-matchit
+  :config
+  (global-evil-matchit-mode 1)
+  (evil-matchit-mode 1))
 
 (use-package evil-paredit
   :ensure evil-paredit)
@@ -17,38 +26,59 @@
 (use-package evil-nerd-commenter
   :ensure evil-nerd-commenter
   :config
-  (progn
-    (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)))
+  (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines))
+
+(use-package evil-surround
+  :ensure evil-surround)
 
 (use-package evil-leader
-  :ensure evil-leader)
-
-(setq evil-move-cursor-back t
-      evil-cross-lines t
-      evil-insert-state-cursor '("#FFFFFF"  box) ;; white
-      evil-emacs-state-cursor  '("#FFFFFF"  box)
-      evil-motion-state-cursor '("#D0BF8F"  box) ;; off-white (same as "zenburn-yellow-2")
-      evil-normal-state-cursor '("#D0BF8F"  box)
-      evil-visual-state-cursor '("#D0BF8F"  box))
-
-(global-evil-matchit-mode 1)
-(evil-matchit-mode 1)
-
-;;; make evil leader okay in dired
-(require 'dired)
-(define-key dired-mode-map (kbd "SPC") nil)
-
-(require 'evil)
-(require 'evil-nerd-commenter)
-(require 'evil-leader)
-(require 'evil-paredit)
-
-(evil-leader/set-leader (kbd "SPC"))
-;; (evil-leader/set-key-for-mode 'Info-mode (kbd "S-SPC"))
-
-(global-evil-leader-mode)
-(evil-leader-mode 1)
-(evil-mode 1)
+  :ensure evil-leader
+  :config
+  (evil-leader/set-leader "SPC")
+  (evil-leader/set-key
+    "0"   'delete-window
+    "1"   'delete-other-windows
+    "3"   'split-window-right
+    "\\"  'shell-command
+    "=="  'ediff-current-file
+    "v="  'vc-ediff 
+    "SPC" 'execute-extended-command
+    "TAB" 'de/comint-shell-command
+    "c"   'calc
+    "de"  'de/visit-demacs
+    "di"  'ediff-current-file
+    "e"   'eshell
+    "f"   'find-name-dired
+    "g"   'helm-do-grep
+    "i"   'info
+    "k"   (defun de/kill-this-buffer ()
+	    (interactive)
+	    (let ((prompt
+		   (format "Kill %s? %s"
+			   (buffer-name)
+			   (if (buffer-modified-p)
+			       "(buffer is unsaved) "
+			     ""))))
+	      (if (y-or-n-p prompt)
+		  (kill-buffer)))
+	    (message ""))
+    "j"   'ace-jump-char-mode
+    "l"   'ibuffer
+    "m"   'woman
+    "py"  'run-python
+    "q"   (defun de/qrr-in-buffer (regexp to-string)
+	    "qrr in whole buffer"
+	    (interactive "sQRRegexp: \nsReplace with: ")
+	    (save-excursion
+	      (query-replace-regexp regexp to-string nil (point-min) (point-max))))
+    "r"   're-builder
+    "s"   'de/switch-to-scratch-buffer-here ; see setup-elisp.el
+    "w"   'de/open-with-eww-dwim
+    "x"   'execute-extended-command)
+  (global-evil-leader-mode 1)
+  (require 'dired)
+  ;; make evil leader okay in dired
+  (define-key dired-mode-map (kbd "SPC") nil))
 
 (defun de/comint-shell-command (command)
   "executes a shell command (in comint mode) in the current directory"
@@ -77,50 +107,6 @@ and switch to it."
 		  (format-time-string "%A, %B %d, %Y at %H:%M %p")
 		  default-directory
 		  )))
-
-;; use spacebar as the leader key
-(evil-leader/set-key
-  "0"   'delete-window
-  "1"   'delete-other-windows
-  "3"   'split-window-right
-  "\\"  'shell-command
-  "=="  'ediff-current-file
-  "v="  'vc-ediff 
-  "SPC" 'execute-extended-command
-  "TAB" 'de/comint-shell-command
-  "c"   'calc
-  "de"  'de/open-emacs-configuration-file
-  "di"  'ediff-current-file
-  "e"   'eshell
-  "f"   'find-name-dired
-  "g"   'magit-status
-  "i"   'info
-  "k"   (defun de/kill-this-buffer ()
-	  (interactive)
-	  (let ((prompt
-		 (format "Kill %s? %s"
-			 (buffer-name)
-			 (if (buffer-modified-p)
-			     "(buffer is unsaved) "
-			   ""))))
-	    (if (y-or-n-p prompt)
-		(kill-buffer)))
-	  (message ""))
-  "j"   'ace-jump-char-mode
-  "l"   'ibuffer
-  "m"   'woman
-  "py"  'run-python
-  "q"   (defun de/qrr-in-buffer (regexp to-string)
-	  "qrr in whole buffer"
-	  (interactive "sQRRegexp: \nsReplace with: ")
-	  (save-excursion
-	    (query-replace-regexp regexp to-string nil (point-min) (point-max))))
-  "r"   're-builder
-  "s"   'de/switch-to-scratch-buffer-here ; see setup-elisp.el
-  "x"   'execute-extended-command
-   )
-
-;; (evilnc-default-hotkeys)
 
 ;;; don't skip wrapped lines
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -213,13 +199,5 @@ and switch to it."
   (mapc (lambda (m)
 	  (evil-set-initial-state m 'emacs))
 	initial-state-emacs-modes))
-
-(use-package evil-nerd-commenter
-  :ensure evil-nerd-commenter
-  :config
-  (progn
-    (require 'evil-nerd-commenter)
-    ;; (evilnc-default-hotkeys)
-    ))
 
 (provide 'setup-evil)
