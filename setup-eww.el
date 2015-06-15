@@ -8,14 +8,20 @@
     (eww-browse-url (concat eww-search-prefix terms))))
 
 (defun de/open-with-eww-dwim ()
+  "open link with EWW under point (if there's a link there),
+otherwise prompt for search terms"
   (interactive)
   (cond
    ((region-active-p)
     (let ((beg (region-beginning))
 	  (end (region-end)))
       (eww (buffer-substring beg end))))
-   ((and (fboundp 'markdown-link-p) (markdown-link-p))
+   ((and (eq major-mode 'markdown-mode)
+	 (fboundp 'markdown-link-p) (markdown-link-p))
     (eww (markdown-link-link)))
+   ((eq major-mode 'org-mode)
+    (let ((browse-url-browser-function 'eww-browse-url))
+      (org-open-at-point)))
    (t
     (eww-search))))
 
