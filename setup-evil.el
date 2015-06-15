@@ -29,7 +29,9 @@
   (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines))
 
 (use-package evil-surround
-  :ensure evil-surround)
+  :ensure evil-surround
+  :config
+  (setq global-evil-surround-mode t))
 
 (use-package evil-leader
   :ensure evil-leader
