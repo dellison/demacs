@@ -9,3 +9,4 @@ tramp
 /setup-clms.el
 /TEST
 /de/*
+/site-lisp/*
