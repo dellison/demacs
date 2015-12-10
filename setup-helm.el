@@ -67,9 +67,26 @@
 	    ("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.3)))
     (shackle-mode 1)))
 
+(use-package helm-pydoc
+  :ensure helm-pydoc
+  :config
+  (bind-key "p" 'helm-pydoc 'helm-command-prefix))
+
 (use-package helm-unicode
   :ensure helm-unicode
   :config
   (bind-key "u" 'helm-unicode 'helm-command-prefix))
+
+(use-package helm-swoop
+  :ensure helm-swoop
+  :config
+  ;; keybindings
+  (global-set-key (kbd "M-i") 'helm-swoop)
+  (global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
+  (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
+  (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+  ;; from isearch
+  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop))
 
 (provide 'setup-helm)
