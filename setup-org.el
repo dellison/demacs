@@ -17,7 +17,7 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 
 (setq org-capture-templates
-      '(("e" "Emacs" entry (file (concat demacs-directory "todo.org"))
+      '(("e" "Emacs" entry (file (concat demacs-directory "/todo.org"))
 	 "* TODO %?\n  Captured at %T")
 	("m" "Movie" entry (file (concat org-directory "/movies.org"))
 	 "* WATCHME %t %?\n  %a")
