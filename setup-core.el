@@ -179,11 +179,15 @@ Anything else means that previous occurance of that character."
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
   (use-package zenburn-theme
-  :ensure zenburn-theme
-  :config
-  ;; TODO: try to fix whitespace highlighting?
-  )
-  )
+    :ensure zenburn-theme
+    :config
+    ;; TODO: try to fix whitespace highlighting?
+    )
+
+  (use-package beacon-mode
+    :config
+    (setq beacon-color "#FFFFFF")
+    (beacon-mode 1)))
 
 (use-package aggressive-indent
   :ensure aggressive-indent)
