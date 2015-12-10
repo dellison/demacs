@@ -195,7 +195,7 @@ Anything else means that previous occurance of that character."
 (use-package smartparens
   :ensure smartparens)
 
-;;; now setup a few smaller packages from ELPA
+;;; now set up a few smaller packages from ELPA
 (use-package yasnippet
   :ensure yasnippet
   :config
@@ -230,10 +230,6 @@ Anything else means that previous occurance of that character."
 (use-package expand-region
   :ensure expand-region
   :bind (("C-M-=" . er/expand-region)))
-
-(use-package ace-jump-mode
-  :ensure ace-jump-mode
-  :bind (("C-c SPC" . ace-jump-mode)))
 
 (use-package dash
   :ensure dash)
