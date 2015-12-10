@@ -97,6 +97,32 @@ in LaTeX."
     (beginning-of-line)
     (insert-char ?\s (- 1 to-indent))))
 
+;;
+(defun de/indent-to ()
+  "Insert a newline and indent to something.
+RET means current position.
+Anything else means that previous occurance of that character."
+  (interactive)
+  (let ((key (read-key "Indent to (RET for current position): ")))
+    (if (equal key 13) ;; 13 is RET
+	(let ((c (current-column)))
+	  (newline)
+	  (insert (make-string c 32)))
+      ;; indent to a character
+      (let* ((ch (make-string 1 key))
+	     (next-pos (save-excursion
+			 (search-backward ch)
+			 (current-column))))
+	(newline)
+	(insert (make-string next-pos 32))))))
+
+(defun de/newline-and-indent-to-here ()
+  "Insert a newline at point, and then indent to the same position."
+  (interactive)
+  (let ((c (current-column)))
+    (newline)
+    (insert (make-string c 32))))
+
 (require 'comint)
 (defun de/clear-comint-buffer ()
   "Clear the comint buffer"
@@ -153,11 +179,11 @@ in LaTeX."
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
   (use-package zenburn-theme
-    :ensure zenburn-theme
-    :config
-    (progn
-      ;; TODO: try to fix whitespace highlighting?
-      )))
+  :ensure zenburn-theme
+  :config
+  ;; TODO: try to fix whitespace highlighting?
+  )
+  )
 
 (use-package aggressive-indent
   :ensure aggressive-indent)
