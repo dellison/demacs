@@ -1,6 +1,6 @@
 (setq mac-command-modifier 'meta)
 
-(global-set-key (kbd "C-c fs") 'toggle-frame-fullscreen)
+(global-set-key (kbd "C-c fs") 'toggle-fullscreen)
 
 (defun dired-finder ()
   "Opens the current directory (in dired mode) in Finder"
@@ -18,5 +18,8 @@
 (setq ispell-program-name "/usr/local/bin/aspell")
 
 (push "/usr/local/bin" exec-path) ; this is required by DocView mode, I guess...
+
+;; (use-package exec-path-from-shell
+;;   :ensure exec-path-from-shell)
 
 (provide 'setup-osx)
