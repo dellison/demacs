@@ -1,9 +1,7 @@
 # -*- mode: snippet -*-
 # name: begin_src
 # key: src
-# contributor: david ellison
 # --
-#+NAME: $1
-#+begin_src ${2:language}
+#+begin_src ${1:language}
 $0
 #+end_src
