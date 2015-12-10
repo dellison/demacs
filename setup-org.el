@@ -35,7 +35,6 @@
 
 (defun de/org-mode-hook ()
   "setup for org mode"
-  (message "setting up org mode!")
   (define-key evil-insert-state-local-map
     (kbd "C-<return>") 'org-insert-heading-after-current)
   (define-key evil-emacs-state-local-map
