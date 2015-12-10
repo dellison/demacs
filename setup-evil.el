@@ -182,12 +182,14 @@ and switch to it."
 				   dired-mode
 				   doc-view-mode
 				   eshell-mode
+				   ess-help-mode
 				   git-commit-mode
 				   haskell-interactive-mode
 				   help-mode
 				   ielm-mode
 				   inferior-ess-mode
 				   inferior-haskell-mode
+				   inferior-octave-mode
 				   inf-ruby-mode
 				   Info-mode
 				   inferiorer-python-mode
