@@ -24,8 +24,8 @@
     (define-key helm-grep-mode-map (kbd "p")  'helm-grep-mode-jump-other-window-backward)
     (setq helm-command-prefix-key (kbd "C-c h")
 
-	  ;; helm-split-window-in-side-p nil
-	  ;; helm-split-window-default-side 'below
+	  helm-split-window-in-side-p t
+	  helm-split-window-default-side 'below
 	  ;; helm-always-two-windows nil
 	  ;; helm-autoresize-mode t
 	  
@@ -51,7 +51,9 @@
 					 "\\.la$"
 					 "\\.o$"
 					 "\\.i$"
+					 "\\.so$"
 					 "\\.class$"
+					 "\\.elc$"
 					 "\\.pyc$"))
     (add-hook 'helm-goto-line-before-hook 'helm-save-current-pos-to-mark-ring)
     (helm-mode 1)))
@@ -63,8 +65,8 @@
   (progn
     (setq shackle-rules
 	  '( ;;; Helm windows should always be on the bottom
-	     ;;; (without clobbering any existing windows) at 40% height.
-	    ("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.3)))
+	     ;;; (without clobbering any existing windows)
+	    ("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.28)))
     (shackle-mode 1)))
 
 (use-package helm-pydoc
