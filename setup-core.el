@@ -154,11 +154,15 @@ Anything else means that previous occurance of that character."
 
 ;;; use ibuffer instead of list-buffers
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(add-hook 'ibuffer-mode-hook
-	  (defun de/ibuffer-mode-hook ()
-	    (local-set-key (kbd "U") 'ibuffer-unmark-all)
-	    (local-set-key (kbd "C-x C-f") 'ido-find-file)
-	    (message "setting up ibuffer!")))
+
+(define-ibuffer-filter unsaved
+  "Toggle current view to buffers whose file is unsaved."
+  (:description "file is unsaved")
+  (with-current-buffer buf
+    (and buffer-file-name (buffer-modified-p) )))
+
+(define-key ibuffer-mode-map (kbd "/ u") 'ibuffer-filter-by-unsaved)
+(define-key ibuffer-mode-map (kbd "M-o") 'other-window)
 
 (unless (package-installed-p 'use-package)
   (unless (assoc 'package package-archive-contents)
