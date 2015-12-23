@@ -159,7 +159,7 @@ Anything else means that previous occurance of that character."
   "Toggle current view to buffers whose file is unsaved."
   (:description "file is unsaved")
   (with-current-buffer buf
-    (and buffer-file-name (buffer-modified-p) )))
+    (and buffer-file-name (buffer-modified-p))))
 
 (define-key ibuffer-mode-map (kbd "/ u") 'ibuffer-filter-by-unsaved)
 (define-key ibuffer-mode-map (kbd "M-o") 'other-window)
