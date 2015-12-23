@@ -29,9 +29,8 @@
   (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines))
 
 (use-package evil-surround
-  :ensure evil-surround
-  :config
-  (setq global-evil-surround-mode t))
+  :ensure evil-surround)
+(global-evil-surround-mode 1)
 
 (use-package evil-leader
   :ensure evil-leader
@@ -90,25 +89,6 @@
 	 (args (mapconcat 'identity (cdr tokens) " ")))
     ;; (message(format "running command %s with args %s" cmd args))
     (switch-to-buffer (make-comint cmd cmd nil args))))
-
-(defun de/switch-to-scratch-buffer-here ()
-  "create an elisp interaction buffer in the current directory (if necessary)
-and switch to it."
-  (interactive)
-  (let ((local-scratch-buffer-name (format "*scratch: %s*" default-directory)))
-    (if (get-buffer local-scratch-buffer-name)
-	(switch-to-buffer local-scratch-buffer-name)
-      (de/initialize-scratch-buffer-here local-scratch-buffer-name))))
-
-(defun de/initialize-scratch-buffer-here (name)
-  "create a elisp interaction buffer in the current directory"
-  (switch-to-buffer (get-buffer-create name))
-  (goto-char (point-min))
-  (lisp-interaction-mode)
-  (insert (format "; elisp scratch buffer, opened %s\n; in %s\n\n"
-		  (format-time-string "%A, %B %d, %Y at %H:%M %p")
-		  default-directory
-		  )))
 
 ;;; don't skip wrapped lines
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)

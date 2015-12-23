@@ -16,27 +16,48 @@
 (require 'paredit)
 (require 'setup-lisps)
 
-(defvar de/scratch-yeah ";     ___        ___    _________   _____   __       __    __
-;     \\  \\      /  /   /  ______/  /    |  |  |     |  |  |  |
-;      \\  \\    /  /   /  /        /     |  |  |     |  |  |  |
-;       \\  \\  /  /   /  /        /      |  |  |     |  |  |  |
-;        \\  \\/  /   /  /        /       |  |  |     |  |  |  |
-;         \\    /   /  /____    /        |  |  |_____|  |  |  |
-;          /  /   /  _____/   /         |  |  _______  |  |  |
-;         /  /   /  /        /  _____   |  |  |     |  |  |  |
-;        /  /   /  /        /  /     |  |  |  |     |  |  |  |
-;       /  /   /  /        /  /      |  |  |  |     |  |  |__|
-;    __/  /   /  /______  /  /       |  |  |  |     |  |   __
-;   |____/   /_________/ /__/        |__|  |__|     |__|  |__|
-;   
+(defvar de/scratch-yeah ";;    ___        ___    _________   _____   __       __    __
+;;    \\  \\      /  /   /  ______/  /    |  |  |     |  |  |  |
+;;     \\  \\    /  /   /  /        /     |  |  |     |  |  |  |
+;;      \\  \\  /  /   /  /        /      |  |  |     |  |  |  |
+;;       \\  \\/  /   /  /        /       |  |  |     |  |  |  |
+;;        \\    /   /  /____    /        |  |  |_____|  |  |  |
+;;         /  /   /  _____/   /         |  |  _______  |  |  |
+;;        /  /   /  /        /  _____   |  |  |     |  |  |  |
+;;       /  /   /  /        /  /     |  |  |  |     |  |  |  |
+;;      /  /   /  /        /  /      |  |  |  |     |  |  |__|
+;;   __/  /   /  /______  /  /       |  |  |  |     |  |   __
+;;  |____/   /_________/ /__/        |__|  |__|     |__|  |__|
+;;  
 
 " "YEAH")
-(setq initial-scratch-message
-      (format ";;; elisp scratch buffer, opened %s\n;;; in %s\n\n"
-	      (format-time-string "%A, %B %d, %Y at %H:%M %p")
-	      default-directory))
 
+(defun de/elisp-scratch-buffer-message ()
+  "create the message at the top of an elisp scratch buffer"
+  (format ";;; elisp scratch buffer, opened %s
+;;; in %s
 
+"
+	  (format-time-string "%A, %B %d, %Y at %H:%M %p")
+	  default-directory))
+
+(setq initial-scratch-message (de/elisp-scratch-buffer-message))
+
+(defun de/switch-to-scratch-buffer-here ()
+  "create an elisp interaction buffer in the current directory (if necessary)
+and switch to it."
+  (interactive)
+  (let ((local-scratch-buffer-name (format "*scratch: %s*" default-directory)))
+    (if (get-buffer local-scratch-buffer-name)
+	(switch-to-buffer local-scratch-buffer-name)
+      (de/initialize-scratch-buffer-here local-scratch-buffer-name))))
+
+(defun de/initialize-scratch-buffer-here (name)
+  "create a elisp interaction buffer in the current directory"
+  (switch-to-buffer (get-buffer-create name))
+  (goto-char (point-min))
+  (lisp-interaction-mode)
+  (insert (de/elisp-scratch-buffer-message)))
 
 (defun de/elisp-mode-hook ()
   "hook for emacs lisp mode"
@@ -60,8 +81,8 @@
 (add-hook 'emacs-lisp-mode-hook 'de/elisp-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'de/lisps-mode-hook)
 
-(add-hook 'ielm-mode-hook 'de/elisp-mode-hook)
-(add-hook 'ielm-mode-hook 'de/lisps-mode-hook)
+;; (add-hook 'ielm-mode-hook 'de/elisp-mode-hook)
+;; (add-hook 'ielm-mode-hook 'de/lisps-mode-hook)
 
 (add-hook 'lisp-mode-hook 'de/lisps-mode-hook)
 
