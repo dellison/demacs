@@ -169,6 +169,11 @@ Anything else means that previous occurance of that character."
 
 (define-key ibuffer-mode-map (kbd "/ u") 'ibuffer-filter-by-unsaved)
 (define-key ibuffer-mode-map (kbd "M-o") 'other-window)
+(define-key ibuffer-mode-map (kbd "j") 'ibuffer-forward-line)
+(define-key ibuffer-mode-map (kbd "k") 'ibuffer-backward-line)
+(define-key ibuffer-mode-map (kbd "J") 'ibuffer-jump-to-buffer)
+(define-key ibuffer-mode-map (kbd "K") 'ibuffer-do-kill-lines)
+(define-key ibuffer-mode-map (kbd "U") 'ibuffer-unmark-all)
 
 (unless (package-installed-p 'use-package)
   (unless (assoc 'package package-archive-contents)

@@ -22,6 +22,10 @@
   (local-unset-key " ")		; :( it doesn't work, i want leader
   (define-key dired-mode-map (kbd "<SPC>") nil)
   (define-key dired-mode-map "f" 'de/dired-find-here)
+  ;; use j and k for going up and down
+  (define-key dired-mode-map (kbd "j") 'dired-next-line)
+  (define-key dired-mode-map (kbd "k") 'dired-previous-line)
+  (define-key dired-mode-map (kbd "K") 'dired-do-kill-lines)
   (when (fboundp 'evil-mode)
     (define-key evil-normal-state-local-map "(" 'dired-details-toggle)
     (define-key evil-motion-state-local-map (kbd "0") nil)
