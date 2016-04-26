@@ -175,6 +175,8 @@ Anything else means that previous occurance of that character."
 (define-key ibuffer-mode-map (kbd "K") 'ibuffer-do-kill-lines)
 (define-key ibuffer-mode-map (kbd "U") 'ibuffer-unmark-all)
 
+(require 'setup-isearch)
+
 (unless (package-installed-p 'use-package)
   (unless (assoc 'package package-archive-contents)
     ;; (package-refresh-contents)

@@ -1,5 +1,3 @@
-(global-set-key "\C-s" 'isearch-forward-regexp) ; search with regexes by default
-(global-set-key "\C-r" 'isearch-backward-regexp)
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-x C-k") 'kill-region)
