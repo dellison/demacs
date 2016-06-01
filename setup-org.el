@@ -34,7 +34,7 @@
 	:matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 
 ;; my org-mode setup and capturing notes
-(setq org-directory "~/dorg"
+(setq org-directory "s:/dorg"
       org-default-notes-file (concat org-directory "/notes.org"))
 
 (global-set-key (kbd "C-c a") #'org-agenda)

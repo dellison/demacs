@@ -62,12 +62,12 @@
      (propertize "%b" 
 		 'face 'font-lock-keyword-face)
      (propertize (concat "" (if (and (buffer-file-name) (buffer-modified-p)) "[*]" "   "))
-     		 'face '(:height 130))))
+     		 'face '(:height 90))))
   "Display the buffer name, with trailing \"[*]\" if modified from disk.")
 
 (defvar de/mode-line-buffer-size
   '(:eval (concat (propertize "[ %l | %c ] "
-			      'face '(:height 130))))
+			      'face '(:height 90))))
   "Display the line number")
 
 (defvar de/mode-line-mode-info
@@ -78,7 +78,7 @@
 (setq de/mode-line-time
       '(:eval
 	(propertize (format-time-string "   %a, %m/%d %I:%M%p")
-		    'face '(:height 130 :foreground "LightSkyBlue"))))
+		    'face '(:height 90 :foreground "LightSkyBlue"))))
 
 (setq-default mode-line-format
 	      (list ""

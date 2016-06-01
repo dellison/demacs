@@ -1,5 +1,5 @@
 (defvar demacs-directory
-  "~/demacs"
+  "s:/demacs"
   "directory with emacs customization files")
 
 (add-to-list 'load-path demacs-directory)

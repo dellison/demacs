@@ -281,7 +281,9 @@ Anything else means that previous occurance of that character."
     (global-set-key (kbd "C-c gs") 'magit-status)
     (setq magit-last-seen-setup-instructions "1.4.0")
     (when (eq system-type 'darwin)
-      (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.5/bin/emacsclient"))))
+      (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.5/bin/emacsclient"))
+    (when (eq system-type 'windows-nt)
+      (setq magit-git-executable "c:\\Program Files\\Git\\bin\\git.exe"))))
 
 (use-package multiple-cursors
   :ensure multiple-cursors

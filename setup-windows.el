@@ -8,6 +8,9 @@
 
 (add-to-list 'exec-path "c:\\cygwin\\bin;")
 
+;;; use Git Bash (and other tools provided there) instead
+(setenv "PATH" (concat "c:\\Program Files\\Git\\bin;" (getenv "PATH")))
+
 ;; cygwin shells aren't working right now :(
 (defun cygwin-shell ()
   "Run cygwin bash in shell mode"
@@ -70,5 +73,12 @@
 (setq w32-quote-process-args ?\")
 
 (setq shell-mode-hook 'my-shell-setup)
+
+
+;;; python/anaconda setup on windows
+(let ((conda-exe "c:/Users/davide/Anaconda2/python.exe"))
+  (if (file-exists-p conda-exe)
+      (setq python-shell-interpreter conda-exe)))
+
 
 (provide 'setup-windows)
