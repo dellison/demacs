@@ -23,6 +23,9 @@
 
 (define-key doc-view-mode-map "k" 'doc-view-previous-line-or-previous-page)
 (define-key doc-view-mode-map "j" 'doc-view-next-line-or-next-page)
+(define-key doc-view-mode-map "l" 'image-forward-hscroll)
+(define-key doc-view-mode-map "h" 'image-backward-hscroll)
+
 
 (add-hook 'LaTeX-mode-hook 'de/latex-mode-hook)
 (add-hook 'doc-view-mode-hook 'de/doc-view-mode-hook)
