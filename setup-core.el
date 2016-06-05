@@ -202,6 +202,7 @@ Anything else means that previous occurance of that character."
     )
 
   (use-package beacon-mode
+    :ensure beacon
     :config
     (setq beacon-color "#FFFFFF")
     (beacon-mode 1)))
