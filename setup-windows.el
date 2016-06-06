@@ -5,11 +5,14 @@
 		       (getenv "PATH")))
 
 (setq shell-file-name "c:/cygwin/bin/bash.exe")
-
-(add-to-list 'exec-path "c:\\cygwin\\bin;")
+(add-to-list 'exec-path "c:/cygwin/bin;")
 
 ;;; use Git Bash (and other tools provided there) instead
-(setenv "PATH" (concat "c:\\Program Files\\Git\\bin;" (getenv "PATH")))
+(setenv "PATH" (concat "c:/Program Files/Git/bin;" (getenv "PATH")))
+(add-to-list 'exec-path "c:/Program Files/Git/bin")
+(setenv "GIT_ASKPASS" "git-gui--askpass") ;; so that pushing from Magit can work
+
+(setq with-editor-emacsclient-executable "s:/emacs/bin/emacsclientw.exe")
 
 ;; cygwin shells aren't working right now :(
 (defun cygwin-shell ()

@@ -3,6 +3,7 @@
   "directory with emacs customization files")
 
 (add-to-list 'load-path demacs-directory)
+(add-to-list 'exec-path demacs-directory)
 
 (defun de/log (m)
   "print a log message with a timestamp, and message m"
