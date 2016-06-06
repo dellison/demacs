@@ -201,7 +201,7 @@ Anything else means that previous occurance of that character."
     ;; TODO: try to fix whitespace highlighting?
     )
 
-  (use-package beacon-mode
+  (use-package beacon
     :ensure beacon
     :config
     (setq beacon-color "#FFFFFF")
