@@ -8,8 +8,17 @@
 	(sh . t)))
 
 ;; cosmetic stuff
-(setq org-ellipsis " ⋯ ▼"
+(setq org-ellipsis " ..."
       org-export-dispatch-use-expert-ui t)
+
+;; indentation
+(setq org-indent-indentation-per-level 1)
+(require 'org-indent)
+(set-face-attribute 'org-indent nil
+		    :underline nil
+		    :foreground "#656555"
+		    :background "#383838")
+
 
 ;; my org-mode setup and capturing notes
 (setq org-directory "~/dorg"
