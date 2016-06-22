@@ -20,4 +20,10 @@
 (global-set-key (kbd "C-c /") #'de/isearch-forward-flexibly)
 (global-set-key (kbd "C-c ?") #'de/isearch-backward-flexibly)
 
+;; occur-mode
+(define-key occur-mode-map "j" #'next-line)
+(define-key occur-mode-map "k" #'previous-line)
+(define-key occur-mode-map "J" #'next-error)
+(define-key occur-mode-map "K" #'previous-error)
+
 (provide 'setup-isearch)
