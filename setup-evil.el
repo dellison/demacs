@@ -74,7 +74,7 @@
 	      (query-replace-regexp regexp to-string nil (point-min) (point-max))))
     "r"   're-builder
     "s"   'de/switch-to-scratch-buffer-here ; see setup-elisp.el
-    "w"   'de/open-with-eww-dwim
+    "w"   'de/eww-dwim
     "x"   'execute-extended-command)
   (global-evil-leader-mode 1)
   (require 'dired)
