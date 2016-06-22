@@ -195,16 +195,32 @@ Anything else means that previous occurance of that character."
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
 
+  (whitespace-mode 1)
   (use-package zenburn-theme
     :ensure zenburn-theme
+
     :config
-    ;; TODO: try to fix whitespace highlighting?
-    )
+    (mapc (lambda (face)
+	    (set-face-attribute face nil
+				:foreground "#4F4F4F"
+				:background "#3F3F3F"))
+	  '(whitespace-tab
+	    whitespace-space
+	    whitespace-newline))
+    (set-face-attribute 'whitespace-line nil
+			:foreground "#545444"
+			:background "#3F3F3F")
+    (set-face-attribute 'whitespace-trailing nil
+			:foreground "#545444"
+			:background "#3F3F3F"))
 
   (use-package beacon
     :ensure beacon
     :config
-    (setq beacon-color "#FFFFFF")
+    (setq beacon-color "#888888"
+	  beacon-blink-duration 0.2
+	  beacon-blink-when-focused t
+	  beacon-size 12)
     (beacon-mode 1)))
 
 (use-package aggressive-indent
