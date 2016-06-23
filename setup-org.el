@@ -13,12 +13,14 @@
 
 ;; indentation
 (setq org-indent-indentation-per-level 1)
-(require 'org-indent)
-(set-face-attribute 'org-indent nil
-		    :underline nil
-		    :foreground "#656555"
-		    :background "#383838")
-
+;; for some reason, changing org-indent doesn't work until after initialization
+(add-hook 'after-init-hook
+	  (lambda ()
+	    (require 'org-indent)
+	    (set-face-attribute 'org-indent nil
+				:underline nil
+				:foreground "#656555"
+				:background "#383838")))
 
 ;; my org-mode setup and capturing notes
 (setq org-directory "~/dorg"
