@@ -22,7 +22,6 @@ in the current buffer."
 (defun de/clojure-mode-hook ()
   "setup hook for editing clojure code"
   (define-key evil-insert-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
-  (cider-turn-on-eldoc-mode)
   (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-"))))
 
 (defun de/cider-repl-mode-hook ()
@@ -35,7 +34,6 @@ in the current buffer."
   (define-key evil-emacs-state-local-map (kbd "S-SPC") (lambda () (interactive) (insert "-")))
   (define-key evil-insert-state-local-map (kbd "M-.") 'cider-jump-to-var)
   (define-key evil-emacs-state-local-map (kbd "M-.") 'cider-jump-to-var)
-  (cider-turn-on-eldoc-mode)
   (evil-emacs-state))
 
 
