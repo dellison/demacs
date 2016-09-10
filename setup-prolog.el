@@ -18,16 +18,32 @@
 (defalias 'switch-to-prolog 'de/switch-to-prolog)
 
 (defun de/prolog-mode-hook ()
-  (define-key evil-insert-state-local-map (kbd "S-SPC") 'de/prolog-contextual-shift-space)
-  (define-key evil-emacs-state-local-map (kbd "S-SPC") 'de/prolog-contextual-shift-space)
+  (setq comment-start "%%")
+  (define-key evil-insert-state-local-map (kbd "S-SPC") 'de/prolog-shift-space)
+  (define-key evil-emacs-state-local-map (kbd "S-SPC") 'de/prolog-shift-space)
   (smartparens-mode 1))
 
 (add-hook 'prolog-mode-hook 'de/prolog-mode-hook)
 
-(defun de/prolog-contextual-shift-space ()
+(defun de/prolog-shift-space ()
   (interactive)
-  (if (string-match-p ")" (string (preceding-char)))
-      (insert " :-")
-    (insert "_")))
+  (cond ((looking-back ")")
+	 (insert " :-")
+	 (newline-and-indent))
+	((looking-back ") ")
+	 (insert ":-")
+	 (newline-and-indent))
+	((looking-back "^")
+	 (insert ":- "))
+	((looking-back "[A-Za-z0-9] ")
+	 (insert ":-")
+	 (newline-and-indent))
+	(t
+	 (insert "_")))
+
+  ;; (if (string-match-p ")" (string (preceding-char)))
+  ;;     (insert " :-")
+  ;;   (insert "_"))
+  )
 
 (provide 'setup-prolog)
