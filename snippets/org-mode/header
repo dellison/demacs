@@ -3,6 +3,8 @@
 # key: org
 # --
 #+TITLE: $1
-#+AUTHOR: david ellison
-#+TODO: ${2:todo wait | done}
+#+AUTHOR: David Ellison
+#+FILETAGS:$2
+#+STARTUP: $3
+#+TODO: ${2:TODO WAIT | DONE}
 $0

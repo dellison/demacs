@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: docfunction
+# key: docf
+# --
+"""
+$1
+"""
+function $0
+end

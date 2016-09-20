@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: list_comprehension
+# key: lc
+# --
+[ $1 for ${2:$1} in $0 ]

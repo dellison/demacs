@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: abstract
+# key: ab
+# --
+abstract $1 <: $2
+
+$0
