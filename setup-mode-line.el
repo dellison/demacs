@@ -44,7 +44,7 @@
 (defvar de/mode-line-evil
   '(:eval
     (let ((evil-modeline-indicator-face
-	   (case evil-state
+	   (cl-case evil-state
 	     (emacs   'evil-modeline-emacs-face)
 	     (insert  'evil-modeline-emacs-face)
 	     (normal  'evil-modeline-normal-face)
@@ -90,5 +90,15 @@
 		    '(:eval (nyan-create))
 		    de/mode-line-mode-info " "
 		    de/mode-line-time))
+
+(defun flash-mode-line ()
+  "Flash the mode line white briefly."
+  (let ((bg (face-background 'mode-line)))
+    (set-face-background 'mode-line "white")
+    (run-with-idle-timer 0.1 nil #'set-face-background 'mode-line bg)))
+
+;; (face-background 'minibuffer)
+
+(setq ring-bell-function #'flash-mode-line)
 
 (provide 'setup-mode-line)
