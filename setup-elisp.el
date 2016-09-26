@@ -6,6 +6,12 @@
 (use-package elisp-slime-nav
   :ensure elisp-slime-nav)
 
+(defun de/jump-to-elisp-definition ()
+  "See the elisp definition of something."
+  (interactive)
+  (with-temp-buffer
+    (call-interactively #'elisp-slime-nav-find-elisp-thing-at-point)))
+
 (use-package litable
   :ensure litable
   :config

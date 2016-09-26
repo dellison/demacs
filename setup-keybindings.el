@@ -13,6 +13,7 @@
 ;; (global-set-key (kbd "C-c lw") 'toggle-truncate-lines)
 ;;    - "line wrap" mnemonic too
 (global-set-key (kbd "C-c ws") #'whitespace-mode)
+(global-set-key (kbd "C-c M-.") #'de/jump-to-elisp-definition)
 (global-set-key (kbd "M-/") #'hippie-expand)
 
 (global-set-key "\C-ha" #'apropos) ; search for all symbols by default (instead of only commands)
