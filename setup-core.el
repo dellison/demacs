@@ -247,6 +247,19 @@ Anything else means that previous occurance of that character."
 			)
     (highlight-symbol-mode 1))) ;; don't use it :(
 
+;; vc-mode for svn
+(require 'vc)
+(require 'vc-dir)
+(define-key vc-dir-mode-map "e" #'vc-ediff)
+
+(defun de/vc-dir-here ()
+  ""
+  (interactive)
+  (if default-directory
+      (vc-dir default-directory)
+    (vc-dir)))
+
+(global-set-key (kbd "C-c v d") #'de/vc-dir-here)
 ;; use Magit for git stuff
 (use-package magit
   :ensure magit
