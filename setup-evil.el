@@ -122,11 +122,6 @@
 
 (define-key evil-motion-state-map (kbd "RET") nil)
 
-;; now "quit" with C-g also sends you back to normal mode
-(defadvice keyboard-quit (before evil activate)
-  (when (fboundp 'evil-normal-state)
-    (evil-normal-state)))
-
 ;; always re-enter Normal State after saving with C-x C-s
 (define-key evil-insert-state-map (kbd "C-x C-s")
   (defun de/evil-save-and-enter-normal-state ()
@@ -151,37 +146,43 @@
 ;; (run-with-idle-timer 5.0 nil 'de/evil-back-to-normal-state)
 
 ;;; Start the following modes in the Emacs state:
-(let ((initial-state-emacs-modes '(cider-docview-mode
-				   cider-repl-mode
-				   cider-test-report-mode
-				   cider-stacktrace-mode
-				   comint-mode
-				   compilation-mode
-				   debugger-mode
-				   diff-mode
-				   dired-mode
-				   doc-view-mode
-				   eshell-mode
-				   ess-help-mode
-				   git-commit-mode
-				   haskell-interactive-mode
-				   help-mode
-				   ielm-mode
-				   inferior-ess-mode
-				   inferior-haskell-mode
-				   inferior-octave-mode
-				   inf-ruby-mode
-				   Info-mode
-				   inferiorer-python-mode
-				   magit-mode
-				   message-mode
-				   prolog
-				   shell-mode
-				   special-mode
-				   sql-interactive-mode
-				   term-mode)))
-  (mapc (lambda (m)
-	  (evil-set-initial-state m 'emacs))
-	initial-state-emacs-modes))
+(setq initial-state-emacs-modes '(cider-docview-mode
+				  cider-repl-mode
+				  cider-test-report-mode
+				  cider-stacktrace-mode
+				  comint-mode
+				  compilation-mode
+				  debugger-mode
+				  diff-mode
+				  dired-mode
+				  doc-view-mode
+				  eshell-mode
+				  ess-help-mode
+				  git-commit-mode
+				  haskell-interactive-mode
+				  help-mode
+				  ielm-mode
+				  inferior-ess-mode
+				  inferior-haskell-mode
+				  inferior-octave-mode
+				  inf-ruby-mode
+				  Info-mode
+				  inferiorer-python-mode
+				  magit-mode
+				  message-mode
+				  prolog
+				  shell-mode
+				  special-mode
+				  sql-interactive-mode
+				  term-mode))
+(mapc (lambda (m)
+	(evil-set-initial-state m 'emacs))
+      initial-state-emacs-modes)
+
+;; "quit" with C-g also sends you back to normal mode
+(defadvice keyboard-quit (before evil activate)
+  (when (and (fboundp 'evil-normal-state) (not (memq major-mode initial-state-emacs-modes)))
+    (evil-normal-state)))
+
 
 (provide 'setup-evil)
