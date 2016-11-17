@@ -156,6 +156,8 @@
 				  diff-mode
 				  dired-mode
 				  doc-view-mode
+				  docker-images-mode
+				  dockerfile-mode
 				  eshell-mode
 				  ess-help-mode
 				  git-commit-mode
