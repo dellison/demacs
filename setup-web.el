@@ -1,5 +1,4 @@
-(use-package web-mode
-  :ensure web-mode
+(use-package web-mode :ensure web-mode
   :mode "\\.html\\'")
 
 (use-package markdown-mode
@@ -13,4 +12,5 @@
 
   :config
   (define-key restclient-mode-map (kbd "C-c C-c") #'restclient-http-send-current-stay-in-window))
+
 (provide 'setup-web)
