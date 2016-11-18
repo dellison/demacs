@@ -1,6 +1,8 @@
 (require 'dired)
 (setq dired-listing-switches "-hal")
 
+(require 'dired-x)
+
 (use-package dired-details
   :ensure dired-details)
 
@@ -37,7 +39,7 @@
 
 (defun de/dired-mode-hook ()
   "dired mode hook"
-  (load "dired-x")
+  ;; (load "dired-x")
   (local-set-key (kbd "(") 'dired-details-toggle)
   (local-unset-key (kbd "SPC"))		; so that evil-leader works
   (local-unset-key (kbd "M-o")) ; I prefer other-window to dired-omit-mode
