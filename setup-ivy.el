@@ -27,7 +27,8 @@ Point to the current match with an arrow -> and highlight its line."
        (concat "     " str "\n"))
      cands
      ""))
-  (setq ivy-format-function #'de/ivy-format-fn)
+  (setq ivy-format-function #'de/ivy-format-fn
+	ivy-initial-inputs-alist '())
 
   (global-set-key (kbd "M-x") 'counsel-M-x)
 
