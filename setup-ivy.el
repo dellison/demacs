@@ -9,6 +9,41 @@
 ;; why use ido when you can use ivy?
 (defalias 'ido-completing-read 'ivy-completing-read)
 
+(defun de/get-keybinding (cmd)
+  "Return the keybinding for CMD, if it exists."
+  (let ((binding (substitute-command-keys (format "\\[%s]" cmd))))
+    (unless (string-match "^M-x " binding)
+      binding)))
+
+(defun de/keybound-p (cmd)
+  (let ((binding (substitute-command-keys (format "\\[%s]" cmd)))
+	(mx (format "M-x %s" cmd)))
+    (not (string= mx binding))))
+
+(defun de/counsel-M-x-only-bound ()
+  "Jude like counsel-M-x, but only include commands that are bound to a
+key or key sequence."
+  (interactive)
+  (ivy-read (counsel--M-x-prompt) obarray
+	    :predicate 'de/keybound-p
+	    :require-match t
+	    ;; :history
+	    :action
+	    (lambda (cmd)
+	      (when (featurep 'smex)
+		(smex-rank (intern cmd)))
+	      (let ((prefix-arg current-prefix-arg))
+		(setq real-this-command
+		      (setq this-command (intern cmd)))
+		(command-execute (intern cmd) 'record)))
+	    :sort t
+	    :keymap counsel-describe-map
+	    ;; :initial-input
+	    :caller 'counsel-M-x))
+
+(global-set-key (kbd "C-c M-x") 'de/counsel-M-x-only-bound)
+
+
 (use-package counsel
   :ensure t
 
