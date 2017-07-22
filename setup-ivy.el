@@ -36,5 +36,11 @@ Point to the current match with an arrow -> and highlight its line."
 		      :background "#2B2B2B"
 		      :foreground "#FFFFFF"))
 
+(use-package browse-kill-ring
+  :ensure t
+  :config
+  (global-set-key (kbd "M-y") #'browse-kill-ring)
+  (define-key browse-kill-ring-mode-map "j" #'browse-kill-ring-forward)
+  (define-key browse-kill-ring-mode-map "k" #'browse-kill-ring-previous))
 
 (provide 'setup-ivy)
