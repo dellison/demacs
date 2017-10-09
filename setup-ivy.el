@@ -1,4 +1,3 @@
-
 (use-package swiper
   :ensure t
   :config
@@ -42,6 +41,16 @@ key or key sequence."
 	    :caller 'counsel-M-x))
 
 (global-set-key (kbd "C-c M-x") 'de/counsel-M-x-only-bound)
+
+(defun de/counsel-git-grep ()
+  (interactive)
+  (if (region-active-p)
+      (counsel-git-grep "git --no-pager grep --full-name -n --no-color -i -e \"%s\""
+			(buffer-substring (region-beginning) (region-end)))
+    (counsel-git-grep)))
+
+
+(global-set-key (kbd "C-c g g") #'de/counsel-git-grep)
 
 
 (use-package counsel
