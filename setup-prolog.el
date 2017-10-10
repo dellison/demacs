@@ -21,7 +21,8 @@
   (setq comment-start "%%")
   (define-key evil-insert-state-local-map (kbd "S-SPC") 'de/prolog-shift-space)
   (define-key evil-emacs-state-local-map (kbd "S-SPC") 'de/prolog-shift-space)
-  (smartparens-mode 1))
+  ;; (smartparens-mode 1)
+  )
 
 (add-hook 'prolog-mode-hook 'de/prolog-mode-hook)
 

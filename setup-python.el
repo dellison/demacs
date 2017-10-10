@@ -24,11 +24,11 @@
     (compile run-cmd t)))
 
 (defun de/python-mode-hook ()
-  (smartparens-mode 1)
-  (show-smartparens-mode 1)
-  (local-set-key (kbd "C-c rp") 'de/run-this-python-script-as-compile)
-  (local-set-key (kbd "C-c pb") 'de/python-insert-breakpoint)
-  (local-set-key (kbd "C-c pd") 'de/python-insert-breakpoint)
+  ;; (smartparens-mode 1)
+  ;; (show-smartparens-mode 1)
+  ;; (local-set-key (kbd "C-c rp") 'de/run-this-python-script-as-compile)
+  ;; (local-set-key (kbd "C-c pb") 'de/python-insert-breakpoint)
+  ;; (local-set-key (kbd "C-c pd") 'de/python-insert-breakpoint)
   (local-set-key (kbd "S-SPC") (lambda () (interactive) (insert "_"))))
 
 (add-hook 'python-mode-hook 'de/python-mode-hook) 

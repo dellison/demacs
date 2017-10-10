@@ -226,8 +226,8 @@ Anything else means that previous occurance of that character."
 (use-package aggressive-indent
   :ensure aggressive-indent)
 
-(use-package smartparens
-  :ensure smartparens)
+;; (use-package smartparens
+;;   :ensure smartparens)
 
 ;;; now set up a few smaller packages from ELPA
 (use-package yasnippet
