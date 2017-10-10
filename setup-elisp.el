@@ -80,6 +80,7 @@ and switch to it."
   (local-set-key (kbd "C-c C-j") 'imenu)
   (if (fboundp 'helm)
       (local-set-key (kbd "C-M-i") 'helm-lisp-completion-at-point))
+  (local-set-key (kbd "C-c eb") #'eval-buffer)
   (local-set-key (kbd "C-RET") 'de/evil-paredit-open-below))
 
 
