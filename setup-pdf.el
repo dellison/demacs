@@ -12,7 +12,14 @@
   (define-key pdf-view-mode-map "j" #'pdf-view-next-line-or-next-page)
   (define-key pdf-view-mode-map "k" #'pdf-view-previous-line-or-previous-page)
   (define-key pdf-view-mode-map "l" #'image-forward-hscroll)
-  )
+
+  (define-key pdf-view-mode-map "J" (lambda ()
+				      (interactive)
+				      (pdf-view-next-line-or-next-page 10)))
+  (define-key pdf-view-mode-map "K" (lambda ()
+                                      (interactive)
+                                      (pdf-view-previous-line-or-previous-page 10)))
+  (setq pdf-view-resize-factor 1.1))
 
 (defun de/org-pdf-view-store-link ()
   (when (equal major-mode 'pdf-view-mode)
