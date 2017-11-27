@@ -3,7 +3,10 @@
   :mode "\\.html\\'")
 
 (use-package markdown-mode
-  :ensure markdown-mode)
+  :ensure t)
+
+(use-package yaml-mode
+  :ensure t)
 
 (use-package restclient
   :ensure t
