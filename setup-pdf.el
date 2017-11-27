@@ -19,7 +19,11 @@
   (define-key pdf-view-mode-map "K" (lambda ()
                                       (interactive)
                                       (pdf-view-previous-line-or-previous-page 10)))
-  (setq pdf-view-resize-factor 1.1))
+  (setq pdf-view-resize-factor 1.1)
+
+  (require 'pdf-outline)
+  (define-key pdf-outline-buffer-mode-map "j" #'next-line)
+  (define-key pdf-outline-buffer-mode-map "k" #'previous-line))
 
 (defun de/org-pdf-view-store-link ()
   (when (equal major-mode 'pdf-view-mode)
