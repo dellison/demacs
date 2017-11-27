@@ -1,8 +1,12 @@
 (require 'org)
 
+;; (use-package org-plus-contrib
+;;   :ensure t)
+
 ;; Babel setup
 (setq org-babel-load-languages
       '((emacs-lisp . t)
+	(julia . t)
 	(perl . t)
 	(python . t)
 	(sh . t)))
@@ -22,39 +26,103 @@
 				:foreground "#656555"
 				:background "#383838")))
 
+;; inline latex images should be large and black text, white background
+(setq org-format-latex-options
+      '(:foreground "Black"
+	:background "White"
+	:scale 2.5
+	:matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
+
 ;; my org-mode setup and capturing notes
 (setq org-directory "~/dorg"
       org-default-notes-file (concat org-directory "/notes.org"))
-(global-set-key (kbd "C-c c") 'org-capture)
+
+(global-set-key (kbd "C-c a") #'org-agenda)
+
+(defun de/org-agenda-hook ()
+  (hl-line-mode 1))
+
+(add-hook 'org-agenda-mode-hook #'de/org-agenda-hook)
+
+(global-set-key (kbd "C-c c") #'org-capture)
+(global-set-key (kbd "C-c l") #'org-store-link)
 
 (setq org-capture-templates
-      '(("e" "Emacs" entry (file (concat demacs-directory "/todo.org"))
+      '(
+	("b" "Book" entry
+	 (file "books.org")
+	 "* TOREAD\n%U\n")
+	
+	("e" "Emacs" entry
+	 (file "todo.org")
 	 "* TODO %?\n  Captured at %T")
-	("m" "Movie" entry (file (concat org-directory "/movies.org"))
-	 "* WATCHME %t %?\n  %a")
-	("n" "Note" entry (file (concat org-directory "/notes.org"))
-	 "* %?\n  Captured at %T")
-	("t" "Todo" entry (file (concat org-directory "/todo.org"))
+
+	("l" "Link" entry
+	 (file "links.org")
+	 "* %a\n%U\n%?")
+	
+	("m" "Movie" entry
+	 (file "movies.org")
+	 "* WATCHME %t %?\n%a")
+
+	("n" "Note" entry
+	 (file "notes.org")
+	 "* %?\n%U\nLink: %a" :empty-lines 1)
+
+	("t" "Todo" entry
+	 (file "todo.org")
 	 "* TODO %?\n  Captured at %T")
-	("g" "Grocery Store" item (file (concat org-directory "/groceries.org"))
+
+	("g" "Grocery Store" item (file "groceries.org")
 	 "- %?")))
+
+
 
 (add-hook 'org-capture-mode-hook
 	  (defun setup-org-capture-mode ()
 	    (if (fboundp 'evil-mode)
 		(evil-emacs-state))))
 
+;; (setq de/org-note-capture-template
+;;       '("n" "Note" entry (file (concat org-directory "/notes.org"))
+;; 	(string-join '("* %?\n%U\n"
+;; 		       (when (eq major-mode 'elfeed-show-mode)
+;; 			 "elfeed lol"
+;; 			 ;; capture links (to elfeed article and url)
+;; 			 )
+;; 		       ;; (when (eq major-mode ))
+;; 		       ) ))
+;;       )
+
+
+
+(defun de/org-set-tag ()
+  (interactive)
+  (counsel-org-tag)
+  (org-set-tags-to (sort (org-get-local-tags) #'string<)))
+
 (defun de/org-mode-hook ()
   "setup for org mode"
+  (hl-line-mode 1)
+  (yas-minor-mode 1)
   (define-key evil-insert-state-local-map
     (kbd "C-<return>") 'org-insert-heading-after-current)
   (define-key evil-emacs-state-local-map
     (kbd "C-<return>") 'org-insert-heading-after-current)
   (define-key evil-normal-state-local-map
     (kbd "C-<return>") 'org-insert-heading-after-current)
-  (local-set-key (kbd "C-RET") 'org-insert-heading-after-current))
+  (local-set-key (kbd "C-RET") 'org-insert-heading-after-current)
+  (local-set-key (kbd "M-q") #'org-fill-paragraph)
+
+  (local-set-key (kbd "C-c C-q") #'de/org-set-tag))
 
 (add-hook 'org-mode-hook 'de/org-mode-hook)
+
+(defun de/org-agenda-hook ()
+  (hl-line-mode 1)
+  (local-set-key "j" #'org-agenda-next-line)
+  (local-set-key "k" #'org-agenda-previous-line)
+  (local-set-key (kbd "C-c C-q") #'de/org-set-tag))
 
 (defun de/surround-region-with-org-comment (beg end)
   (interactive "r")
@@ -68,6 +136,18 @@
   (interactive)
   (beginning-of-line)
   (insert "#+LaTeX: \\\\ \\: \\\\\n"))
+
+(defun de/revert-org-buffers ()
+  "Reload all the org-mode buffers from disk."
+  (interactive)
+  (mapc
+   (lambda (buf)
+     (with-current-buffer buf
+       (when (and buffer-file-name
+		  (eq major-mode 'org-mode))
+	 (revert-buffer nil t))))
+   (buffer-list))
+  (message "Reverted org buffers."))
 
 (defun de/convert-decimal-to-roman (x &optional s)
   (let ((st (if s s ""))
