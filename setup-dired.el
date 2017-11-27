@@ -1,22 +1,24 @@
 (require 'dired)
-(setq dired-listing-switches "-hal")
-
 (require 'dired-x)
 
+(setq dired-listing-switches "-hal")
+
 (use-package dired-details
-  :ensure dired-details)
+  :ensure t)
 
 (define-key dired-mode-map (kbd "SPC") nil)
 
 (require 'dired-details)
-(setq dired-details-hidden-string "--- ")
+(setq dired-details-hidden-string "--- "
+      dired-dwim-target t)
 
 (define-key dired-mode-map (kbd "<SPC>") nil)
 (define-key dired-mode-map "f" 'de/dired-find-here)
 ;; use j and k for going up and down
-(define-key dired-mode-map (kbd "j") 'dired-next-line)
-(define-key dired-mode-map (kbd "k") 'dired-previous-line)
+(define-key dired-mode-map (kbd "j") #'dired-next-line)
+(define-key dired-mode-map (kbd "k") #'dired-previous-line)
 ;; (define-key dired-mode-map (kbd "K") 'dired-do-kill-lines)
+(define-key dired-mode-map (kbd "J") #'dired-jump)
 (define-key dired-mode-map (kbd "K") #'de/dired-kill-lines-or-sibdir)
 (when (fboundp 'evil-mode)
   (define-key evil-normal-state-local-map "(" 'dired-details-toggle)
