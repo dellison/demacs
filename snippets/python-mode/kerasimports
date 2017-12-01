@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: imports for using keras
+# key: kerasimports 
+# expand-env: ((yas-indent-line 'fixed))
+# --
+import os
+import re
+import sys
+
+import numpy as np
+
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation
+from keras.layers import Embedding
+from keras.layers import Conv1D, GlobalMaxPooling1D
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing import sequence
+from keras.utils.np_utils import to_categorical
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+
