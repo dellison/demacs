@@ -1,24 +1,23 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Setup for editing emacs lisp
-;; 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; emacs lisp, of course
+
 (use-package elisp-slime-nav
-  :ensure elisp-slime-nav)
+  :ensure elisp-slime-nav
 
-(defun de/jump-to-elisp-definition ()
-  "See the elisp definition of something."
-  (interactive)
-  (with-temp-buffer
-    (call-interactively #'elisp-slime-nav-find-elisp-thing-at-point)))
+  :bind (("C-c M-x" . de/jump-to-elisp-definition))
 
-(use-package litable
-  :ensure litable
   :config
-  (add-hook 'lisp-interaction-mode-1 'litable-mode))
+  (defun de/jump-to-elisp-definition ()
+    "See the elisp definition of something.
+
+This is a weird way to do this, but switching to a temp buffer
+and trying to slime-nav with nothing at point always prompts for
+a symbol."
+    (interactive)
+    (with-temp-buffer
+      (call-interactively #'elisp-slime-nav-find-elisp-thing-at-point))))
 
 (require 'elisp-slime-nav)
-;; (require 'litable) ;; changed my mind about this one, i think
 (require 'paredit)
 (require 'setup-lisps)
 
@@ -78,9 +77,9 @@ and switch to it."
   (define-key evil-normal-state-local-map (kbd "M-.") 'elisp-slime-nav-find-elisp-thing-at-point)
   (turn-on-elisp-slime-nav-mode)
   (local-set-key (kbd "C-c C-j") 'imenu)
-  (if (fboundp 'helm)
-      (local-set-key (kbd "C-M-i") 'helm-lisp-completion-at-point))
   (local-set-key (kbd "C-c eb") #'eval-buffer)
+  ;; (if (fboundp 'helm)
+  ;;     (local-set-key (kbd "C-M-i") 'helm-lisp-completion-at-point))
   (local-set-key (kbd "C-RET") 'de/evil-paredit-open-below))
 
 
@@ -95,17 +94,15 @@ and switch to it."
 (add-hook 'minibuffer-setup-hook
 	  (defun de/minibuffer-setup-hook ()
 	    (local-set-key (kbd "S-SPC") (lambda () (interactive) (insert "-")))
-	    ;; Setup paredit for elisp
-	    (when (eq this-command 'eval-expression)
-	      (paredit-mode 1)
-	      (local-set-key (kbd "S-SPC") (lambda () (interactive) (insert "-")))
-	      (paredit-open-round))))
+	    (if (eq this-command 'eval-expression)
+		(progn  ;; Setup paredit for elisp
+		  (paredit-mode 1)
+		  (paredit-open-round)))))
 
 (add-hook 'ielm-mode-hook
 	  (defun de/ielm-mode-hook ()
 	    "Hook for setting up IELM (interactive emacs lisp mode)"
-	    (litable-mode -1)
-	    (define-key evil-insert-state-local-map (kbd "DEL") 'paredit-backward-delete)))
+	    (de/elisp-mode-hook)))
 
 (require 'setup-lisps)
 (add-hook 'emacs-lisp-mode-hook 'de/lisps-mode-hook)
