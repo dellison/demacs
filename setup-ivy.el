@@ -1,3 +1,6 @@
+(use-package smex
+  :ensure t)
+
 (use-package swiper
   :ensure t
   :config
@@ -19,27 +22,35 @@
 	(mx (format "M-x %s" cmd)))
     (not (string= mx binding))))
 
+
+;; TODO: maybe speed this up by getting symbols from the major &
+;; minor mode maps?
+
 (defun de/counsel-M-x-only-bound ()
-  "Jude like counsel-M-x, but only include commands that are bound to a
+  "Like counsel-M-x, but only include commands that are bound to a
 key or key sequence."
   (interactive)
-  (ivy-read (counsel--M-x-prompt) obarray
-	    :predicate 'de/keybound-p
-	    :require-match t
-	    ;; :history
-	    :action
-	    (lambda (cmd)
-	      (when (featurep 'smex)
-		(smex-rank (intern cmd)))
-	      (let ((prefix-arg current-prefix-arg))
-		(setq real-this-command
-		      (setq this-command (intern cmd)))
-		(command-execute (intern cmd) 'record)))
-	    :sort t
-	    :keymap counsel-describe-map
-	    ;; :initial-input
-	    :caller 'counsel-M-x))
-
+  (let ((symbols '()))
+    (mapatoms
+     (lambda (x)
+       (when (de/keybound-p x)
+	 (push (symbol-name x) symbols))))
+    (ivy-read (counsel--M-x-prompt) symbols ;; obarray
+	      :predicate 'de/keybound-p
+	      :require-match t
+	      ;; :history
+	      :action
+	      (lambda (cmd)
+		(when (featurep 'smex)
+		  (smex-rank (intern cmd)))
+		(let ((prefix-arg current-prefix-arg))
+		  (setq real-this-command
+			(setq this-command (intern cmd)))
+		  (command-execute (intern cmd) 'record)))
+	      :sort t
+	      :keymap counsel-describe-map
+	      ;; :initial-input
+	      :caller 'counsel-M-x)))
 (global-set-key (kbd "C-c M-x") 'de/counsel-M-x-only-bound)
 
 (defun de/counsel-git-grep ()
@@ -60,7 +71,7 @@ key or key sequence."
   (setq counsel-find-file-at-point t
 	ivy-height 13)
 
-  ;; written in the style of ivy-format-function-arrow
+  ;; written in the style of (kinda copied from) ivy-format-function-arrow
   (defun de/ivy-format-fn (cands)
     "Format candidate pairs in the minibuffer.
 Point to the current match with an arrow -> and highlight its line."

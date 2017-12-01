@@ -1,8 +1,7 @@
 (use-package inf-ruby
   :ensure inf-ruby
   :config
-  (progn
-    (defalias 'irb 'run-ruby)))
+  (defalias 'irb 'run-ruby))
 
 (defun de/ruby-mode-hook ()
   "setup for ruby files"

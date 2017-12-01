@@ -1,8 +1,11 @@
 (global-set-key "\C-w" #'backward-kill-word)
 (global-set-key (kbd "RET") #'newline-and-indent)
 (global-set-key (kbd "C-x C-k") #'kill-region)
-(global-set-key (kbd "C-c gr") #'lgrep)
-(global-set-key (kbd "C-c rg") #'rgrep)
+(global-set-key (kbd "C-c gr") #'igrep)
+(global-set-key (kbd "C-c rg") (defun de/recursive-igrep ()
+				 (interactive)
+				 (let ((igrep-options "-R"))
+				   (call-interactively #'igrep))))
 (global-set-key (kbd "C-c sw") #'swap-windows)
 (global-set-key (kbd "C-c dc") #'describe-char)
 (global-set-key (kbd "C-c rr") #'replace-rectangle)
@@ -15,6 +18,8 @@
 (global-set-key (kbd "C-c ws") #'whitespace-mode)
 (global-set-key (kbd "C-c M-.") #'de/jump-to-elisp-definition)
 (global-set-key (kbd "M-/") #'hippie-expand)
+
+(global-set-key (kbd "C-c q") #'quit-window)
 
 (global-set-key "\C-ha" #'apropos) ; search for all symbols by default (instead of only commands)
 (global-set-key (kbd "C-h c") #'apropos-command)  ; previously describe-key-briefly
@@ -98,7 +103,8 @@ Otherwise, moves to the beginning of the line."
   "Use helm to visit an emacs configuration file."
   (interactive)
   (let ((default-directory demacs-directory))
-    (helm-projectile)))
+    (counsel-projectile-find-file)))
+
 (global-set-key (kbd "C-c de") #'de/visit-demacs)
 
 (when (fboundp 'evil-mode)

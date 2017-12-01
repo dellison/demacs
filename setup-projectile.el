@@ -1,11 +1,13 @@
 (use-package projectile
   :ensure projectile
-  :config
-  (progn
-    (projectile-mode 1)
-    (global-set-key (kbd "C-c ff") 'helm-projectile)))
 
-(use-package helm-projectile
-  :ensure helm-projectile)
+  :config
+  (projectile-mode 1))
+
+(use-package counsel-projectile
+  :ensure t
+
+  :config
+  (global-set-key (kbd "C-c ff") #'counsel-projectile-find-file))
 
 (provide 'setup-projectile)

@@ -1,7 +1,6 @@
-(install-if-needed 'yasnippet)
-
-(require 'yasnippet)
-(setq yas-snippet-dirs  '("~/demacs/snippets"))
-(yas-global-mode 1)
+(use-package yasnippet
+  :ensure t
+  :config
+  (add-to-list 'yas-snippet-dirs (concat demacs-directory "/snippets")))
 
 (provide 'setup-yasnippet)

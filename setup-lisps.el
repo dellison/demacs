@@ -46,7 +46,7 @@
     (lambda () (interactive) (insert "-")))
   (define-key evil-insert-state-local-map (kbd "S-SPC")
     (lambda () (interactive) (insert "-")))
-  (aggressive-indent-mode 1)
+  ;; (aggressive-indent-mode 1)
   
   ;; (make-local-variable 'hippie-expand-try-functions-list)
   ;; (setq hippie-expand-try-functions-list
