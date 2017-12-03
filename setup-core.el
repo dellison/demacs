@@ -22,6 +22,10 @@
 (blink-cursor-mode 0)
 (show-paren-mode 1)
 (global-hl-line-mode 1)
+
+(set-face-attribute 'hl-line nil :background "#3C3C3C")
+(global-hl-line-mode t)
+
 (winner-mode 1)
 
 ;; if you're looking at a file, the frame title should be the full path
