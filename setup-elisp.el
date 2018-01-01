@@ -4,7 +4,7 @@
 (use-package elisp-slime-nav
   :ensure elisp-slime-nav
 
-  :bind (("C-c M-x" . de/jump-to-elisp-definition))
+  :bind (("C-c M-." . de/jump-to-elisp-definition))
 
   :config
   (defun de/jump-to-elisp-definition ()
