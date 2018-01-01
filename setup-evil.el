@@ -1,35 +1,32 @@
 ;;; EVIL
-
 (use-package evil
   :ensure t
+
+  :bind (:map evil-normal-state-map
+	 ("j" . evil-next-visual-line)
+	 ("k" . evil-previous-visual-line)
+	 ("C-n" . evil-next-visual-line)
+	 ("C-p" . evil-previous-visual-line)
+	 ("C-r" . isearch-backward-regexp)
+	 ("C-t" . transpose-chars)
+	 ("M-t" . transpose-words)
+	 ("s-M-t" . transpose-sexps)
+	 ("C-w" . backward-kill-word)
+	 :map evil-visual-state-map
+	 ("C-n" . evil-next-visual-line)
+	 ("C-p" . evil-previous-visual-line))
 
   :config
   (evil-mode 1)
   (setq evil-move-cursor-back t
 	evil-cross-lines t
+	evil-default-cursor      '("white" box)
 	evil-insert-state-cursor '("white"  box)
 	evil-emacs-state-cursor  '("#FFFFFF"  box)
 	;;evil-motion-state-cursor '("#D0BF8F"  box) ;; same as "zenburn-yellow-2"
 	evil-motion-state-cursor '("LightSkyBlue" box) ;; same as time in mode line
 	evil-normal-state-cursor '("#D0BF8F"  box)
 	evil-visual-state-cursor '("#D0BF8F"  box))
-
-  ;;; don't skip wrapped lines
-  (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
-  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-
-  (define-key evil-normal-state-map (kbd "C-w") 'backward-kill-word)
-
-  (define-key evil-visual-state-map "\C-n" 'evil-next-line)
-
-  (define-key evil-normal-state-map "\C-p" 'evil-previous-line)
-  (define-key evil-visual-state-map "\C-p" 'evil-previous-line)
-
-  (define-key evil-normal-state-map (kbd "C-r") 'isearch-backward-regexp)
-
-  (define-key evil-normal-state-map (kbd "C-t") 'transpose-chars)
-  (define-key evil-normal-state-map (kbd "M-t") 'transpose-words)
-  (define-key evil-normal-state-map (kbd "s-M-t") 'transpose-sexps)
 
   (when (display-graphic-p)
     (defun de/dont-suspend-frame ()
@@ -46,7 +43,7 @@
       "Save buffer and go to normal state."
       (interactive)
       (save-buffer)
-      (when (memq major-mode initial-state-emacs-modes)
+      (unless (memq major-mode initial-state-emacs-modes)
         (evil-normal-state))))
 
   (setcdr evil-insert-state-map nil) ;; just use normal emacs for insert state
