@@ -27,7 +27,7 @@
 
 (defun de/org-pdf-view-store-link ()
   (when (equal major-mode 'pdf-view-mode)
-    (let* ((title "pdf link")
+    (let* ((title "pdf")
 	   (file (buffer-file-name))
 	   (page (pdf-view-current-page))
 	   (link (format "pdf-tools:%s::%d" file page)))
