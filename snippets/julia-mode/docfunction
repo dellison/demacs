@@ -1,9 +1,12 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # name: docfunction
-# key: docf
+# key: fn
 # --
 """
-$1
+    $1($2)
+
+${3:documentation}
 """
-function $0
+function ${1:name}(${2:args})
+    $0
 end

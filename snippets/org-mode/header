@@ -4,7 +4,9 @@
 # --
 #+TITLE: $1
 #+AUTHOR: David Ellison
-#+FILETAGS:$2
-#+STARTUP: $3
-#+TODO: ${2:TODO WAIT | DONE}
-$0
+#+EMAIL: 
+#+FILETAGS: $2
+#+KEYWORDS:
+#+OPTIONS: 
+#+STARTUP: indent showall
+#+TODO: TODO | DONE
