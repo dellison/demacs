@@ -47,6 +47,19 @@
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c l") #'org-store-link)
 
+
+;; (setq org-capture-templates
+;;       '(("e" "Emacs" entry (file (concat demacs-directory "/todo.org"))
+;; 	 "* TODO %?\n  Captured at %T")
+;; 	("m" "Movie" entry (file (concat org-directory "/movies.org"))
+;; 	 "* WATCHME %t %?\n  %a")
+;; 	("n" "Note" entry (file (concat org-directory "/notes.org"))
+;; 	 "* %?\nlink: %a\nCaptured at %T")
+;; 	("t" "Todo" entry (file (concat org-directory "/todo.org"))
+;; 	 "* TODO %?\n  Captured at %T")
+;; 	("g" "Grocery Store" item (file (concat org-directory "/groceries.org"))
+;; 	 "- %?")))
+
 (setq org-capture-templates
       '(
 	("b" "Book" entry
@@ -75,7 +88,6 @@
 
 	("g" "Grocery Store" item (file "groceries.org")
 	 "- %?")))
-
 
 
 (add-hook 'org-capture-mode-hook
@@ -115,8 +127,11 @@
     (kbd "C-<return>") 'org-insert-heading-after-current)
   (local-set-key (kbd "C-RET") 'org-insert-heading-after-current)
   (local-set-key (kbd "M-q") #'org-fill-paragraph)
-
-  (local-set-key (kbd "C-c C-q") #'de/org-set-tag))
+  (when (fboundp 'ivy-mode)
+    (local-set-key (kbd "C-c C-q") (lambda ()
+				     (interactive)
+				     (save-excursion
+				       (counsel-org-tag))))))
 
 (add-hook 'org-mode-hook 'de/org-mode-hook)
 

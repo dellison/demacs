@@ -13,4 +13,7 @@
   :config
   (define-key restclient-mode-map (kbd "C-c C-c") #'restclient-http-send-current-stay-in-window))
 
+(use-package yaml-mode
+  :ensure t)
+
 (provide 'setup-web)

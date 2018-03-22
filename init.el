@@ -53,8 +53,9 @@
 (de/log "running setup-eshell")
 (require 'setup-eshell)
 
-(de/log "running setup-helm")
-(require 'setup-helm)
+;; (de/log "running setup-helm")
+;; (require 'setup-helm)
+(require 'setup-ivy)
 
 (de/log "running setup-yasnippet")
 (require 'setup-yasnippet)

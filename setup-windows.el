@@ -1,3 +1,4 @@
+
 ;; add cygwin things to path
 ;; (always prefer cygwin tools to windows ones if there's a collision)
 (setenv "PATH" (concat "c:\\cygwin\\bin;"
@@ -8,9 +9,10 @@
 (add-to-list 'exec-path "c:/cygwin/bin;")
 
 ;;; use Git Bash (and other tools provided there) instead
+(setenv "HOME" "c:/Users/davide")
 (setenv "PATH" (concat "c:/Program Files/Git/bin;" (getenv "PATH")))
 (add-to-list 'exec-path "c:/Program Files/Git/bin")
-(setenv "GIT_ASKPASS" "git-gui--askpass") ;; so that pushing from Magit can work
+;; (setenv "GIT_ASKPASS" "git-gui--askpass") ;; so that pushing from Magit can work
 
 (setq with-editor-emacsclient-executable "s:/emacs/bin/emacsclientw.exe")
 

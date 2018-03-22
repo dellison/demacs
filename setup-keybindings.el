@@ -15,6 +15,7 @@
 (global-set-key (kbd "C-c d RET") 'de/indent-to)
 ;; (global-set-key (kbd "C-c lw") 'toggle-truncate-lines)
 ;;    - "line wrap" mnemonic too
+(global-set-key (kbd "C-c q") #'quit-window)
 (global-set-key (kbd "C-c ws") #'whitespace-mode)
 (global-set-key (kbd "C-c M-.") #'de/jump-to-elisp-definition)
 (global-set-key (kbd "M-/") #'hippie-expand)

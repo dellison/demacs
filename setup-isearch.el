@@ -2,8 +2,8 @@
       isearch-regexp-lax-whitespace t
       search-whitespace-regexp "[ \t\r\n_-]+")
 
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-s") #'isearch-forward-regexp)
+(global-set-key (kbd "C-r") #'isearch-backward-regexp)
 
 (defun de/isearch-forward-flexibly ()
   "incrementally search the buffer, but let SPC match anything"

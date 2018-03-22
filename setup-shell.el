@@ -32,4 +32,9 @@ Prompts user for buffer name (defaults to *shell: <directory>*)"
     (setq eshell-path-env path-from-shell) ; for eshell users
     (setq exec-path (split-string path-from-shell path-separator))))
 
+(defun de/sh-mode-hook ()
+  (local-set-key (kbd "C-c C-j") #'counsel-imenu))
+
+(add-hook 'sh-mode-hook #'de/sh-mode-hook)
+
 (provide 'setup-shell)
