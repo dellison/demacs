@@ -69,7 +69,8 @@ key or key sequence."
 
   :config
   (setq counsel-find-file-at-point t
-	ivy-height 13)
+	ivy-height 13
+	ivy-use-selectable-prompt t)
 
   ;; written in the style of (kinda copied from) ivy-format-function-arrow
   (defun de/ivy-format-fn (cands)
