@@ -6,6 +6,17 @@
 			       "/usr/local/lib/python2.7/site-packages"))
   (setq python-shell-interpreter "/usr/local/bin/python"))
 
+
+(use-package pyvenv
+  :ensure t)
+
+(use-package counsel-pydoc
+  :ensure t
+
+  :bind ((:map python-mode-map
+	  ("C-c C-d d" . counsel-pydoc)
+	  ("C-c C-d C-d" . counsel-pydoc))))
+
 (defvar de/python-breakpoint-string "import pdb; pdb.set_trace() ## DEBUG ##"
   "Python breakpoint string.")
 

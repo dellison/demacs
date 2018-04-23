@@ -77,9 +77,9 @@
 				      inferior-ess-mode
 				      inferior-haskell-mode
 				      inferior-octave-mode
+				      inferior-python-mode
 				      inf-ruby-mode
 				      Info-mode
-				      inferiorer-python-mode
 				      ledger-report-mode
 				      magit-log-mode
 				      magit-status-mode
