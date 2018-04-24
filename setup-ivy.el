@@ -94,9 +94,11 @@ Point to the current match with an arrow -> and highlight its line."
 
 (use-package browse-kill-ring
   :ensure t
-  :config
-  (global-set-key (kbd "M-y") #'browse-kill-ring)
-  (define-key browse-kill-ring-mode-map "j" #'browse-kill-ring-forward)
-  (define-key browse-kill-ring-mode-map "k" #'browse-kill-ring-previous))
+  :bind (("M-y" . browse-kill-ring)
+	 :map browse-kill-ring-mode-map
+	 ("j" . browse-kill-ring-forward)
+	 ("k" . browse-kill-ring-previous)
+	 ("n" . browse-kill-ring-forward)
+	 ("p" . browse-kill-ring-previous)))
 
 (provide 'setup-ivy)
