@@ -156,28 +156,37 @@ Anything else means that previous occurance of that character."
 ;;; enable all the disabled commands
 (mapatoms (lambda (s) (when (get s 'disabled) (put s 'disabled nil))))
 
-;;; use ibuffer instead of list-buffers
-(require 'ibuffer)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(defun de/ibuffer-mode-hook ()
-  ""
-  ;; set up filter by unsaved buffers
-  (define-ibuffer-filter unsaved
-      "Toggle current view to buffers whose file is unsaved."
-    (:description "file is unsaved")
-    (with-current-buffer buf
-      (and buffer-file-name (buffer-modified-p)))))
-
-(add-hook 'ibuffer-mode-hook 'de/ibuffer-mode-hook)
-
-(define-key ibuffer-mode-map (kbd "/ u") 'ibuffer-filter-by-unsaved)
-(define-key ibuffer-mode-map (kbd "M-o") 'other-window)
-(define-key ibuffer-mode-map (kbd "j") 'ibuffer-forward-line)
-(define-key ibuffer-mode-map (kbd "k") 'ibuffer-backward-line)
-(define-key ibuffer-mode-map (kbd "J") 'ibuffer-jump-to-buffer)
-(define-key ibuffer-mode-map (kbd "K") 'ibuffer-do-kill-lines)
-(define-key ibuffer-mode-map (kbd "U") 'ibuffer-unmark-all)
+(use-package ibuffer
+  :commands ibuffer
+  :bind
+  (("C-x C-b" . ibuffer)
+   :map ibuffer-mode-map
+   ("/ u" . ibuffer-filter-by-unsaved)
+   ("M-o" . other-window)
+   ("j" . ibuffer-forward-line)
+   ("k" . ibuffer-backward-line)
+   ("J" . ibuffer-jump-to-buffer)
+   ("K" . ibuffer-do-kill-lines)
+   ("U" . ibuffer-unmark-all)
+   ("M-<" . de/ibuffer-beginning-of-buffer)
+   ("M->" . de/ibuffer-end-of-buffer))
+  :config
+  (defun de/ibuffer-beginning-of-buffer ()
+    (interactive)
+    (beginning-of-buffer)
+    (ibuffer-forward-line 2))
+  (defun de/ibuffer-end-of-buffer ()
+    (interactive)
+    (end-of-buffer)
+    (ibuffer-backward-line))
+  (defun de/setup-ibuffer-filters ()
+    ;; add an "unsaved" filter
+    (define-ibuffer-filter unsaved
+	"Toggle current view to only buffers which are unsaved."
+      (:description "unsaved")
+      (with-current-buffer buf
+	(and buffer-file-name (buffer-modified-p)))))
+  (add-hook 'ibuffer-hook #'de/setup-ibuffer-filters))
 
 (require 'setup-isearch)
 
