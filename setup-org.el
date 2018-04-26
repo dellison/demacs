@@ -97,9 +97,11 @@
 
 
 (defun de/org-set-tag ()
+  "Wrapper for org-set-tag which keep tags in alphabetical order."
   (interactive)
   (counsel-org-tag)
-  (org-set-tags-to (sort (org-get-local-tags) #'string<)))
+  (org-set-tags-to (sort (org-get-local-tags) #'string<))
+  (org-set-tags nil t))
 
 (defun de/org-mode-hook ()
   "setup for org mode"
