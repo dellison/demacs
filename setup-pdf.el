@@ -4,26 +4,27 @@
   :ensure t)
 
 (use-package pdf-tools
-  :ensure pdf-tools
+  :ensure t
+
+  :bind (:map pdf-view-mode-map
+	 ("h" . image-backward-hscroll)
+	 ("j" . pdf-view-next-line-or-next-page)
+	 ("k" . pdf-view-previous-line-or-previous-page)
+	 ("l" . image-forward-hscroll)
+	 ("J" . de/pdf-faster-next-line-or-page)
+	 ("K" . de/pdf-faster-previous-line-or-page))
 
   :config
-  (pdf-tools-install)
-  (define-key pdf-view-mode-map "h" #'image-backward-hscroll)
-  (define-key pdf-view-mode-map "j" #'pdf-view-next-line-or-next-page)
-  (define-key pdf-view-mode-map "k" #'pdf-view-previous-line-or-previous-page)
-  (define-key pdf-view-mode-map "l" #'image-forward-hscroll)
+  (defun de/pdf-faster-next-line-or-page (&optional lines)
+    (interactive)
+    (pdf-view-next-line-or-next-page (or lines 10)))
+  (defun de/pdf-faster-previous-line-or-page (&optional lines)
+    (interactive)
+    (pdf-view-previous-line-or-previous-page (or lines 10)))
 
-  (define-key pdf-view-mode-map "J" (lambda ()
-				      (interactive)
-				      (pdf-view-next-line-or-next-page 10)))
-  (define-key pdf-view-mode-map "K" (lambda ()
-                                      (interactive)
-                                      (pdf-view-previous-line-or-previous-page 10)))
   (setq pdf-view-resize-factor 1.1)
 
-  (require 'pdf-outline)
-  (define-key pdf-outline-buffer-mode-map "j" #'next-line)
-  (define-key pdf-outline-buffer-mode-map "k" #'previous-line))
+  (require 'pdf-outline))
 
 (defun de/org-pdf-view-store-link ()
   (when (equal major-mode 'pdf-view-mode)
