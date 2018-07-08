@@ -47,4 +47,37 @@
   ;;   (insert "_"))
   )
 
+(use-package ediprolog
+  :ensure t
+
+  :bind ((:map prolog-mode-map
+	       ("C-c C-c" . ediprolog-dwim)
+	       ("C-c M-o" . ediprolog-remove-interactions)
+	       ("?" . de/ediprolog-query-or-question-mark)))
+
+  :config
+  (setq ediprolog-prefix "%@ ")
+
+  (defun de/ediprolog-query-or-question-mark ()
+    (interactive)
+    (if (prolog-in-string-or-comment)
+	(if (looking-back "^\s*")
+	    (insert "?- ")
+	  (insert "?"))
+      (if (looking-back "^\s*")
+	  (progn
+	    (prolog-insert-comment-block)
+	    (insert "?- "))
+	(insert "?"))))
+
+  (defun prolog-insert-comment-block ()
+    "Insert a PceEmacs-style comment block like /* - - ... - - */ "
+    (interactive)
+    (let ((dashes "-"))
+      (dotimes (_ 36) (setq dashes (concat "- " dashes)))
+      (insert (format "/* %s\n\n%s */" dashes dashes))
+      (forward-line -1)
+      (indent-for-tab-command))))
+
+
 (provide 'setup-prolog)
