@@ -6,21 +6,32 @@
 (use-package pdf-tools
   :ensure t
 
-  :bind (:map pdf-view-mode-map
-	 ("h" . image-backward-hscroll)
-	 ("j" . pdf-view-next-line-or-next-page)
-	 ("k" . pdf-view-previous-line-or-previous-page)
-	 ("l" . image-forward-hscroll)
-	 ("J" . de/pdf-faster-next-line-or-page)
-	 ("K" . de/pdf-faster-previous-line-or-page))
+  :mode (("\\.pdf\\'" . pdf-view-mode))
+
+  :bind ((:map pdf-view-mode-map
+	       ("h" . image-backward-hscroll)
+	       ("j" . pdf-view-next-line-or-next-page)
+	       ("J" . de/pdf-faster-next-line-or-page)
+	       ("k" . pdf-view-previous-line-or-previous-page)
+	       ("K" . de/pdf-faster-previous-line-or-page)
+	       ("l" . image-forward-hscroll)
+	       ("o" . pdf-outline))
+	 (:map pdf-outline-minor-mode-map
+	       ("a" . outline-show-all)))
 
   :config
+  (pdf-tools-install)
   (defun de/pdf-faster-next-line-or-page (&optional lines)
     (interactive)
     (pdf-view-next-line-or-next-page (or lines 10)))
   (defun de/pdf-faster-previous-line-or-page (&optional lines)
     (interactive)
     (pdf-view-previous-line-or-previous-page (or lines 10)))
+
+  (defun de/pdf-view-mode-setup ()
+    (pdf-isearch-minor-mode 1)
+    (pdf-outline-minor-mode 1))
+  (add-hook 'pdf-view-mode-hook #'de/pdf-view-mode-setup)
 
   (setq pdf-view-resize-factor 1.1)
 
