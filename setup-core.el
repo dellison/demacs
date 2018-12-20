@@ -19,12 +19,16 @@
       backup-directory-alist '(("." . "~/backups"))
       gc-cons-threshold 20000000)
 
-(blink-cursor-mode 0)
-(show-paren-mode 1)
-(global-hl-line-mode 1)
 
-(set-face-attribute 'hl-line nil :background "#3C3C3C")
-(global-hl-line-mode t)
+(show-paren-mode 1)
+
+(when (display-graphic-p)
+  (blink-cursor-mode 0)
+  (global-hl-line-mode 1)
+  (set-face-attribute 'hl-line nil :background "#3C3C3C")
+  (global-hl-line-mode t))
+
+
 
 (winner-mode 1)
 
@@ -225,16 +229,16 @@ Anything else means that previous occurance of that character."
 			:background "#3F3F3F")
     (set-face-attribute 'whitespace-trailing nil
 			:foreground "#545444"
-			:background "#3F3F3F"))
+			:background "#3F3F3F")))
 
-  (use-package beacon
-    :ensure beacon
-    :config
-    (setq beacon-color "#888888"
-	  beacon-blink-duration 0.2
-	  beacon-blink-when-focused t
-	  beacon-size 12)
-    (beacon-mode 1)))
+(use-package beacon
+  :ensure beacon
+  :config
+  (setq beacon-color "#888888"
+	beacon-blink-duration 0.2
+	beacon-blink-when-focused t
+	beacon-size 12)
+  (beacon-mode 1))
 
 (use-package aggressive-indent
   :ensure aggressive-indent)

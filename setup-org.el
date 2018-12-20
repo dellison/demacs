@@ -40,7 +40,8 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 
 (defun de/org-agenda-hook ()
-  (hl-line-mode 1))
+  ;; (hl-line-mode 1)
+  )
 
 (add-hook 'org-agenda-mode-hook #'de/org-agenda-hook)
 

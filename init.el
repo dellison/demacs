@@ -17,12 +17,15 @@
 	  ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
 	  ("melpa" . "http://melpa.milkbox.net/packages/")
 	  ("gnu" . "http://elpa.gnu.org/packages/")))
+  (package-initialize)
   (package-refresh-contents)
   (defun install-if-needed (package)
     "I hope to deprecate this soon in favor of `use-package' -de"
     (unless (package-installed-p package)
       (package-install package)))
   (package-initialize))
+
+(install-if-needed 'use-package)
 
 (de/log "starting server")
 (when (display-graphic-p)

@@ -19,6 +19,16 @@
   :config
   (evil-mode 1)
   (setq evil-move-cursor-back t
+	evil-cross-lines t)
+  
+
+  (when (display-graphic-p)
+    (defun de/dont-suspend-frame ()
+      (interactive)
+      (message "didn't suspend the frame!"))
+    (define-key evil-emacs-state-map (kbd "C-z") 'de/dont-suspend-frame)
+    (define-key evil-insert-state-map (kbd "C-z") 'de/dont-suspend-frame)
+    (setq evil-move-cursor-back t
 	evil-cross-lines t
 	evil-default-cursor      '("white" box)
 	evil-insert-state-cursor '("white"  box)
@@ -26,14 +36,7 @@
 	;;evil-motion-state-cursor '("#D0BF8F"  box) ;; same as "zenburn-yellow-2"
 	evil-motion-state-cursor '("LightSkyBlue" box) ;; same as time in mode line
 	evil-normal-state-cursor '("#D0BF8F"  box)
-	evil-visual-state-cursor '("#D0BF8F"  box))
-
-  (when (display-graphic-p)
-    (defun de/dont-suspend-frame ()
-      (interactive)
-      (message "didn't suspend the frame!"))
-    (define-key evil-emacs-state-map (kbd "C-z") 'de/dont-suspend-frame)
-    (define-key evil-insert-state-map (kbd "C-z") 'de/dont-suspend-frame))
+	evil-visual-state-cursor '("#D0BF8F"  box)))
 
   (define-key evil-motion-state-map (kbd "RET") nil)
 
