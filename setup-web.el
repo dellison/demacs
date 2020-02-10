@@ -11,6 +11,10 @@
 (use-package restclient
   :ensure t
 
-  :config
-  (define-key restclient-mode-map (kbd "C-c C-c") #'restclient-http-send-current-stay-in-window))
+  :bind (:map restclient-mode-map
+	 ("C-c C-c" . restclient-http-send-current-stay-in-window)))
+
+(use-package ob-restclient
+  :ensure t)
+
 (provide 'setup-web)
