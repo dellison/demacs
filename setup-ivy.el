@@ -86,6 +86,8 @@ Point to the current match with an arrow -> and highlight its line."
   (setq ivy-format-function #'de/ivy-format-fn
 	ivy-initial-inputs-alist '())
 
+  (defalias 'ivy-format-function-default 'de/ivy-format-fn)
+
   (global-set-key (kbd "M-x") 'counsel-M-x)
 
   (set-face-attribute 'ivy-current-match nil
