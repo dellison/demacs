@@ -148,6 +148,7 @@ Anything else means that previous occurance of that character."
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+(define-coding-system-alias 'utf8 'utf-8)
 ;; backwards compatibility as default-buffer-file-coding-system
 ;; is deprecated in 23.2.
 (if (boundp 'buffer-file-coding-system)
@@ -214,22 +215,26 @@ Anything else means that previous occurance of that character."
 
   (whitespace-mode 1)
   (use-package zenburn-theme
+    ;; :disabled
     :ensure zenburn-theme
 
     :config
     (mapc (lambda (face)
-	    (set-face-attribute face nil
-				:foreground "#4F4F4F"
-				:background "#3F3F3F"))
-	  '(whitespace-tab
-	    whitespace-space
-	    whitespace-newline))
+  	    (set-face-attribute face nil
+  				:foreground "#4F4F4F"
+  				:background "#3F3F3F"))
+  	  '(whitespace-tab
+  	    whitespace-space
+  	    whitespace-newline))
     (set-face-attribute 'whitespace-line nil
+    			:foreground nil
+    			:background nil)
+    (set-face-attribute 'whitespace-empty nil
 			:foreground "#545444"
-			:background "#3F3F3F")
+			:background "#4F4F4F")
     (set-face-attribute 'whitespace-trailing nil
-			:foreground "#545444"
-			:background "#3F3F3F")))
+    			:foreground "#545444"
+    			:background "#4F4F4F")))
 
 (use-package beacon
   :ensure beacon
@@ -246,12 +251,11 @@ Anything else means that previous occurance of that character."
 ;; (use-package smartparens
 ;;   :ensure smartparens)
 
-;;; now set up a few smaller packages from ELPA
+;;; a few smaller packages from ELPA
 (use-package yasnippet
   :ensure yasnippet
   :config
-  (progn
-    (add-to-list 'yas/snippet-dirs (format "%s/snippets" demacs-directory))))
+  (add-to-list 'yas/snippet-dirs (format "%s/snippets" demacs-directory)))
 
 (use-package highlight-symbol
   :ensure highlight-symbol
@@ -279,13 +283,18 @@ Anything else means that previous occurance of that character."
 (global-set-key (kbd "C-c v d") #'de/vc-dir-here)
 ;; use Magit for git stuff
 (use-package magit
-  :ensure magit
+  :ensure t
+
+  :bind (("C-c g s" . magit-status)
+	 (:map magit-mode-map
+	  ("e" . magit-ediff)
+	  ("E" . magit-ediff-dwim)))
+  
   :config
-  (progn
-    (global-set-key (kbd "C-c gs") 'magit-status)
-    (setq magit-last-seen-setup-instructions "1.4.0")
-    (when (eq system-type 'darwin)
-      (setq magit-emacsclient-executable "/usr/local/Cellar/emacs/24.5/bin/emacsclient"))))
+  )
+(use-package forge
+  :ensure t
+  :init (setq eieio-backward-compatibility nil))
 
 (use-package multiple-cursors
   :ensure multiple-cursors

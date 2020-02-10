@@ -11,7 +11,7 @@
 	'(("org" . "http://orgmode.org/elpa/")
 	  ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
 	  ("melpa" . "http://melpa.milkbox.net/packages/")
-	  ("gnu" . "http://elpa.gnu.org/packages/")))
+	  ("gnu" . "https://elpa.gnu.org/packages/")))
   (package-initialize)
   (package-refresh-contents)
   (defun install-if-needed (package)
@@ -60,5 +60,3 @@
 
 (when (file-exists-p (format "%s/setup-site.el" demacs-directory))
   (require 'setup-site))
-
-(message de/scratch-yeah)

@@ -3,14 +3,22 @@
 
 (use-package paredit
   :ensure paredit)
+
 (use-package evil-paredit
   :ensure evil-paredit)
+
 (use-package rainbow-delimiters
   :ensure rainbow-delimiters)
+
 (use-package rainbow-identifiers
   :ensure rainbow-identifiers)
+
 (use-package rainbow-blocks
-  :ensure rainbow-blocks)
+  :ensure t
+
+  :config
+  ;; (set-face-attribute 'rainbow-blocks-depth-1-face )
+  )
 
 (defun de/toggle-lisp-highlighting ()
   "Toggles between `rainbow-blocks-mode' and `rainbow-delimiters-mode'"

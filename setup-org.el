@@ -6,9 +6,11 @@
 ;; Babel setup
 (setq org-babel-load-languages
       '((emacs-lisp . t)
+	(haskell . t)
 	(julia . t)
-	(perl . t)
+	(prolog . t)
 	(python . t)
+	(restclient . t)
 	(sh . t)))
 
 ;; cosmetic stuff
@@ -54,9 +56,17 @@
 	 (file "books.org")
 	 "* TOREAD\n%U\n")
 	
+	("c" "Capture (quick)" entry
+	 (file "notes.org")
+	 "* %?\n%u")
+
 	("e" "Emacs" entry
 	 (file "todo.org")
 	 "* TODO %?\n  Captured at %T")
+
+	("j" "Job" entry
+	 (file "jobs.org")
+	 "* TODO %? [/]\nCaptured: %t\n%a\n** TODO Cover Letter\n** TODO Resume\n** TODO Send!")
 
 	("l" "Link" entry
 	 (file "links.org")
@@ -74,6 +84,9 @@
 	 (file "todo.org")
 	 "* TODO %?\n  Captured at %T")
 
+	("y" "Yank" entry
+	 (file "notes.org") "* %x")
+	
 	("g" "Grocery Store" item (file "groceries.org")
 	 "- %?")))
 

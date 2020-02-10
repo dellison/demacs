@@ -6,7 +6,7 @@
 	      (eclipse "eclipse")
 	      (mercury nil)
 	      (sicstus "sicstus")
-	      (swi "/opt/local/bin/swipl")
+	      (swi "swipl")
 	      (gnu "gprolog")
 	      (xsb "xsb")
 	      (t "pl"))))
@@ -79,5 +79,12 @@
       (forward-line -1)
       (indent-for-tab-command))))
 
+
+(use-package ob-prolog
+  :ensure t
+
+  :init
+  (defun prolog-program-name ()
+    (car (alist-get prolog-system prolog-program-name))))
 
 (provide 'setup-prolog)

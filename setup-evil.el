@@ -70,6 +70,9 @@
 				      elfeed-log-mode
 				      elfeed-search-mode
 				      elfeed-show-mode
+				      emms-browser-mode
+				      emms-playlist-mode
+				      emms-stream-mode
 				      eshell-mode
 				      ess-help-mode
 				      git-commit-mode

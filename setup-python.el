@@ -7,6 +7,16 @@
   (setq python-shell-interpreter "/usr/local/bin/python"))
 
 
+(use-package conda
+  :ensure t
+
+  ;:bind ("C-c C" )
+
+  :config
+  (let ((conda-home (concat (getenv "HOME") "/anaconda3")))
+    (setq conda-env-home-directory conda-home)
+    (setenv "PATH" (concat (getenv "PATH") ":" conda-home "/condabin"))))
+
 (use-package pyvenv
   :ensure t)
 
@@ -14,8 +24,13 @@
   :ensure t
 
   :bind ((:map python-mode-map
+	  ("C-c C-d" . nil)
 	  ("C-c C-d d" . counsel-pydoc)
 	  ("C-c C-d C-d" . counsel-pydoc))))
+
+(use-package cython-mode
+  :ensure t
+  :mode (("\\.pyx\\'" . cython-mode)))
 
 (defvar de/python-breakpoint-string "import pdb; pdb.set_trace() ## DEBUG ##"
   "Python breakpoint string.")

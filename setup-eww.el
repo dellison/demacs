@@ -11,21 +11,19 @@
   "open link with EWW under point (if there's a link there),
 otherwise prompt for search terms"
   (interactive)
-  (cond
-   ((region-active-p)
-    (let ((beg (region-beginning))
-	  (end (region-end)))
-      (eww (buffer-substring beg end))))
-   ((thing-at-point 'url)
-    (eww-browse-url (thing-at-point 'url)))
-   ((and (eq major-mode 'markdown-mode)
-	 (fboundp 'markdown-link-p) (markdown-link-p))
-    (eww (markdown-link-link)))
-   ((eq major-mode 'org-mode)
-    (let ((browse-url-browser-function 'eww-browse-url))
-      (org-open-at-point)))
-   (t
-    (eww-search))))
+  (cond ((region-active-p)
+	 (eww (buffer-substring (region-beginning) (region-end))))
+	((thing-at-point 'url)
+	 (eww-browse-url (thing-at-point 'url)))
+	((and (eq major-mode 'markdown-mode) (fboundp 'markdown-link-p) (markdown-link-p))
+	 (eww (markdown-link-link)))
+	((eq major-mode 'org-mode)
+	 (let ((browse-url-browser-function 'eww-browse-url))
+	   (org-open-at-point)))
+	((eq major-mode 'elfeed-show-mode)
+	 (eww (elfeed-entry-link elfeed-show-entry)))
+	(t
+	 (eww-search))))
 
 (global-set-key (kbd "C-c eww") #'de/eww-dwim)
 
