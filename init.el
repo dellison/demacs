@@ -8,10 +8,9 @@
   (require 'package)
   (setq package-user-dir (format "%s/elpa" demacs-directory))
   (setq package-archives
-	'(("org" . "http://orgmode.org/elpa/")
-	  ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-	  ("melpa" . "http://melpa.milkbox.net/packages/")
-	  ("gnu" . "https://elpa.gnu.org/packages/")))
+	'(("gnu" . "https://elpa.gnu.org/packages/")
+	  ("melpa" . "https://melpa.org/packages/")
+	  ("melpa-stable" . "https://stable.melpa.org/packages/")))
   (package-initialize)
   (package-refresh-contents)
   (defun install-if-needed (package)
