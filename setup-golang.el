@@ -6,6 +6,7 @@
   :config
   (defun de/go-mode-hook ()
     (setq tab-width 4)
+    (flycheck-mode t)
     (yas-minor-mode-on))
 
   (setq gofmt-command "goimports"))
@@ -24,6 +25,9 @@
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode)
+
+(use-package flycheck
+  :ensure t)
 
 (use-package go-projectile
   :ensure t)
